@@ -10,6 +10,7 @@ namespace asynchronous_server_TCP_CMD_app
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Hello word");
         }
     }
 }
