@@ -18,9 +18,9 @@ namespace ClassLibraryForAsynchronousServerTCP
         /// Sprawdza czy jest otwarte połączenie z bazą danych. Jeżeli nie to otwiera połączenie
         /// </summary>
         /// <param name="databaseConnection">połączenie SQLite</param>
-        void openConnection(SQLiteConnection databaseConnection)
+        public void openConnection()
         {
-            if(databaseConnection != null && databaseConnection.State == System.Data.ConnectionState.Closed)
+            if(myDatabaseConnection != null && myDatabaseConnection.State == System.Data.ConnectionState.Closed)
             {
                 myDatabaseConnection.Open();
             }
@@ -32,10 +32,10 @@ namespace ClassLibraryForAsynchronousServerTCP
         /// <param name="tableName">nazwa tabeli do sprawdzenia</param>
         /// <param name="databaseConnection"> połączenie SQLite </param>
         /// <returns></returns>
-        bool checkForTableExist(string tableName, SQLiteConnection databaseConnection) 
+        private bool checkForTableExist(string tableName, SQLiteConnection databaseConnection) 
         {
             bool exists;
-            openConnection(databaseConnection);
+            openConnection();
 
             try
             {
@@ -83,10 +83,10 @@ namespace ClassLibraryForAsynchronousServerTCP
 
                 if (checkForTableExist("users", myDatabaseConnection))
                 {
-                    Console.WriteLine("Tabela users została utworzona");
+                    Console.WriteLine("Users table has been created");
                 }
                 else
-                    Console.WriteLine("Tabela nie została utworzona");
+                    Console.WriteLine("Users table not created");
             }
         }
 
