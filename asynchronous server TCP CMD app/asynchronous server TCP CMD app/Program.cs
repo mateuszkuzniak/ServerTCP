@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ClassLibraryForAsynchronousServerTCP;
 
 namespace asynchronous_server_TCP_CMD_app
 {
@@ -10,7 +11,7 @@ namespace asynchronous_server_TCP_CMD_app
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello word");
+            Database databaseObject = new Database();
             Console.ReadLine();
         }
     }

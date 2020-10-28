@@ -69,6 +69,12 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClassLibraryForAsynchronousServerTCP\ClassLibraryForAsynchronousServerTCP.csproj">
+      <Project>{dfc45dbb-21b5-4015-81a0-55feab673b37}</Project>
+      <Name>ClassLibraryForAsynchronousServerTCP</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
