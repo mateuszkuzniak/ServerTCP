@@ -78,7 +78,8 @@ namespace ClassLibraryForAsynchronousServerTCP
                 command.CommandText = @"CREATE TABLE users(
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         user_name varchar(50) NOT NULL UNIQUE,
-                        password varchar(255) NOT NULL)";
+                        password varchar(255) NOT NULL,
+                        isLogged BOOLEAN DEFAULT '0')";
                 command.ExecuteNonQuery();
 
                 if (checkForTableExist("users", myDatabaseConnection))
