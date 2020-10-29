@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace ClassLibraryForAsynchronousServerTCP
 {
-    class Account
+    public class Account
     {
         public int? id { get; set; }
         public string login { get; set; }
         public string pass { get; set; }
+        public bool isLogged { get; set; }
     }
 }

@@ -14,6 +14,7 @@ namespace ClassLibraryForAsynchronousServerTCP
         string databaseName = "database.users";
         SQLiteCommand command;
 
+
         /// <summary>
         /// Funkcja sprawdza czy jest otwarte połączenie z bazą danych. Jeżeli nie to otwiera połączenie
         /// </summary>
@@ -101,7 +102,11 @@ namespace ClassLibraryForAsynchronousServerTCP
                     Console.WriteLine("Users table not created");
             }
         }
-
+        /// <summary>
+        /// Funkcja dodająca użytkowników do bazy danych 
+        /// </summary>
+        /// <param name="name">nazwa użytkownika</param>
+        /// <param name="pass">hasło użytkownika</param>
         public void addUser(string name, string pass)
         {
             openConnection();
@@ -114,15 +119,54 @@ namespace ClassLibraryForAsynchronousServerTCP
                     command.ExecuteNonQuery();
                     Console.WriteLine("Dodano użytownika pomyślnie");
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Console.WriteLine("The specified username is taken. Error: " + e.GetHashCode());
                 }
             }
-            cloceConnection();
 
         }
 
+        /// <summary>
+        /// Funkcja wyszukująca użytkownika w bazie danych z użyciem nazwy użytkownika
+        /// </summary>
+        /// <param name="user_name">nazwa użytkownika</param>
+        /// <returns></returns>
+        public List<Account> getUserWithDatabase(string user_name)
+        {
+            openConnection();
 
+            command.CommandText = "SELECT * FROM users WHERE user_name = '" + user_name + "'";
+            SQLiteDataReader reader = command.ExecuteReader();
+            List<Account> user = new List<Account>();
+            while (reader.Read())
+            {
+                user.Add(new Account
+                {
+                    id = reader.GetInt16(0),
+                    login = reader.GetString(1),
+                    pass = reader.GetString(2),
+                    isLogged = reader.GetBoolean(3)
+                });
+            }
+            reader.Close();
+            return user;
+        }
+
+
+        /// <summary>
+        /// Funkcja zmienia status użytkownika: zalogowany/wylogowany
+        /// </summary>
+        /// <param name="account">Konto</param>
+        public void updateLoginStatus(Account account)
+        {
+            openConnection();
+
+            if (account.isLogged)
+                command.CommandText = $"UPDATE users SET isLogged = '0' WHERE id='{account.id}'";
+            else
+                command.CommandText = $"UPDATE users SET isLogged = '1' WHERE id='{account.id}'";
+            command.ExecuteNonQuery();
+        }
     }
 }
