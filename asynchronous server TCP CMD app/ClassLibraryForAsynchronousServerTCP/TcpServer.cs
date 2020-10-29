@@ -17,7 +17,7 @@ namespace ClassLibraryForAsynchronousServerTCP
         bool running;
         TcpListener tcpListener;
         TcpClient tcpClient;
-        NetworkStream stream;
+        protected NetworkStream stream;
 
         public IPAddress IPAddress
         {

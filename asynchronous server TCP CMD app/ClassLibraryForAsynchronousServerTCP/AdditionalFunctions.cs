@@ -11,7 +11,7 @@ namespace ClassLibraryForAsynchronousServerTCP
         public static bool securePassword(string pass)
         {
             int bigLetters = 0, smallLeters = 0, numbers = 0, specialCharacter = 0;
-            foreach(char x in pass)
+            foreach (char x in pass)
             {
                 if (((x >= 33) && (x <= 47)) || ((x >= 58) && (x <= 64)) || ((x >= 91) && (x <= 96)) || ((x >= 123) && (x <= 126)))
                     specialCharacter++;
@@ -26,7 +26,7 @@ namespace ClassLibraryForAsynchronousServerTCP
                 return true;
             else
                 return false;
-            
+
         }
     }
 }
