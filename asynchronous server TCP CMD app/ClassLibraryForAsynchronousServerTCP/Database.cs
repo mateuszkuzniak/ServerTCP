@@ -15,14 +15,25 @@ namespace ClassLibraryForAsynchronousServerTCP
         SQLiteCommand command;
 
         /// <summary>
-        /// Sprawdza czy jest otwarte połączenie z bazą danych. Jeżeli nie to otwiera połączenie
+        /// Funkcja sprawdza czy jest otwarte połączenie z bazą danych. Jeżeli nie to otwiera połączenie
         /// </summary>
         /// <param name="databaseConnection">połączenie SQLite</param>
         public void openConnection()
         {
-            if(myDatabaseConnection != null && myDatabaseConnection.State == System.Data.ConnectionState.Closed)
+            if (myDatabaseConnection != null && myDatabaseConnection.State == System.Data.ConnectionState.Closed)
             {
                 myDatabaseConnection.Open();
+            }
+        }
+
+        /// <summary>
+        /// Funckja sprawdza czy jest zamknięte połączenie z bazą danych. Jeżeli nie to zamyka połączenie
+        /// </summary>
+        public void cloceConnection()
+        {
+            if (myDatabaseConnection != null && myDatabaseConnection.State == System.Data.ConnectionState.Open)
+            {
+                myDatabaseConnection.Close();
             }
         }
 
@@ -32,14 +43,14 @@ namespace ClassLibraryForAsynchronousServerTCP
         /// <param name="tableName">nazwa tabeli do sprawdzenia</param>
         /// <param name="databaseConnection"> połączenie SQLite </param>
         /// <returns></returns>
-        private bool checkForTableExist(string tableName, SQLiteConnection databaseConnection) 
+        private bool checkForTableExist(string tableName, SQLiteConnection databaseConnection)
         {
             bool exists;
             openConnection();
 
             try
             {
-                command = new SQLiteCommand (
+                command = new SQLiteCommand(
                     "select case when exists((select * from information_schema.tables where table_name = '" + tableName + "')) then 1 else 0 end", databaseConnection);
                 exists = (int)command.ExecuteScalar() == 1;
             }
@@ -68,8 +79,8 @@ namespace ClassLibraryForAsynchronousServerTCP
             myDatabaseConnection = new SQLiteConnection("Data Source=" + databaseName);
             command = new SQLiteCommand(myDatabaseConnection);
 
-            if(!File.Exists("./" + databaseName))
-            { 
+            if (!File.Exists("./" + databaseName))
+            {
                 SQLiteConnection.CreateFile(databaseName);
                 Console.WriteLine("Database file created");
 
@@ -89,6 +100,27 @@ namespace ClassLibraryForAsynchronousServerTCP
                 else
                     Console.WriteLine("Users table not created");
             }
+        }
+
+        public void addUser(string name, string pass)
+        {
+            openConnection();
+            if (checkForTableExist("users", myDatabaseConnection)) ;
+            {
+                try
+                {
+                    command.CommandText = "INSERT INTO users(user_name, password)" +
+                                           "VALUES('" + name + "','" + pass + "')";
+                    command.ExecuteNonQuery();
+                    Console.WriteLine("Dodano użytownika pomyślnie");
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine("The specified username is taken. Error: " + e.GetHashCode());
+                }
+            }
+            cloceConnection();
+
         }
 
 
