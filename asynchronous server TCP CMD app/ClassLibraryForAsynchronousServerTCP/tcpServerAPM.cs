@@ -13,6 +13,11 @@ namespace ClassLibraryForAsynchronousServerTCP
     {
         public delegate void TransmissionDataDelegate(NetworkStream stream);
         public TcpServerAPM(IPAddress ip, int port) : base(ip, port) { }
+      
+        #region Message 
+        readonly byte[] helloMessage = new ASCIIEncoding().GetBytes("Witaj! Zaloguj się do serwera. Podaj login:\n\r");
+        #endregion
+
 
         public override void Start()
         {
@@ -36,21 +41,24 @@ namespace ClassLibraryForAsynchronousServerTCP
 
         private void TransmissionCallback(IAsyncResult ar)
         {
-            Console.WriteLine("Forced shutdown!\nCleaning...");
+            Console.WriteLine("Connection lost!\nCleaning...");
         }
 
 
         protected override void BeginDataTransmission(NetworkStream stream)
         {
-            byte[] buffer = new byte[BufferSize];
+            Account user = new Account();
+            byte[] reciveBuffer = new byte[BufferSize];
             while (true)
             {
                 try
                 {
-                    int message_size = stream.Read(buffer, 0, BufferSize);
-                    stream.Write(buffer, 0, BufferSize);
+                    stream.Write(helloMessage, 0, helloMessage.Length);
+
+                    int message_size = stream.Read(reciveBuffer, 0, BufferSize);
+                    stream.Write(reciveBuffer, 0, message_size);
                 }
-                catch (IOException e)
+                catch (IOException)
                 {
                     break;
                 }

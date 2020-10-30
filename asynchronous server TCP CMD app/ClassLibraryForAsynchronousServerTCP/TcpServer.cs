@@ -18,6 +18,8 @@ namespace ClassLibraryForAsynchronousServerTCP
         TcpListener tcpListener;
         TcpClient tcpClient;
         protected NetworkStream stream;
+        protected Database database;
+
 
         public IPAddress IPAddress
         {
