@@ -51,8 +51,8 @@ namespace ClassLibraryForAsynchronousServerTCP
 
             try
             {
-                command = new SQLiteCommand(
-                    "select case when exists((select * from information_schema.tables where table_name = '" + tableName + "')) then 1 else 0 end", databaseConnection);
+                command.CommandText = 
+                    $"select case when exists((select * from information_schema.tables where table_name = '{tableName}')) then 1 else 0 end";
                 exists = (int)command.ExecuteScalar() == 1;
             }
             catch
@@ -79,6 +79,7 @@ namespace ClassLibraryForAsynchronousServerTCP
         {
             myDatabaseConnection = new SQLiteConnection("Data Source=" + databaseName);
             command = new SQLiteCommand(myDatabaseConnection);
+           
 
             if (!File.Exists("./" + databaseName))
             {
@@ -102,6 +103,18 @@ namespace ClassLibraryForAsynchronousServerTCP
                     Console.WriteLine("Users table not created");
             }
         }
+
+        public bool checkUserExist(string user_name)
+        {
+            openConnection();
+            user_name.ToLower();
+            command.CommandText = $"SELECT id FROM users WHERE user_name = '{user_name}'";
+            if (command.ExecuteScalar() != null)
+                return true;
+            else
+                return false;
+        }
+
         /// <summary>
         /// Funkcja dodająca użytkowników do bazy danych 
         /// </summary>
