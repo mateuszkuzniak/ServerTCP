@@ -26,7 +26,24 @@ namespace ClassLibraryForAsynchronousServerTCP
                 return true;
             else
                 return false;
+        }
 
+        public static bool validUserName(string userName)
+        {
+            int check = 0;
+            if(userName != "break")
+            {
+                foreach (char x in userName)
+                {
+                    if ((x >= 32 && x <= 47) || (x >= 58 && x <= 64) || (x >= 91 && x <= 96) || (x >= 123 && x <= 126))
+                        check++;
+                }
+            }
+
+            if ((check > 0) || (userName == "break"))
+                return false;
+            else
+                return true;
         }
     }
 }

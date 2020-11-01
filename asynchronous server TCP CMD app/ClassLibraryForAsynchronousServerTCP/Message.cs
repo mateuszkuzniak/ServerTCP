@@ -15,37 +15,37 @@ namespace ClassLibraryForAsynchronousServerTCP
         /// <summary>
         /// Hello!\n\r 1. Log in\n\r2. Register:\n\r
         /// </summary>
-        public static readonly byte[] helloMessage = new ASCIIEncoding().GetBytes("Hello!\n\r1. Log in\n\r2. Register:\n\r");
+        public static readonly byte[] helloMessageMENU = new ASCIIEncoding().GetBytes("Hello!\n\r1. Log in\n\r2. Register:\n\r");
         /// <summary>
         /// ERROR: This option does not exist
         /// </summary>
-        public static readonly byte[] menuError = new ASCIIEncoding().GetBytes("ERROR: This option does not exist\n\r");
+        public static readonly byte[] menuErrorMENU = new ASCIIEncoding().GetBytes("ERROR: This option does not exist\n\r");
         /// <summary>
         /// ERROR: Just enter the number
         /// </summary>
-        public static readonly byte[] invalidCharError = new ASCIIEncoding().GetBytes("ERROR: Just enter the number\n\r");
+        public static readonly byte[] invalidCharErrorMENU = new ASCIIEncoding().GetBytes("ERROR: Just enter the number\n\r");
         #endregion
 
         #region LOGIN
         /// <summary>
         /// Give login
         /// </summary>
-        public static readonly byte[] giveLogin = new ASCIIEncoding().GetBytes("Give login\n\r");
+        public static readonly byte[] giveLoginLOGIN = new ASCIIEncoding().GetBytes("Give login\n\r");
         
         /// <summary>
         /// ERROR: User does not exist
         /// </summary>
-        public static readonly byte[] userDoesNotExistsError = new ASCIIEncoding().GetBytes("ERROR: User does not exist\n\r");
+        public static readonly byte[] userDoesNotExistsErrorLOGIN = new ASCIIEncoding().GetBytes("ERROR: User does not exist\n\r");
         
         /// <summary>
         /// Give password
         /// </summary>
-        public static readonly byte[] givePassword = new ASCIIEncoding().GetBytes("Give password\n\r");
+        public static readonly byte[] givePasswordLOGIN = new ASCIIEncoding().GetBytes("Give password\n\r");
         
         /// <summary>
         /// ERROR: Bad password
         /// </summary>
-        public static readonly byte[] badPasswordError = new ASCIIEncoding().GetBytes("ERROR: Bad password\n\r");
+        public static readonly byte[] badPasswordErrorLOGIN = new ASCIIEncoding().GetBytes("ERROR: Bad password\n\r");
         
         /// <summary>
         /// Hello {userName}! Logged in correctly
@@ -71,12 +71,48 @@ namespace ClassLibraryForAsynchronousServerTCP
         /// <summary>
         /// The user has been logged out
         /// </summary>
-        public static readonly string userLogOut  = "The user has been logged out\n\r";
+        public static readonly byte[] userLogOut  = new ASCIIEncoding().GetBytes("\nThe user has been logged out\n\r");
+
+        #endregion
+
+        #region REGISTRY
+        /// <summary>
+        /// Give user name
+        /// </summary
+        public static readonly byte[] giveUserNameREGISTRY = new ASCIIEncoding().GetBytes("Give user name\n\r");
+
+        /// <summary>
+        /// Username can onlu contain letters and numbers
+        /// </summary>
+        public static readonly byte[] invalidUserNameREGISTRY = new ASCIIEncoding().GetBytes("Username can onlu contain letters and numbers\n\r");
+
+        /// <summary>
+        /// The specified username is taken
+        /// </summary>
+        public static readonly byte[] busyUserNameREGISTRY = new ASCIIEncoding().GetBytes("The specified username is taken\n\r");
+
+        /// <summary>
+        /// Enter the password
+        /// </summary>
+        public static readonly byte[]   enterPasswordREGISTRY = new ASCIIEncoding().GetBytes("Enter the password\n\r");
+
+        /// <summary>
+        /// Password musy contains: -> 8 character, -> one upper and lower case letter, -> one number and a special character"
+        /// </summary>
+        public static readonly byte[]  invalidPasswordREGISTRY = new ASCIIEncoding().GetBytes("Password musy contains:\n\r-> 8 character," +
+                                                                                                "\n\r-> one upper and lower case letter," +
+                                                                                                "\n\r-> one number and a special character" +
+                                                                                                "\n\r-> username can't be equal to \"break\"");
+
+        /// <summary>
+        /// User added successfully
+        /// </summary>
+        public static readonly byte[] userAddedREGISTRY = new ASCIIEncoding().GetBytes("User added successfully\n\r");
 
         #endregion
 
         #region CONNECTION
-        
+
         /// <summary>
         /// Connection with the user has been lost
         /// </summary>

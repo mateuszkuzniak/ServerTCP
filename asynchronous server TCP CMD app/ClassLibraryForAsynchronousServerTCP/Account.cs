@@ -18,6 +18,9 @@ namespace ClassLibraryForAsynchronousServerTCP
         public string Pass { get => pass; set => pass = value; }
         public bool IsLogged { get => isLogged; set => isLogged = value; }
 
+        /// <summary>
+        /// Funkcja czyszcząca obiekt
+        /// </summary>
         public void Clear()
         {
             Id = null;
