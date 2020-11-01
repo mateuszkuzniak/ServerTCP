@@ -12,5 +12,16 @@ namespace ClassLibraryForAsynchronousServerTCP
         public string login { get; set; }
         public string pass { get; set; }
         public bool isLogged { get; set; }
+
+        Account(int? id, string login, string pass, bool isLogged)
+        {
+            this.id = id;
+            this.login = login;
+            this.pass = pass;
+            this.isLogged = isLogged;
+        }
+
+
+
     }
 }
