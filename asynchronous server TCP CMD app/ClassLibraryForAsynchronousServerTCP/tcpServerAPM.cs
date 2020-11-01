@@ -22,7 +22,6 @@ namespace ClassLibraryForAsynchronousServerTCP
         {
             StartListening();
             AcceptClient();
-            Console.WriteLine("Client is logged");
         }
 
         /// <summary>
@@ -46,7 +45,7 @@ namespace ClassLibraryForAsynchronousServerTCP
         private void TransmissionCallback(IAsyncResult ar)
         {
 
-            Console.WriteLine("Connection lost!\nCleaning...");
+            Console.WriteLine(Message.connectionCloseCONNECTION);
         }
         #endregion
 
@@ -159,7 +158,7 @@ namespace ClassLibraryForAsynchronousServerTCP
             while (true)
             {
                 WriteMessage(stream, Message.giveUserNameREGISTRY);
-                userName = ReadMessage(stream);
+                userName = ReadMessage(stream).ToLower();
                 if (AdditionalFunctions.validUserName(userName))
                 {
                     if (!database.checkUserExist(userName))
@@ -235,7 +234,7 @@ namespace ClassLibraryForAsynchronousServerTCP
                 catch (IOException)
                 {
                     logOutUser(user);
-                    Console.WriteLine(Message.lostConnection);
+                    Console.WriteLine(Message.lostConnectionCONNECTION);
                     break;
                 }
             }

@@ -116,13 +116,14 @@ namespace ClassLibraryForAsynchronousServerTCP
         /// <summary>
         /// Connection with the user has been lost
         /// </summary>
-        public static readonly string lostConnection = "Connection with the user has been lost ";
+        public static readonly string lostConnectionCONNECTION = "Connection with the user has been lost ";
+        
+        /// <summary>
+        /// Connection lost!\nCleaning...
+        /// </summary>
+        public static readonly string connectionCloseCONNECTION = "Connection lost!\nCleaning...";
        
         #endregion
-
-
-
-
 
     }
 }

@@ -12,13 +12,9 @@ namespace asynchronous_server_TCP_CMD_app
     {
         static void Main(string[] args)
         {
-            //Database databaseObject = new Database();
-            //databaseObject.addUser("Paweł", "jakiestamhaslo123");
-            //databaseObject.updateLoginStatus(databaseObject.getUserWithDatabase("Mateusz").First());
-            TcpServerAPM serverObj = new TcpServerAPM(IPAddress.Parse("127.0.0.1"), 8000);
-            serverObj.Start();
-
-            Console.ReadLine();
+           TcpServerAPM serverObj = new TcpServerAPM(IPAddress.Parse("127.0.0.1"), 8000);
+           serverObj.Start();
+           Console.ReadLine();
         }
     }
 }
