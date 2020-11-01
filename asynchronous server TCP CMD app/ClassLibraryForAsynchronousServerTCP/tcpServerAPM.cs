@@ -11,6 +11,7 @@ namespace ClassLibraryForAsynchronousServerTCP
 {
     public class TcpServerAPM : TcpServer
     {
+        #region BASIC_FUNCTION
         public delegate void TransmissionDataDelegate(NetworkStream stream);
         public TcpServerAPM(IPAddress ip, int port) : base(ip, port) { }
 
@@ -44,11 +45,12 @@ namespace ClassLibraryForAsynchronousServerTCP
         /// <param name="ar"></param>
         private void TransmissionCallback(IAsyncResult ar)
         {
-            
+
             Console.WriteLine("Connection lost!\nCleaning...");
         }
+        #endregion
 
-
+        #region MENU
         /// <summary>
         /// Pierwszy kontak z klientem -> MENU
         /// </summary>
@@ -61,7 +63,7 @@ namespace ClassLibraryForAsynchronousServerTCP
 
             while (true)
             {
-                WriteMessage(stream, Message.helloMessage);
+                WriteMessage(stream, Message.helloMessageMENU);
                 temp = ReadMessage(stream);
                 if (int.TryParse(temp, out choose))
                 {
@@ -70,15 +72,16 @@ namespace ClassLibraryForAsynchronousServerTCP
                         break;
                     }
                     else
-                        stream.Write(Message.menuError, 0, Message.menuError.Length);
+                        stream.Write(Message.menuErrorMENU, 0, Message.menuErrorMENU.Length);
                 }
                 else
-                    stream.Write(Message.invalidCharError, 0, Message.invalidCharError.Length);
+                    stream.Write(Message.invalidCharErrorMENU, 0, Message.invalidCharErrorMENU.Length);
             }
             return choose;
         }
+        #endregion
 
-
+        #region LOGIN
         /// <summary>
         /// Logowanie użytkownika do systemu
         /// </summary>
@@ -87,47 +90,117 @@ namespace ClassLibraryForAsynchronousServerTCP
         private void loginProgram(NetworkStream stream, ref Account user)
         {
             string userName;
-            while(true)
+            while (true)
             {
-                WriteMessage(stream, Message.giveLogin);
+                WriteMessage(stream, Message.giveLoginLOGIN);
                 userName = ReadMessage(stream).ToLower();
                 if (database.checkUserExist(userName))
                 {
                     break;
                 }
+                else if (userName == "break")
+                {
+                    break;
+                }
                 else
                 {
-                    WriteMessage(stream, Message.userDoesNotExistsError);
+                    WriteMessage(stream, Message.userDoesNotExistsErrorLOGIN);
                 }
-
-                
             }
 
-            user = database.getUserWithDatabase(userName);
-            if (!user.IsLogged)
+            if (userName != "break")
             {
-                string password;
-                while (true)
+                user = database.getUserWithDatabase(userName);
+                if (!user.IsLogged)
                 {
-                    WriteMessage(stream, Message.givePassword);
-                    password = ReadMessage(stream);
-                    if (password == user.Pass)
+                    string password;
+                    while (true)
+                    {
+                        WriteMessage(stream, Message.givePasswordLOGIN);
+                        password = ReadMessage(stream);
+                        if (password == user.Pass)
+                        {
+                            break;
+                        }
+                        else
+                            WriteMessage(stream, Message.badPasswordErrorLOGIN);
+                    }
+
+                    database.updateLoginStatus(user);
+                    WriteMessage(stream, Message.loggedIn(user.Login));
+                }
+                else
+                {
+                    user.Clear();
+                    WriteMessage(stream, Message.userIsLoggedError);
+                }
+            }
+
+
+        }
+
+        /// <summary>
+        /// Funkcja zmienia status użytkownika na false - wylogowany, jeżeli owy użytkownik widnieje w bazie jako zalogowany
+        /// </summary>
+        /// <param name="user"></param>
+        void logOutUser(Account user)
+        {
+            if (user.IsLogged)
+            {
+                database.updateLoginStatus(user);
+            }
+        }
+        #endregion
+
+        #region REGISTRY
+        private void RegistryProgram(NetworkStream stream)
+        {
+            string userName, password;
+            while (true)
+            {
+                WriteMessage(stream, Message.giveUserNameREGISTRY);
+                userName = ReadMessage(stream);
+                if (AdditionalFunctions.validUserName(userName))
+                {
+                    if (!database.checkUserExist(userName))
                     {
                         break;
                     }
                     else
-                        WriteMessage(stream, Message.badPasswordError);
+                    {
+                        WriteMessage(stream, Message.busyUserNameREGISTRY);
+                    }
+                }
+                else if (userName == "break")
+                    break;
+                else
+                    WriteMessage(stream, Message.invalidUserNameREGISTRY);
+            }
+
+            if (userName != "break")
+            {
+                Account user = new Account();
+                user.Login = userName;
+
+                while (true)
+                {
+                    WriteMessage(stream, Message.enterPasswordREGISTRY);
+                    password = ReadMessage(stream);
+                    if (AdditionalFunctions.securePassword(password))
+                    {
+                        user.Pass = password;
+                        break;
+                    }
+                    else
+                    {
+                        WriteMessage(stream, Message.invalidPasswordREGISTRY);
+                    }
                 }
 
-                database.updateLoginStatus(user);
-                WriteMessage(stream, Message.loggedIn(user.Login));
-            }
-            else
-            {
-                user.Clear();
-                WriteMessage(stream, Message.userIsLoggedError);
+                database.addUser(user.Login, user.Pass);
             }
         }
+        #endregion
 
         /// <summary>
         /// Funkcja odpowiedzialan za delegat transmisji
@@ -140,40 +213,29 @@ namespace ClassLibraryForAsynchronousServerTCP
             {
                 try
                 {
-                    if (userMenu(stream) == 1) //Logowanie
+                    if (userMenu(stream) == 1)
                     {
                         loginProgram(stream, ref user);
                     }
-                    else  //Rejstracja 
-                        Console.WriteLine("2");
+                    else
+                    {
+                        RegistryProgram(stream);
+                    }
 
-                    if(user.IsLogged)
+                    if (user.IsLogged)
                     {
                         WriteMessage(stream, Message.logOut);
                         ReadMessage(stream);
 
-                        Exception userLogOutException = new Exception(Message.userLogOut);
-                        throw userLogOutException;
+                        logOutUser(user);
+                        WriteMessage(stream, Message.userLogOut);
+
                     }
                 }
                 catch (IOException)
                 {
-
-                    if (user.IsLogged)
-                    {
-                        database.updateLoginStatus(user);
-                        Console.WriteLine(Message.lostConnection);
-                    }
-                    break;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    if (user.IsLogged)
-                    {
-                        database.updateLoginStatus(user);
-                        Console.WriteLine(Message.lostConnection);
-                    }
+                    logOutUser(user);
+                    Console.WriteLine(Message.lostConnection);
                     break;
                 }
             }
