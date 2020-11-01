@@ -13,6 +13,7 @@ namespace ClassLibraryForAsynchronousServerTCP
         public SQLiteConnection myDatabaseConnection;
         string databaseName = "database.users";
         SQLiteCommand command;
+        readonly object keyLock = new object();
 
 
         /// <summary>
@@ -51,9 +52,13 @@ namespace ClassLibraryForAsynchronousServerTCP
 
             try
             {
-                command.CommandText = 
+                lock (keyLock)
+                {
+                    command.CommandText =
                     $"select case when exists((select * from information_schema.tables where table_name = '{tableName}')) then 1 else 0 end";
-                exists = (int)command.ExecuteScalar() == 1;
+                    exists = (int)command.ExecuteScalar() == 1;
+                }
+
             }
             catch
             {
@@ -77,30 +82,33 @@ namespace ClassLibraryForAsynchronousServerTCP
         /// </summary>
         public Database()
         {
-            myDatabaseConnection = new SQLiteConnection("Data Source=" + databaseName);
-            command = new SQLiteCommand(myDatabaseConnection);
-           
-
-            if (!File.Exists("./" + databaseName))
+            lock (keyLock)
             {
-                SQLiteConnection.CreateFile(databaseName);
-                Console.WriteLine("Database file created");
+                myDatabaseConnection = new SQLiteConnection("Data Source=" + databaseName);
+                command = new SQLiteCommand(myDatabaseConnection);
 
-                myDatabaseConnection.Open();
 
-                command.CommandText = @"CREATE TABLE users(
+                if (!File.Exists("./" + databaseName))
+                {
+                    SQLiteConnection.CreateFile(databaseName);
+                    Console.WriteLine("Database file created");
+
+                    myDatabaseConnection.Open();
+
+                    command.CommandText = @"CREATE TABLE users(
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         user_name varchar(50) NOT NULL UNIQUE,
                         password varchar(255) NOT NULL,
                         isLogged BOOLEAN DEFAULT '0')";
-                command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
 
-                if (checkForTableExist("users", myDatabaseConnection))
-                {
-                    Console.WriteLine("Users table has been created");
+                    if (checkForTableExist("users", myDatabaseConnection))
+                    {
+                        Console.WriteLine("Users table has been created");
+                    }
+                    else
+                        Console.WriteLine("Users table not created");
                 }
-                else
-                    Console.WriteLine("Users table not created");
             }
         }
 
@@ -108,11 +116,14 @@ namespace ClassLibraryForAsynchronousServerTCP
         {
             openConnection();
             string userNameToLower = userName.ToLower();
-            command.CommandText = $"SELECT id FROM users WHERE user_name = '{userNameToLower}'";
-            if (command.ExecuteScalar() != null)
-                return true;
-            else
-                return false;
+            lock (keyLock)
+            {
+                command.CommandText = $"SELECT id FROM users WHERE user_name = '{userNameToLower}'";
+                if (command.ExecuteScalar() != null)
+                    return true;
+                else
+                    return false;
+            }
         }
 
         /// <summary>
@@ -127,10 +138,13 @@ namespace ClassLibraryForAsynchronousServerTCP
             {
                 try
                 {
-                    command.CommandText = "INSERT INTO users(user_name, password)" +
-                                           "VALUES('" + name + "','" + pass + "')";
-                    command.ExecuteNonQuery();
-                    Console.WriteLine("Dodano użytownika pomyślnie");
+                    lock (keyLock)
+                    {
+                        command.CommandText = "INSERT INTO users(user_name, password)" +
+                                                 "VALUES('" + name + "','" + pass + "')";
+                        command.ExecuteNonQuery();
+                    }
+                    Console.WriteLine("User added successfully");
                 }
                 catch (Exception e)
                 {
@@ -149,19 +163,22 @@ namespace ClassLibraryForAsynchronousServerTCP
         {
             openConnection();
             string userNameToLower = userName.ToLower();
-            command.CommandText = $"SELECT * FROM users WHERE user_name = '{userNameToLower}'";
-            SQLiteDataReader reader = command.ExecuteReader();
-
             Account user = new Account();
-            while (reader.Read())
+            lock (keyLock)
             {
-                user.Id = reader.GetInt16(0);
-                user.Login = reader.GetString(1);
-                user.Pass = reader.GetString(2);
-                user.IsLogged = reader.GetBoolean(3);
-            }
+                command.CommandText = $"SELECT * FROM users WHERE user_name = '{userNameToLower}'";
+                SQLiteDataReader reader = command.ExecuteReader();
 
-            reader.Close();
+                while (reader.Read())
+                {
+                    user.Id = reader.GetInt16(0);
+                    user.Login = reader.GetString(1);
+                    user.Pass = reader.GetString(2);
+                    user.IsLogged = reader.GetBoolean(3);
+                }
+
+                reader.Close();
+            }
             return user;
         }
 
@@ -174,17 +191,20 @@ namespace ClassLibraryForAsynchronousServerTCP
         {
             openConnection();
 
-            if (account.IsLogged)
+            lock(keyLock)
             {
-                command.CommandText = $"UPDATE users SET isLogged = '0' WHERE id='{account.Id}'";
-                account.IsLogged = false;
+                if (account.IsLogged)
+                {
+                    command.CommandText = $"UPDATE users SET isLogged = '0' WHERE id='{account.Id}'";
+                    account.IsLogged = false;
+                }
+                else
+                {
+                    command.CommandText = $"UPDATE users SET isLogged = '1' WHERE id='{account.Id}'";
+                    account.IsLogged = true;
+                }
+                command.ExecuteNonQuery();
             }
-            else
-            {
-                command.CommandText = $"UPDATE users SET isLogged = '1' WHERE id='{account.Id}'";
-                account.IsLogged = true;
-            }
-            command.ExecuteNonQuery();
         }
     }
-} 
+}
