@@ -69,7 +69,7 @@ namespace ClassLibraryForAsynchronousServerTCP
 
         protected TcpListener TcpListener { get => tcpListener; set => tcpListener = value; }
         protected TcpClient TcpClient { get => tcpClient; set => tcpClient = value; }
-        protected NetworkStream NetworkStream { get => stream; set => stream = value; }
+        protected NetworkStream Stream { get => stream; set => stream = value; }
 
         protected bool checkPort()
         {
@@ -80,6 +80,8 @@ namespace ClassLibraryForAsynchronousServerTCP
 
         public TcpServer(IPAddress ip, int port)
         {
+            Database databaseObject = new Database();
+
             running = false;
             IPAddress = ip;
             Port = port;
@@ -94,6 +96,32 @@ namespace ClassLibraryForAsynchronousServerTCP
         {
             TcpListener = new TcpListener(IPAddress, Port);
             TcpListener.Start();
+        }
+
+        /// <summary>
+        /// Funkcja odpowiedzialan za wysyłanie wiadomości do klienta
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="message"></param>
+        protected void WriteMessage(NetworkStream stream, byte[] message)
+        {
+            stream.Write(message, 0, message.Length);
+        }
+
+        /// <summary>
+        /// Funkcja odpowiedzialna za odbieranie wiadomości od klienta
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        protected string ReadMessage(NetworkStream stream)
+        {
+            string message;
+            byte[] reciveBuffer = new byte[BufferSize];
+
+            stream.Read(reciveBuffer, 0, reciveBuffer.Length);
+            if (reciveBuffer[0] == 13 && reciveBuffer[1] == 10)
+                stream.Read(reciveBuffer, 0, reciveBuffer.Length);
+            return message = Encoding.UTF8.GetString(reciveBuffer, 0, reciveBuffer.Length);
         }
 
         protected abstract void AcceptClient();

@@ -13,50 +13,88 @@ namespace ClassLibraryForAsynchronousServerTCP
     {
         public delegate void TransmissionDataDelegate(NetworkStream stream);
         public TcpServerAPM(IPAddress ip, int port) : base(ip, port) { }
-      
-        #region Message 
-        readonly byte[] helloMessage = new ASCIIEncoding().GetBytes("Witaj! Zaloguj się do serwera. Podaj login:\n\r");
-        #endregion
 
-
+        /// <summary>
+        /// Funkcja startująca server TCP
+        /// </summary>
         public override void Start()
         {
             StartListening();
-
             AcceptClient();
-            Console.WriteLine("Klient został połączony");
+            Console.WriteLine("Client is logged");
         }
 
-
+        /// <summary>
+        /// Funckja akceptująca klienta
+        /// </summary>
         protected override void AcceptClient()
         {
             while (true)
             {
                 TcpClient tcpClient = TcpListener.AcceptTcpClient();
-                NetworkStream = tcpClient.GetStream();
+                Stream = tcpClient.GetStream();
                 TransmissionDataDelegate transmissionDataDelegate = new TransmissionDataDelegate(BeginDataTransmission);
-                transmissionDataDelegate.BeginInvoke(NetworkStream, TransmissionCallback, tcpClient);
+                transmissionDataDelegate.BeginInvoke(Stream, TransmissionCallback, tcpClient);
             }
         }
 
+        /// <summary>
+        /// Funkcja czyszcząca
+        /// </summary>
+        /// <param name="ar"></param>
         private void TransmissionCallback(IAsyncResult ar)
         {
             Console.WriteLine("Connection lost!\nCleaning...");
         }
 
 
+        /// <summary>
+        /// Pierwszy kontak z klientem -> MENU
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        private int userMenu(NetworkStream stream)
+        {
+            int choose;
+            string temp;
+
+            while (true)
+            {
+                WriteMessage(stream, Message.helloMessage);
+                temp = ReadMessage(stream);
+                if (int.TryParse(temp, out choose))
+                {
+                    if ((choose == 1) || (choose == 2))
+                    {
+                        break;
+                    }
+                    else
+                        stream.Write(Message.menuError, 0, Message.menuError.Length);
+                }
+                else
+                    stream.Write(Message.invalidChar, 0, Message.invalidChar.Length);
+            }
+
+            return choose;
+        }
+
+
+        /// <summary>
+        /// Funkcja odpowiedzialan za delegat transmisji
+        /// </summary>
+        /// <param name="stream"></param>
         protected override void BeginDataTransmission(NetworkStream stream)
         {
             Account user = new Account();
-            byte[] reciveBuffer = new byte[BufferSize];
             while (true)
             {
                 try
                 {
-                    stream.Write(helloMessage, 0, helloMessage.Length);
+                    if ((int)userMenu(stream) == 1)
+                        Console.WriteLine("1");
+                    else 
+                        Console.WriteLine("2");
 
-                    int message_size = stream.Read(reciveBuffer, 0, BufferSize);
-                    stream.Write(reciveBuffer, 0, message_size);
                 }
                 catch (IOException)
                 {
