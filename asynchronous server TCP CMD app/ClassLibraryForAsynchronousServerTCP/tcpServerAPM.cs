@@ -79,13 +79,18 @@ namespace ClassLibraryForAsynchronousServerTCP
         }
 
 
+        /// <summary>
+        /// Logowanie użytkownika do systemu
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="user"></param>
         private void loginProgram(NetworkStream stream, ref Account user)
         {
             string userName;
             while(true)
             {
                 WriteMessage(stream, Message.giveLogin);
-                userName = ReadMessage(stream);
+                userName = ReadMessage(stream).ToLower();
                 if (database.checkUserExist(userName))
                 {
                     break;
@@ -94,6 +99,8 @@ namespace ClassLibraryForAsynchronousServerTCP
                 {
                     WriteMessage(stream, Message.userDoesNotExistsError);
                 }
+
+                
             }
 
             user = database.getUserWithDatabase(userName);
@@ -105,7 +112,9 @@ namespace ClassLibraryForAsynchronousServerTCP
                     WriteMessage(stream, Message.givePassword);
                     password = ReadMessage(stream);
                     if (password == user.Pass)
+                    {
                         break;
+                    }
                     else
                         WriteMessage(stream, Message.badPasswordError);
                 }
@@ -114,7 +123,10 @@ namespace ClassLibraryForAsynchronousServerTCP
                 WriteMessage(stream, Message.loggedIn(user.Login));
             }
             else
+            {
+                user.Clear();
                 WriteMessage(stream, Message.userIsLoggedError);
+            }
         }
 
         /// <summary>
@@ -134,11 +146,30 @@ namespace ClassLibraryForAsynchronousServerTCP
                     }
                     else  //Rejstracja 
                         Console.WriteLine("2");
+
+                    if(user.IsLogged)
+                    {
+                        WriteMessage(stream, Message.logOut);
+                        ReadMessage(stream);
+
+                        Exception userLogOutException = new Exception(Message.userLogOut);
+                        throw userLogOutException;
+                    }
                 }
                 catch (IOException)
                 {
 
-                    if (user.IsLogged == true)
+                    if (user.IsLogged)
+                    {
+                        database.updateLoginStatus(user);
+                        Console.WriteLine(Message.lostConnection);
+                    }
+                    break;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    if (user.IsLogged)
                     {
                         database.updateLoginStatus(user);
                         Console.WriteLine(Message.lostConnection);

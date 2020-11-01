@@ -17,5 +17,14 @@ namespace ClassLibraryForAsynchronousServerTCP
         public string Login { get => login; set => login = value; }
         public string Pass { get => pass; set => pass = value; }
         public bool IsLogged { get => isLogged; set => isLogged = value; }
+
+        public void Clear()
+        {
+            Id = null;
+            Login = null;
+            Pass= null;
+            IsLogged = false;
+
+        }
     }
 }

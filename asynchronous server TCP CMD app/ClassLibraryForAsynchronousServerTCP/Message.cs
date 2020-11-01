@@ -31,19 +31,22 @@ namespace ClassLibraryForAsynchronousServerTCP
         /// Give login
         /// </summary>
         public static readonly byte[] giveLogin = new ASCIIEncoding().GetBytes("Give login\n\r");
+        
         /// <summary>
         /// ERROR: User does not exist
         /// </summary>
         public static readonly byte[] userDoesNotExistsError = new ASCIIEncoding().GetBytes("ERROR: User does not exist\n\r");
+        
         /// <summary>
         /// Give password
         /// </summary>
         public static readonly byte[] givePassword = new ASCIIEncoding().GetBytes("Give password\n\r");
+        
         /// <summary>
         /// ERROR: Bad password
         /// </summary>
         public static readonly byte[] badPasswordError = new ASCIIEncoding().GetBytes("ERROR: Bad password\n\r");
-
+        
         /// <summary>
         /// Hello {userName}! Logged in correctly
         /// </summary>
@@ -54,15 +57,31 @@ namespace ClassLibraryForAsynchronousServerTCP
             byte[] text = new ASCIIEncoding().GetBytes($"Hello {userName}! Logged in correctly \n\r");
             return text;
         }
+        
         /// <summary>
         /// ERROR: User is logged
         /// </summary>
         public static readonly byte[] userIsLoggedError = new ASCIIEncoding().GetBytes("ERROR: User is logged\n\r");
+        
+        /// <summary>
+        /// Press The key to log out
+        /// </summary>
+        public static readonly byte[] logOut = new ASCIIEncoding().GetBytes("Press The key to log out\n\r");
+
+        /// <summary>
+        /// The user has been logged out
+        /// </summary>
+        public static readonly string userLogOut  = "The user has been logged out\n\r";
 
         #endregion
 
         #region CONNECTION
+        
+        /// <summary>
+        /// Connection with the user has been lost
+        /// </summary>
         public static readonly string lostConnection = "Connection with the user has been lost ";
+       
         #endregion
 
 
