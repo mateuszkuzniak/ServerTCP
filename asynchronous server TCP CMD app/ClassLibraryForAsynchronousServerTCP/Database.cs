@@ -15,7 +15,7 @@ namespace ClassLibraryForAsynchronousServerTCP
         SQLiteCommand command;
         readonly object keyLock = new object();
 
-
+        #region BASIC
         /// <summary>
         /// Funkcja sprawdza czy jest otwarte połączenie z bazą danych. Jeżeli nie to otwiera połączenie
         /// </summary>
@@ -52,13 +52,9 @@ namespace ClassLibraryForAsynchronousServerTCP
 
             try
             {
-                lock (keyLock)
-                {
-                    command.CommandText =
-                    $"select case when exists((select * from information_schema.tables where table_name = '{tableName}')) then 1 else 0 end";
-                    exists = (int)command.ExecuteScalar() == 1;
-                }
-
+                command.CommandText =
+                $"select case when exists((select * from information_schema.tables where table_name = '{tableName}')) then 1 else 0 end";
+                exists = (int)command.ExecuteScalar() == 1;
             }
             catch
             {
@@ -82,41 +78,39 @@ namespace ClassLibraryForAsynchronousServerTCP
         /// </summary>
         public Database()
         {
-            lock (keyLock)
+            myDatabaseConnection = new SQLiteConnection("Data Source=" + databaseName);
+            command = new SQLiteCommand(myDatabaseConnection);
+
+
+            if (!File.Exists("./" + databaseName))
             {
-                myDatabaseConnection = new SQLiteConnection("Data Source=" + databaseName);
-                command = new SQLiteCommand(myDatabaseConnection);
+                SQLiteConnection.CreateFile(databaseName);
+                Console.WriteLine("Database file created");
 
+                myDatabaseConnection.Open();
 
-                if (!File.Exists("./" + databaseName))
-                {
-                    SQLiteConnection.CreateFile(databaseName);
-                    Console.WriteLine("Database file created");
-
-                    myDatabaseConnection.Open();
-
-                    command.CommandText = @"CREATE TABLE users(
+                command.CommandText = @"CREATE TABLE users(
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         user_name varchar(50) NOT NULL UNIQUE,
                         password varchar(255) NOT NULL,
                         isLogged BOOLEAN DEFAULT '0')";
-                    command.ExecuteNonQuery();
+                command.ExecuteNonQuery();
 
-                    if (checkForTableExist("users", myDatabaseConnection))
-                    {
-                        Console.WriteLine("Users table has been created");
-                    }
-                    else
-                        Console.WriteLine("Users table not created");
+                if (checkForTableExist("users", myDatabaseConnection))
+                {
+                    Console.WriteLine("Users table has been created");
                 }
+                else
+                    Console.WriteLine("Users table not created");
             }
         }
+        #endregion
 
         public bool checkUserExist(string userName)
         {
             openConnection();
             string userNameToLower = userName.ToLower();
-            lock (keyLock)
+            lock(keyLock)
             {
                 command.CommandText = $"SELECT id FROM users WHERE user_name = '{userNameToLower}'";
                 if (command.ExecuteScalar() != null)
@@ -124,6 +118,7 @@ namespace ClassLibraryForAsynchronousServerTCP
                 else
                     return false;
             }
+
         }
 
         /// <summary>
@@ -138,12 +133,13 @@ namespace ClassLibraryForAsynchronousServerTCP
             {
                 try
                 {
-                    lock (keyLock)
+                    lock(keyLock)
                     {
                         command.CommandText = "INSERT INTO users(user_name, password)" +
-                                                 "VALUES('" + name + "','" + pass + "')";
+                                             "VALUES('" + name + "','" + pass + "')";
                         command.ExecuteNonQuery();
                     }
+
                     Console.WriteLine("User added successfully");
                 }
                 catch (Exception e)
@@ -164,6 +160,7 @@ namespace ClassLibraryForAsynchronousServerTCP
             openConnection();
             string userNameToLower = userName.ToLower();
             Account user = new Account();
+
             lock (keyLock)
             {
                 command.CommandText = $"SELECT * FROM users WHERE user_name = '{userNameToLower}'";
@@ -177,8 +174,10 @@ namespace ClassLibraryForAsynchronousServerTCP
                     user.IsLogged = reader.GetBoolean(3);
                 }
 
+
                 reader.Close();
             }
+
             return user;
         }
 
@@ -190,7 +189,6 @@ namespace ClassLibraryForAsynchronousServerTCP
         public void updateLoginStatus(Account account)
         {
             openConnection();
-
             lock(keyLock)
             {
                 if (account.IsLogged)
