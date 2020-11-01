@@ -80,7 +80,7 @@ namespace ClassLibraryForAsynchronousServerTCP
 
         public TcpServer(IPAddress ip, int port)
         {
-            Database databaseObject = new Database();
+            database = new Database();
 
             running = false;
             IPAddress = ip;
@@ -116,12 +116,15 @@ namespace ClassLibraryForAsynchronousServerTCP
         protected string ReadMessage(NetworkStream stream)
         {
             string message;
+            int size;
             byte[] reciveBuffer = new byte[BufferSize];
 
-            stream.Read(reciveBuffer, 0, reciveBuffer.Length);
+            size = stream.Read(reciveBuffer, 0, reciveBuffer.Length);
             if (reciveBuffer[0] == 13 && reciveBuffer[1] == 10)
-                stream.Read(reciveBuffer, 0, reciveBuffer.Length);
-            return message = Encoding.UTF8.GetString(reciveBuffer, 0, reciveBuffer.Length);
+                size = stream.Read(reciveBuffer, 0, reciveBuffer.Length);
+            
+
+            return message = Encoding.UTF8.GetString(reciveBuffer, 0, size);
         }
 
         protected abstract void AcceptClient();

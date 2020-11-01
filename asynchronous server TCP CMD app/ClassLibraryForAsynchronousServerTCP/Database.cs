@@ -104,11 +104,11 @@ namespace ClassLibraryForAsynchronousServerTCP
             }
         }
 
-        public bool checkUserExist(string user_name)
+        public bool checkUserExist(string userName)
         {
             openConnection();
-            user_name.ToLower();
-            command.CommandText = $"SELECT id FROM users WHERE user_name = '{user_name}'";
+            string userNameToLower = userName.ToLower();
+            command.CommandText = $"SELECT id FROM users WHERE user_name = '{userNameToLower}'";
             if (command.ExecuteScalar() != null)
                 return true;
             else
@@ -145,18 +145,22 @@ namespace ClassLibraryForAsynchronousServerTCP
         /// </summary>
         /// <param name="user_name">nazwa użytkownika</param>
         /// <returns></returns>
-        public Account getUserWithDatabase(string user_name)
+        public Account getUserWithDatabase(string userName)
         {
             openConnection();
-
-            command.CommandText = "SELECT * FROM users WHERE user_name = '" + user_name + "'";
+            string userNameToLower = userName.ToLower();
+            command.CommandText = $"SELECT * FROM users WHERE user_name = '{userNameToLower}'";
             SQLiteDataReader reader = command.ExecuteReader();
 
-            Account user;
+            Account user = new Account();
             while (reader.Read())
             {
-                user = new Account(reader.GetInt16(0), reader.GetString(1), reader.GetString(2), reader.GetBoolean(3);
+                user.Id = reader.GetInt16(0);
+                user.Login = reader.GetString(1);
+                user.Pass = reader.GetString(2);
+                user.IsLogged = reader.GetBoolean(3);
             }
+
             reader.Close();
             return user;
         }
@@ -170,10 +174,16 @@ namespace ClassLibraryForAsynchronousServerTCP
         {
             openConnection();
 
-            if (account.isLogged)
-                command.CommandText = $"UPDATE users SET isLogged = '0' WHERE id='{account.id}'";
+            if (account.IsLogged)
+            {
+                command.CommandText = $"UPDATE users SET isLogged = '0' WHERE id='{account.Id}'";
+                account.IsLogged = false;
+            }
             else
-                command.CommandText = $"UPDATE users SET isLogged = '1' WHERE id='{account.id}'";
+            {
+                command.CommandText = $"UPDATE users SET isLogged = '1' WHERE id='{account.Id}'";
+                account.IsLogged = true;
+            }
             command.ExecuteNonQuery();
         }
     }
