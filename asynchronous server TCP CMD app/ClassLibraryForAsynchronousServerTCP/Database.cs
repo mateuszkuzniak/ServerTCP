@@ -103,6 +103,12 @@ namespace ClassLibraryForAsynchronousServerTCP
                 else
                     Console.WriteLine("Users table not created");
             }
+            else
+            {
+                openConnection();
+                command.CommandText = "UPDATE users SET isLogged = '0' WHERE isLogged = '1'";
+                command.ExecuteNonQuery();
+            }
         }
         #endregion
 
