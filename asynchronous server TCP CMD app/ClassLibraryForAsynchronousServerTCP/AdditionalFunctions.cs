@@ -41,7 +41,7 @@ namespace ClassLibraryForAsynchronousServerTCP
         public static bool validUserName(string userName)
         {
             int check = 0;
-            if(userName != "break")
+            if(userName != "break" || userName.Length>2)
             {
                 foreach (char x in userName)
                 {
@@ -50,7 +50,7 @@ namespace ClassLibraryForAsynchronousServerTCP
                 }
             }
 
-            if ((check > 0) || (userName == "break"))
+            if ((check > 0) || (userName == "break") || (userName.Length<=2))
                 return false;
             else
                 return true;

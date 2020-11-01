@@ -84,7 +84,7 @@ namespace ClassLibraryForAsynchronousServerTCP
         /// <summary>
         /// Username can onlu contain letters and numbers
         /// </summary>
-        public static readonly byte[] invalidUserNameREGISTRY = new ASCIIEncoding().GetBytes("Username can onlu contain letters and numbers\n\r");
+        public static readonly byte[] invalidUserNameREGISTRY = new ASCIIEncoding().GetBytes("Username can only contain letters and numbers. Word length must be longer than 2\n\r");
 
         /// <summary>
         /// The specified username is taken
