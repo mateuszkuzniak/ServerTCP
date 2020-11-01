@@ -8,20 +8,14 @@ namespace ClassLibraryForAsynchronousServerTCP
 {
     public class Account
     {
-        public int? id { get; set; }
-        public string login { get; set; }
-        public string pass { get; set; }
-        public bool isLogged { get; set; }
+        private int? id;
+        private string login;
+        private string pass;
+        private bool isLogged;
 
-        Account(int? id, string login, string pass, bool isLogged)
-        {
-            this.id = id;
-            this.login = login;
-            this.pass = pass;
-            this.isLogged = isLogged;
-        }
-
-
-
+        public int? Id { get => id; set => id = value; }
+        public string Login { get => login; set => login = value; }
+        public string Pass { get => pass; set => pass = value; }
+        public bool IsLogged { get => isLogged; set => isLogged = value; }
     }
 }
