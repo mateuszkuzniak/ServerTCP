@@ -30,7 +30,7 @@ namespace CommProtocolLibrary
                 if (!running)
                     ipAdress = value;
                 else
-                    throw new Exception("IP Address can't be changed while the server is powered on");
+                    throw new Exception("IP Address can't be changed while server is running");
             }
         }
 
@@ -43,7 +43,7 @@ namespace CommProtocolLibrary
                 if (!running)
                     port = value;
                 else
-                    throw new Exception("Port can't be changed while the server is powered on");
+                    throw new Exception("Port can't be changed while server is running");
 
                 if (!checkPort())
                 {
@@ -63,7 +63,7 @@ namespace CommProtocolLibrary
                 if (!running)
                     buffer_size = value;
                 else
-                    throw new Exception("Packet size can't be changed while the server is powered on");
+                    throw new Exception("Packet size can't be changed while server is running");
 
             }
         }
@@ -89,7 +89,7 @@ namespace CommProtocolLibrary
             if (!checkPort())
             {
                 Port = 8000;
-                throw new Exception("Invalid value of port, port was set to 8000 ");
+                throw new Exception("Invalid value of port, port set to 8000 ");
             }
         }
 

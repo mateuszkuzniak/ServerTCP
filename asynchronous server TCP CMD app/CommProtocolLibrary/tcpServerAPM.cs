@@ -14,7 +14,7 @@ namespace CommProtocolLibrary
     public class TcpServerAPM : TcpServer
     {
         #region BASIC_FUNCTION
-        public delegate void TransmissionDataDelegate(NetworkStream stream);
+        private delegate void TransmissionDataDelegate(NetworkStream stream);
         public TcpServerAPM(IPAddress ip, int port) : base(ip, port) { }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace CommProtocolLibrary
                     while (true)
                     {
                         WriteMessage(stream, Message.givePasswordLOGIN);
-                        password = ReadMessage(stream);
+                        password = ServerLibrary.HashAlgorithm.getHash( ReadMessage(stream));
                         if (password == user.Pass)
                         {
                             break;
@@ -189,7 +189,7 @@ namespace CommProtocolLibrary
                     password = ReadMessage(stream);
                     if (AdditionalFunctions.securePassword(password))
                     {
-                        user.Pass = password;
+                        user.Pass = ServerLibrary.HashAlgorithm.getHash(password);
                         break;
                     }
                     else
@@ -209,6 +209,7 @@ namespace CommProtocolLibrary
         /// <param name="stream"></param>
         protected override void BeginDataTransmission(NetworkStream stream)
         {
+
             Account user = new Account();
             while (true)
             {
