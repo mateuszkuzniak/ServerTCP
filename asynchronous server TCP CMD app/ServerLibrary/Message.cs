@@ -122,8 +122,25 @@ namespace ServerLibrary
         /// Connection lost!\nCleaning...
         /// </summary>
         public static readonly string connectionCloseCONNECTION = "Connection lost!\nCleaning...";
-       
+
         #endregion
 
+        #region FILE
+        public static readonly byte[] giveFileNameFILE = new ASCIIEncoding().GetBytes("Give file name\n\r");
+        public static readonly byte[] giveTextFILE= new ASCIIEncoding().GetBytes("Give text\n\r");
+        public static readonly byte[] fileIsExistsFILE= new ASCIIEncoding().GetBytes("File exist, please enter a different name\n\r");
+        public static readonly byte[] fileDoesNotExistsFILE= new ASCIIEncoding().GetBytes("File does not exist, please enter a correct name\n\r");
+        public static readonly byte[] fileAddedFILE= new ASCIIEncoding().GetBytes("Successfully added file!\n\r");
+        public static readonly byte[] fileAddedErrorFILE= new ASCIIEncoding().GetBytes("Filed to add file\n\r");
+        public static readonly byte[] deleteFILE= new ASCIIEncoding().GetBytes("The file has been deleted\n\r");
+        public static readonly byte[] deleteErrorFILE= new ASCIIEncoding().GetBytes("The file was not deleted\n\r");
+        public static readonly byte[] updateFILE= new ASCIIEncoding().GetBytes("File update successfully\n\r");
+        public static readonly byte[] updateErrorFILE= new ASCIIEncoding().GetBytes("The file has not been update\n\r");
+        #endregion
+
+        #region USER_PROGRAM
+        public static readonly byte[] optionsPROGRAM = new ASCIIEncoding().GetBytes("Options available\n\r1.Add file 2.Update file 3.Delete file 4.Open file 5.List file 0.EXIT\n\r");
+        public static readonly byte[] invalidOptionPROGRAM = new ASCIIEncoding().GetBytes("This option is not available!\n\r");
+        #endregion
     }
 }
