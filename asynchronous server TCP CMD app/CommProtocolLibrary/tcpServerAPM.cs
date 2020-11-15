@@ -95,7 +95,7 @@ namespace CommProtocolLibrary
             {
                 WriteMessage(stream, Message.giveLoginLOGIN);
                 userName = ReadMessage(stream).ToLower();
-                if (database.checkUserExist(userName))
+                if (_usersDatabase.checkUserExist(userName))
                 {
                     break;
                 }
@@ -111,14 +111,14 @@ namespace CommProtocolLibrary
 
             if (userName != "break")
             {
-                user = database.getUserWithDatabase(userName);
+                user = _usersDatabase.getUserWithDatabase(userName);
                 if (!user.IsLogged)
                 {
                     string password;
                     while (true)
                     {
                         WriteMessage(stream, Message.givePasswordLOGIN);
-                        password = ServerLibrary.HashAlgorithm.getHash( ReadMessage(stream));
+                        password = ServerLibrary.HashAlgorithm.getHash(ReadMessage(stream));
                         if (password == user.Pass)
                         {
                             break;
@@ -127,8 +127,9 @@ namespace CommProtocolLibrary
                             WriteMessage(stream, Message.badPasswordErrorLOGIN);
                     }
 
-                    database.updateLoginStatus(user);
+                    _usersDatabase.updateLoginStatus(user);
                     WriteMessage(stream, Message.loggedIn(user.Login));
+                    userProgram(stream, ref user);
                 }
                 else
                 {
@@ -148,7 +149,7 @@ namespace CommProtocolLibrary
         {
             if (user.IsLogged)
             {
-                database.updateLoginStatus(user);
+                _usersDatabase.updateLoginStatus(user);
             }
         }
         #endregion
@@ -163,7 +164,7 @@ namespace CommProtocolLibrary
                 userName = ReadMessage(stream).ToLower();
                 if (AdditionalFunctions.validUserName(userName))
                 {
-                    if (!database.checkUserExist(userName))
+                    if (!_usersDatabase.checkUserExist(userName))
                     {
                         break;
                     }
@@ -198,8 +199,157 @@ namespace CommProtocolLibrary
                     }
                 }
 
-                database.addUser(user.Login, user.Pass);
+                _usersDatabase.addUser(user.Login, user.Pass);
             }
+        }
+        #endregion
+
+        #region USER_PROGRAM
+
+        bool whiteSpace(string text)
+        {
+            if (text.Contains(" "))
+                return true;
+            else
+                return false;
+        }
+
+        string getFileName(NetworkStream stream, int id, string mode)
+        {
+            WriteMessage(stream, Message.giveFileNameFILE);
+            string fileName = ReadMessage(stream);
+
+            if (whiteSpace(fileName) || fileName.Length == 0)
+                fileName = "";
+
+
+            if(mode == "add")
+            {
+                while (true)
+                {
+                    if (_filesDatabase.fileExists(fileName, id) || fileName.Length == 0 || whiteSpace(fileName)|| (fileName.Contains("\r\n") && fileName.Length == 2))
+                    {
+                        WriteMessage(stream, Message.fileIsExistsFILE);
+                        WriteMessage(stream, Message.giveFileNameFILE);
+                        fileName = ReadMessage(stream);
+                    }
+                    else if (fileName.Contains("\r\n") && fileName.Length == 2)
+                        fileName = "";
+                    else
+                        break;
+                    
+                }
+            }
+            else if (mode == "del")
+            {
+                while (!_filesDatabase.fileExists(fileName, id))
+                {
+                    WriteMessage(stream, Message.fileDoesNotExistsFILE);
+                    WriteMessage(stream, Message.giveFileNameFILE);
+                    fileName = ReadMessage(stream);
+                }
+            }
+            return fileName;
+        }
+
+        #region ADD_FILE
+        void addFile(NetworkStream stream, int id)
+        {
+            string fileName = getFileName(stream, id, "add");
+
+            WriteMessage(stream, Message.giveTextFILE);
+            string text = ReadMessage(stream);
+            _filesDatabase.addFile(fileName, text, id);
+
+            if (_filesDatabase.fileExists(fileName, id))
+            {
+                WriteMessage(stream, Message.fileAddedFILE);
+            }
+            else
+                WriteMessage(stream, Message.fileAddedErrorFILE);
+        }
+        #endregion
+
+        #region LIST_FILE
+        void listFile(NetworkStream stream, int id)
+        {
+            WriteMessage(stream, new ASCIIEncoding().GetBytes(_filesDatabase.getFileList(id)));
+        }
+        #endregion
+
+        #region DELETE_FILE
+        void deleteFile(NetworkStream stream, int id)
+        {
+            string fileName = getFileName(stream, id, "del");
+
+            _filesDatabase.deleteFile(fileName, id);
+
+            if (!_filesDatabase.fileExists(fileName, id))
+                WriteMessage(stream, Message.deleteFILE);
+            else
+                WriteMessage(stream, Message.deleteErrorFILE);
+        }
+        #endregion
+
+        #region UPDATE_FILE
+        void updateFile(NetworkStream stream, int id)
+        {
+            string fileName = getFileName(stream, id, "del");
+            WriteMessage(stream, Message.giveTextFILE);
+            string text = ReadMessage(stream);
+
+            if (_filesDatabase.updateFile(fileName, id, text))
+                WriteMessage(stream, Message.updateFILE);
+            else
+                WriteMessage(stream, Message.updateErrorFILE);
+
+        }
+        #endregion
+
+        #region OPEN_FILE
+
+        void openFile(NetworkStream stream, int id)
+        {
+            string fileName = getFileName(stream, id, "del");
+            WriteMessage(stream, new ASCIIEncoding().GetBytes(_filesDatabase.openFile(fileName, id)));
+        }
+        #endregion
+        void userProgram(NetworkStream stream, ref Account user)
+        {
+            int id = (int)user.Id;
+            bool choose = true;
+            while(choose)
+            {
+                int x;
+                WriteMessage(stream, Message.optionsPROGRAM);
+                int.TryParse(ReadMessage(stream), out x);
+
+                switch(x)
+                {
+                    case 1:
+                        addFile(stream, id);
+                        break;
+                    case 2:
+                        updateFile(stream, id);
+                        break;
+                    case 3:
+                        deleteFile(stream, id);
+                        break;
+                    case 4:
+                        openFile(stream, id);
+                        break;
+                    case 5:
+                        listFile(stream, id);
+                        break;
+                    case 0:
+                        choose = false;
+                        break;
+                    default:
+                        WriteMessage(stream, Message.invalidOptionPROGRAM);
+                        break;
+                }
+            }
+
         }
         #endregion
 

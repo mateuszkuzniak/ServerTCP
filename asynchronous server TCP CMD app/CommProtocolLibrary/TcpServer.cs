@@ -19,7 +19,9 @@ namespace CommProtocolLibrary
         TcpListener tcpListener;
         TcpClient tcpClient;
         protected NetworkStream stream;
-        protected Database database;
+        protected DatabaseUser _usersDatabase;
+        protected DatabaseFile _filesDatabase;
+
 
 
         public IPAddress IPAddress
@@ -81,7 +83,8 @@ namespace CommProtocolLibrary
 
         public TcpServer(IPAddress ip, int port)
         {
-            database = new Database();
+            _usersDatabase = new DatabaseUser("users","users");
+            _filesDatabase = new DatabaseFile("users", "files");
 
             running = false;
             IPAddress = ip;
