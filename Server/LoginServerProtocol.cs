@@ -19,7 +19,7 @@ namespace ServerLibrary
             opcodes = new Dictionary<string, int>();
             user = new Account();
 
-
+            #region OPCODE
             opcodes["LOGIN"] = 0;
             opcodes["REGISTER"] = 1;
             opcodes["FILEADD"] = 2;
@@ -27,7 +27,9 @@ namespace ServerLibrary
             opcodes["FILEDELETE"] = 4;
             opcodes["FILEUPDATE"] = 5;
             opcodes["FILEOPEN"] = 6;
+            #endregion
 
+            #region LOGIN_AND_REGISTRATION
             responses[new Request(opcodes["LOGIN"], "LOGIN", null, null)] = new Response(0,
                 (userArg, pass) =>
                 {
@@ -70,18 +72,7 @@ namespace ServerLibrary
                 null,
                (args) =>
                {
-                   if (user.Status == Account.StatusCode.inv_user)
-                       return "INV_USER";
-                   else if (user.Status == Account.StatusCode.user_is_logged)
-                       return "USER IS CURRENTLY LOGGED IN ";
-                   else if (user.Status == Account.StatusCode.inv_pass)
-                       return "INV_PWD";
-                   else if (user.Status == Account.StatusCode.logged)
-                       return "LOGGED";
-                   else if (user.Status == Account.StatusCode.already_logged)
-                       return "YOU ARE ALREADY LOGGED IN";
-
-                   return "UNK";
+                   return GetLogStatus();
                });
 
             responses[new Request(opcodes["REGISTER"], "REGISTER", null, null)] = new Response(0,
@@ -110,7 +101,8 @@ namespace ServerLibrary
                             else
                                 user.Status = Account.StatusCode.inv_user;
                         }
-                        user.Status = Account.StatusCode.inv_user;
+                        else
+                            user.Status = Account.StatusCode.inv_user;
                     }
                     else
                         user.Status = Account.StatusCode.already_logged;
@@ -118,18 +110,30 @@ namespace ServerLibrary
                 null,
                (args) =>
                {
-                   if (user.Status == Account.StatusCode.inv_pass)
-                       return "INV_PWD";
-                   else if (user.Status == Account.StatusCode.user_exists)
-                       return "USER_EXISTS";
-                   else if (user.Status == Account.StatusCode.successful_registration)
-                       return "REG_OK";
-                   else if (user.Status == Account.StatusCode.already_logged)
-                       return "YOU ARE ALREADY LOGGED IN";
-                   return "UNK";
+                   return GetLogStatus();
                });
 
+            string GetLogStatus()
+            {
+                if (user.Status == Account.StatusCode.inv_user)
+                    return "INV_USER";
+                else if (user.Status == Account.StatusCode.user_is_logged)
+                    return "USER IS CURRENTLY LOGGED IN ";
+                else if (user.Status == Account.StatusCode.inv_pass)
+                    return "INV_PWD";
+                else if (user.Status == Account.StatusCode.logged)
+                    return "LOGGED";
+                else if (user.Status == Account.StatusCode.already_logged)
+                    return "YOU ARE ALREADY LOGGED IN";
+                else if (user.Status == Account.StatusCode.user_exists)
+                    return "USER_EXISTS";
+                else if (user.Status == Account.StatusCode.successful_registration)
+                    return "REG_OK";
+                return "UNK";
+            }
+            #endregion
 
+            #region FILE
             responses[new Request(opcodes["FILEADD"], "FILEADD", null, null)] = new Response(0,
                 (filename, text) =>
                 {
@@ -156,15 +160,7 @@ namespace ServerLibrary
                 null,
                 (args) =>
                 {
-                    if (user.FileStatus == Account.FileCode.file_added)
-                        return "FILE_ADD";
-                    else if (user.FileStatus == Account.FileCode.file_exists)
-                        return "FILE_EXISTS";
-                    else if (user.FileStatus == Account.FileCode.must_be_logged)
-                        return "MUST_BE_LOGGED";
-                    else if (user.FileStatus == Account.FileCode.inv_file_name)
-                        return "INV_FILE_NAME";
-                    return "UNK";
+                    return GetFileStatus();
                 });
 
 
@@ -180,10 +176,7 @@ namespace ServerLibrary
                 },
                 (args) =>
                 {
-                    if (user.FileStatus == Account.FileCode.get_all)
-                        return FileDatabase.GetFileList((int)user.Id);
-                    else
-                        return "MUST_BE_LOGGED";
+                    return GetFileStatus();
                 });
 
             responses[new Request(opcodes["FILEDELETE"], "FILEDELETE", null)] = new Response(0,
@@ -208,15 +201,7 @@ namespace ServerLibrary
                 },
                 (args) =>
                 {
-                    if (user.FileStatus == Account.FileCode.must_be_logged)
-                        return "MUST_BE_LOGGED";
-                    else if (user.FileStatus == Account.FileCode.inv_file_name)
-                        return "INV_FILE_NAME";
-                    else if (user.FileStatus == Account.FileCode.file_deleted)
-                        return "FILE_DELETED";
-                    else if (user.FileStatus == Account.FileCode.file_deleted_error)
-                        return "FILE_DELETED_ERROR";
-                    return "UNK";
+                    return GetFileStatus();
                 });
 
 
@@ -244,15 +229,7 @@ namespace ServerLibrary
                  null,
                 (args) =>
                 {
-                    if (user.FileStatus == Account.FileCode.inv_file_name)
-                        return "INV_FILE_NAME";
-                    else if (user.FileStatus == Account.FileCode.must_be_logged)
-                        return "MUST_BE_LOGGED";
-                    else if (user.FileStatus == Account.FileCode.inv_file_name)
-                        return "INV_FILE_NAME";
-                    else if (user.FileStatus == Account.FileCode.file_update)
-                        return "FILE_UPDATE";
-                    return "UNK";
+                    return GetFileStatus();
                 });
 
             responses[new Request(opcodes["FILEOPEN"], "FILEOPEN", null)] = new Response(0,
@@ -278,52 +255,75 @@ namespace ServerLibrary
                  },
                  (fileName) =>
                  {
-                     if (user.FileStatus == Account.FileCode.must_be_logged)
-                         return "MUST_BE_LOGGED";
-                     else if (user.FileStatus == Account.FileCode.inv_file_name)
-                         return "INV_FILE_NAME";
-                     else if (user.FileStatus == Account.FileCode.inv_file_name)
-                         return "INV_FILE_NAME";
-                     else if (user.FileStatus == Account.FileCode.file_open)
+                     if (user.FileStatus == Account.FileCode.file_open)
                          return FileDatabase.openFile(fileName, (int)user.Id);
-                     return "UNK";
+                     return GetFileStatus();
                  });
+            #endregion
+        }
 
+        #region GetStatus
+        string GetLogStatus()
+        {
+            if (user.Status == Account.StatusCode.inv_user)
+                return "INV_USER";
+            else if (user.Status == Account.StatusCode.user_is_logged)
+                return "USER IS CURRENTLY LOGGED IN ";
+            else if (user.Status == Account.StatusCode.inv_pass)
+                return "INV_PWD";
+            else if (user.Status == Account.StatusCode.logged)
+                return "LOGGED";
+            else if (user.Status == Account.StatusCode.already_logged)
+                return "YOU ARE ALREADY LOGGED IN";
+            else if (user.Status == Account.StatusCode.user_exists)
+                return "USER_EXISTS";
+            else if (user.Status == Account.StatusCode.successful_registration)
+                return "REG_OK";
+            return "UNK";
+        }
+
+        string GetFileStatus()
+        {
+            if (user.FileStatus == Account.FileCode.file_added)
+                return "FILE_ADD";
+            else if (user.FileStatus == Account.FileCode.file_exists)
+                return "FILE_EXISTS";
+            else if (user.FileStatus == Account.FileCode.must_be_logged)
+                return "MUST_BE_LOGGED";
+            else if (user.FileStatus == Account.FileCode.inv_file_name)
+                return "INV_FILE_NAME";
+            else if (user.FileStatus == Account.FileCode.get_all)
+                return FileDatabase.GetFileList((int)user.Id);
+            else if (user.FileStatus == Account.FileCode.file_deleted)
+                return "FILE_DELETED";
+            else if (user.FileStatus == Account.FileCode.file_deleted_error)
+                return "FILE_DELETED_ERROR";
+            else if (user.FileStatus == Account.FileCode.file_update)
+                return "FILE_UPDATE";
+            return "UNK";
 
         }
 
-
+        #endregion
 
         public override string GenerateResponse(string message)
-        {
-
+        { 
             if (message == "")
                 return "";
-
-            string[] tokens = message.Split(new char[] { ' ' });
+            string[] tokens = message.Split(new char[] { ';' });
             string opcode = tokens[0];
-
             string args1;
             string args2;
-
             if (tokens.Length > 1) args1 = tokens[1]; else args1 = null;
-
             if (tokens.Length > 2) args2 = tokens[2]; else args2 = null;
-
-
             Response response;
-
             Request request;
             if (args1 == null && args2 == null)
             {
 
                 request = new Request(opcodes[opcode], opcode);
-
-
                 response = responses[request];
                 response.Action();
-
-
             }
             else if (args1 != null && args2 == null)
             {
@@ -343,8 +343,7 @@ namespace ServerLibrary
 
         }
 
-
-        public override bool GetStatus()
+        public override bool GetUserStatus()
         {
             return user.IsLogged;
         }

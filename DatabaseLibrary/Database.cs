@@ -63,7 +63,7 @@ namespace DatabaseLibrary
 
         protected bool CreateTable(string tableName, string command)
         {
-            if (!checkForDatabaseExists())
+            if (checkForDatabaseExists())
             {
                 _myDatabaseConnection.Open();
 
