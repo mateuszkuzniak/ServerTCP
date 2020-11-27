@@ -124,7 +124,7 @@ namespace ServerLibrary
                 catch (IOException)
                 {
                     //rozłączenie użytkownika przyciskiem x
-                    if (protocol.GetUSerStatus())
+                    if (protocol.GetUserStatus())
                         _usersDatabase.UpdateLoginStatus(protocol.GetUser());
                     break;
                 }

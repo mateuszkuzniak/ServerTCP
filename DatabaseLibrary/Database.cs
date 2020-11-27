@@ -86,7 +86,7 @@ namespace DatabaseLibrary
                     }
                 }
                 else
-                    return true;
+                    return false;
             }
 
             return false;
