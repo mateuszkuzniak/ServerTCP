@@ -135,16 +135,13 @@ namespace ServerLibrary
             responses[new Request(opcodes["FILEADD"], "FILEADD", null, null)] = new Response(0,
                 (fileName, text) =>
                 {
-                    if (CheckFile(fileName))
+                    if (!CheckFile(fileName))
                     {
-                        if (!FileDatabase.FileExists(fileName, (int)user.Id))
-                        {
-                            FileDatabase.AddFile(fileName, text, (int)user.Id);
-                            user.FileStatus = Account.FileCode.file_added;
-                        }
-                        else
-                            user.FileStatus = Account.FileCode.inv_file_name;
+                        FileDatabase.AddFile(fileName, text, (int)user.Id);
+                        user.FileStatus = Account.FileCode.file_added;
                     }
+                    else
+                        user.FileStatus = Account.FileCode.file_exists;
                 },
                 null,
                 (args) =>
@@ -174,16 +171,11 @@ namespace ServerLibrary
 
                     if (CheckFile(fileName))
                     {
-                        if (FileDatabase.FileExists(fileName, (int)user.Id))
-                        {
-                            FileDatabase.DeleteFile(fileName, (int)user.Id);
-                            if (!FileDatabase.FileExists(fileName, (int)user.Id))
-                                user.FileStatus = Account.FileCode.file_deleted;
-                            else
-                                user.FileStatus = Account.FileCode.file_deleted_error;
-                        }
+                        FileDatabase.DeleteFile(fileName, (int)user.Id);
+                        if (!FileDatabase.FileExists(fileName, (int)user.Id))
+                            user.FileStatus = Account.FileCode.file_deleted;
                         else
-                            user.FileStatus = Account.FileCode.inv_file_name;
+                            user.FileStatus = Account.FileCode.file_deleted_error;
                     }
 
                 },
@@ -197,16 +189,11 @@ namespace ServerLibrary
                 (fileName, text) =>
                 {
 
-                        if (CheckFile(fileName))
-                        {
-                            if (FileDatabase.FileExists(fileName, (int)user.Id))
-                            {
-                                FileDatabase.UpdateFile(fileName, (int)user.Id, text);
-                                user.FileStatus = Account.FileCode.file_update;
-                            }
-                            else
-                                user.FileStatus = Account.FileCode.inv_file_name;
-                        }
+                    if (CheckFile(fileName))
+                    {
+                        FileDatabase.UpdateFile(fileName, (int)user.Id, text);
+                        user.FileStatus = Account.FileCode.file_update;
+                    }
 
                 },
                  null,
@@ -218,23 +205,11 @@ namespace ServerLibrary
             responses[new Request(opcodes["FILEOPEN"], "FILEOPEN", null)] = new Response(0,
                  (fileName) =>
                  {
-                     if (fileName.Length > 0)
+                     if (CheckFile(fileName))
                      {
-                         if (user.IsLogged)
-                         {
-                             if (FileDatabase.FileExists(fileName, (int)user.Id))
-                             {
-                                 user.FileStatus = Account.FileCode.file_open;
-                             }
-                             else
-                                 user.FileStatus = Account.FileCode.inv_file_name;
-                         }
-                         else
-                             user.FileStatus = Account.FileCode.must_be_logged;
-                     }
-                     else
-                         user.FileStatus = Account.FileCode.inv_file_name;
 
+                         user.FileStatus = Account.FileCode.file_open;
+                     }
                  },
                  (fileName) =>
                  {
@@ -293,7 +268,12 @@ namespace ServerLibrary
             {
                 if (user.IsLogged)
                 {
-
+                    if (FileDatabase.FileExists(fileName, (int)user.Id))
+                    {
+                        return true;
+                    }
+                    else
+                        user.FileStatus = Account.FileCode.inv_file_name;
                 }
                 else
                     user.FileStatus = Account.FileCode.must_be_logged;
@@ -311,18 +291,23 @@ namespace ServerLibrary
                 return "";
             string[] tokens = message.Split(new char[] { ';' });
             string opcode = tokens[0];
-            string args1;
-            string args2;
-            if (tokens.Length > 1) args1 = tokens[1]; else args1 = null;
-            if (tokens.Length > 2) args2 = tokens[2]; else args2 = null;
-            Response response;
-            Request request;
+            string args1 = null, args2 = null;
 
             if (opcode == "EXIT")
             {
                 throw new IOException();
             }
-            else if (args1 == null && args2 == null && opcode == "FILEALL")
+            else if(tokens.Length>1)
+            {
+                args1 = tokens[1];
+                if (tokens.Length > 2) args2 = tokens[2]; else args2 = null;
+            }
+
+            Response response;
+            Request request;
+
+
+            if (args1 == null && args2 == null && opcode == "FILEALL")
             {
 
                 request = new Request(opcodes[opcode], opcode);
@@ -344,7 +329,6 @@ namespace ServerLibrary
 
             response = responses[request];
             return response.GenerateResponse(args1);
-
         }
 
         public override bool GetUserStatus()

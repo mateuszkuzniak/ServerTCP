@@ -123,7 +123,7 @@ namespace ServerLibrary
                 }
                 catch (IOException)
                 {
-                    //rozłączenie użytkownika przyciskiem x
+                    Console.WriteLine($"Connection with the cilent {user.Login} has been terminated");
                     if (protocol.GetUserStatus())
                         _usersDatabase.UpdateLoginStatus(protocol.GetUser());
                     break;
