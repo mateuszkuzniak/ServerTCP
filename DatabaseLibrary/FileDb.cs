@@ -133,7 +133,10 @@ namespace DatabaseLibrary
                 }
             }
 
-            return fileList;
+            if (fileList.Length > 0)
+                return fileList;
+            else
+                return "File list is empty!";
         }
         public string openFile(string fileName, int id)
         {

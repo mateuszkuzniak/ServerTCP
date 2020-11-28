@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using DatabaseLibrary;
 
 namespace ServerLibrary
@@ -182,22 +180,27 @@ namespace ServerLibrary
             responses[new Request(opcodes["FILEDELETE"], "FILEDELETE", null)] = new Response(0,
                 (fileName) =>
                 {
-
-                    if (user.IsLogged)
+                    if(fileName.Length>0)
                     {
-                        if (FileDatabase.FileExists(fileName, (int)user.Id))
+                        if (user.IsLogged)
                         {
-                            FileDatabase.DeleteFile(fileName, (int)user.Id);
-                            if (!FileDatabase.FileExists(fileName, (int)user.Id))
-                                user.FileStatus = Account.FileCode.file_deleted;
+                            if (FileDatabase.FileExists(fileName, (int)user.Id))
+                            {
+                                FileDatabase.DeleteFile(fileName, (int)user.Id);
+                                if (!FileDatabase.FileExists(fileName, (int)user.Id))
+                                    user.FileStatus = Account.FileCode.file_deleted;
+                                else
+                                    user.FileStatus = Account.FileCode.file_deleted_error;
+                            }
                             else
-                                user.FileStatus = Account.FileCode.file_deleted_error;
+                                user.FileStatus = Account.FileCode.inv_file_name;
                         }
                         else
-                            user.FileStatus = Account.FileCode.inv_file_name;
+                            user.FileStatus = Account.FileCode.must_be_logged;
                     }
                     else
-                        user.FileStatus = Account.FileCode.must_be_logged;
+                        user.FileStatus = Account.FileCode.inv_file_name;
+
                 },
                 (args) =>
                 {
@@ -318,20 +321,25 @@ namespace ServerLibrary
             if (tokens.Length > 2) args2 = tokens[2]; else args2 = null;
             Response response;
             Request request;
-            if (args1 == null && args2 == null)
+
+            if(opcode == "EXIT")
+            {
+                throw new IOException();
+            }
+            else if (args1 == null && args2 == null && opcode == "FILEALL")
             {
 
                 request = new Request(opcodes[opcode], opcode);
                 response = responses[request];
                 response.Action();
             }
-            else if (args1 != null && args2 == null)
+            else if (args1 != null && args2 == null && (opcode == "FILEDELETE" || opcode == "FILEOPEN" || opcode == "FILEUPDATE"))
             {
                 request = new Request(opcodes[opcode], opcode, args1);
                 response = responses[request];
                 response.Action1(args1);
             }
-            else
+            else 
             {
                 request = new Request(opcodes[opcode], opcode, args1, args2);
                 response = responses[request];
