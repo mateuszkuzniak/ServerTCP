@@ -8,7 +8,7 @@ namespace ServerLibrary
     public class LoginServerProtocol : CommunicationProtocol
     {
         Dictionary<Request, Response> responses;
-        Dictionary<string, int> opcodes;
+        readonly Dictionary<string, int> opcodes;
         Account user;
 
         public LoginServerProtocol() : base()
@@ -29,43 +29,30 @@ namespace ServerLibrary
 
             #region LOGIN_AND_REGISTRATION
             responses[new Request(opcodes["LOGIN"], "LOGIN", null, null)] = new Response(0,
-                (userArg, pass) =>
+                (userName, pass) =>
                 {
-                    if (!user.IsLogged)
+                    if (CheckUser(userName))
                     {
-                        if (userArg.Length > 0)
+                        userName = userName.ToLower().Trim(new char[] { '\r', '\n', '\0' });
+                        if (!UsersDatabase.UserIsLogged(userName))
                         {
-                            userArg = userArg.ToLower().Trim(new char[] { '\r', '\n', '\0' });
-                            if (UsersDatabase.CheckUserExist(userArg))
+                            if (UsersDatabase.CheckPassword(userName, pass))
                             {
-                                if (!UsersDatabase.UserIsLogged(userArg))
-                                {
-                                    if (UsersDatabase.CheckPassword(userArg, pass))
-                                    {
-                                        user = UsersDatabase.GetUserWithDatabase(userArg);
-                                        UsersDatabase.UpdateLoginStatus(user);
-                                        user.Status = Account.StatusCode.logged;
-                                    }
-                                    else
-                                    {
-                                        user.Status = Account.StatusCode.inv_pass;
-                                    }
-
-                                }
-                                else
-                                {
-                                    user.Status = Account.StatusCode.user_is_logged;
-                                }
+                                user = UsersDatabase.GetUserWithDatabase(userName);
+                                UsersDatabase.UpdateLoginStatus(user);
+                                user.Status = Account.StatusCode.logged;
                             }
                             else
-                                user.Status = Account.StatusCode.inv_user;
+                            {
+                                user.Status = Account.StatusCode.inv_pass;
+                            }
 
                         }
                         else
-                            user.Status = Account.StatusCode.inv_user;
+                        {
+                            user.Status = Account.StatusCode.user_is_logged;
+                        }
                     }
-                    else
-                        user.Status = Account.StatusCode.already_logged;
                 },
                 null,
                (args) =>
@@ -76,34 +63,16 @@ namespace ServerLibrary
             responses[new Request(opcodes["REGISTER"], "REGISTER", null, null)] = new Response(0,
                 (userName, pass) =>
                 {
-                    if (!user.IsLogged)
+                    if (!CheckUser(userName) && user.Status != Account.StatusCode.already_logged)
                     {
-                        if (userName.Length > 0)
+                        if (pass.Length == 64)
                         {
-                            if (pass.Length > 0)
-                            {
-                                if (!UsersDatabase.CheckUserExist(userName))
-                                {
-                                    //if (pass.Length == 64)
-                                    //{
-                                    //_usersDatabase.AddUser(userName, pass);
-                                    //}
-                                    //else
-                                    //    user.Status = Account.StatusCode.inv_pass;
-                                    UsersDatabase.AddUser(userName, pass);
-                                    user.Status = Account.StatusCode.successful_registration;
-                                }
-                                else
-                                    user.Status = Account.StatusCode.user_exists;
-                            }
-                            else
-                                user.Status = Account.StatusCode.inv_user;
+                            UsersDatabase.AddUser(userName, pass);
+                            user.Status = Account.StatusCode.successful_registration;
                         }
                         else
-                            user.Status = Account.StatusCode.inv_user;
+                            user.Status = Account.StatusCode.inv_pass;
                     }
-                    else
-                        user.Status = Account.StatusCode.already_logged;
                 },
                 null,
                (args) =>
@@ -220,7 +189,7 @@ namespace ServerLibrary
             #endregion
         }
 
-        #region GetStatus
+        #region GET_STATUS_AND_CHECK
         string GetLogStatus()
         {
             if (user.Status == Account.StatusCode.inv_user)
@@ -282,7 +251,46 @@ namespace ServerLibrary
                 user.FileStatus = Account.FileCode.inv_file_name;
             return false;
         }
+        bool CheckUser(string userName)
+        {
 
+            if (!user.IsLogged)
+            {
+                if (userName.Length > 0 && UsersDatabase.CheckUserExist(userName))
+                {
+                    return true;
+                }
+                else
+                    user.Status = Account.StatusCode.inv_user;
+            }
+            else
+                user.Status = Account.StatusCode.already_logged;
+            return false;
+
+        }
+
+        #endregion
+
+        #region GET_SET
+        public override bool GetUserStatus()
+        {
+            return user.IsLogged;
+        }
+
+        public override Account GetUser()
+        {
+            return user;
+        }
+
+        public override void SetDatabaseFile(FileDb database)
+        {
+            FileDatabase = database;
+        }
+
+        public override void SetDatabaseUser(User database)
+        {
+            UsersDatabase = database;
+        }
         #endregion
 
         public override string GenerateResponse(string message)
@@ -297,7 +305,7 @@ namespace ServerLibrary
             {
                 throw new IOException();
             }
-            else if(tokens.Length>1)
+            else if (tokens.Length > 1)
             {
                 args1 = tokens[1];
                 if (tokens.Length > 2) args2 = tokens[2]; else args2 = null;
@@ -320,35 +328,20 @@ namespace ServerLibrary
                 response = responses[request];
                 response.Action1(args1);
             }
-            else
+            else if (args1 != null && args2 != null && (opcode == "FILEADD" || opcode == "LOGIN" || opcode == "REGISTER"))
             {
+
                 request = new Request(opcodes[opcode], opcode, args1, args2);
                 response = responses[request];
                 response.Action2(args1, args2);
             }
+            else
+            {
+                return "INV_COMM";
+            }
 
             response = responses[request];
             return response.GenerateResponse(args1);
-        }
-
-        public override bool GetUserStatus()
-        {
-            return user.IsLogged;
-        }
-
-        public override Account GetUser()
-        {
-            return user;
-        }
-
-        public override void SetDatabaseFile(FileDb database)
-        {
-            FileDatabase = database;
-        }
-
-        public override void SetDatabaseUser(User database)
-        {
-            UsersDatabase = database;
         }
     }
 }

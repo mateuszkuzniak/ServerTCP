@@ -128,15 +128,6 @@ namespace ServerLibrary
                         _usersDatabase.UpdateLoginStatus(protocol.GetUser());
                     break;
                 }
-                catch(KeyNotFoundException)
-                {
-                    //Klucza nie było w słowniku
-                }
-                catch(NullReferenceException)
-                {
-                    //Użytkownik bez hasla
-                }
-
 
             }
 

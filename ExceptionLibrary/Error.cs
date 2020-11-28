@@ -9,7 +9,7 @@ using System.Threading.Tasks;
         public static class Error
         {
             #region DATABASE
-            public static string emptyName = "Database name cannot be empty";
+           // public static string emptyName = "Database name cannot be empty";
         #endregion
 
         

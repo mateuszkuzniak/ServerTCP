@@ -30,7 +30,7 @@ namespace DatabaseLibrary
                 }
             }
             else
-                throw new Exception(Error.emptyName);
+                throw new Exception("Database name cannot be empty");
         }
 
         #region CONNECTION
