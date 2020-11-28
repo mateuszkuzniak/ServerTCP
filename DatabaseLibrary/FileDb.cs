@@ -125,7 +125,7 @@ namespace DatabaseLibrary
                     while (reader.Read())
                     {
                         fileList += reader.GetString(2);
-                        fileList += "\n\r";
+                        fileList += ";";
                     }
 
 
@@ -152,8 +152,6 @@ namespace DatabaseLibrary
                     SQLiteDataReader reader = _command.ExecuteReader();
                     while (reader.Read())
                     {
-                        fileList += reader.GetString(2);
-                        fileList += ": ";
                         fileList += reader.GetString(3);
                         fileList += "\n\r";
                     }
