@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -9,7 +9,7 @@ namespace ServerLibrary
     {
         public ServerTAP(IPAddress IP, int port) : base(IP, port) { }
         protected override void AcceptClient()
-        {
+        {   
             while (true)
             {
 
@@ -21,11 +21,16 @@ namespace ServerLibrary
         }
 
         public override void Start()
-        {
+        { 
+            Task.Run(() => ListeningTask());
+            ServerConsole();
+        }
 
+        protected override void ListeningTask()
+        {
             running = true;
             StartListening();
-            AcceptClient();
+             AcceptClient();
         }
     }
 }

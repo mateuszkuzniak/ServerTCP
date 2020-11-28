@@ -5,6 +5,8 @@ using System.Net.Sockets;
 using System.Text;
 using DatabaseLibrary;
 using MessageLibrary;
+using Exceptions;
+using System.Threading.Tasks;
 
 namespace ServerLibrary
 {
@@ -66,6 +68,7 @@ namespace ServerLibrary
                 Port = 8000;
                 throw new Exception(ServerMessage.incorrectPort);
             }
+           
         }
         #endregion
 
@@ -130,10 +133,18 @@ namespace ServerLibrary
                 }
 
             }
+        }
 
-
+        public void ServerConsole()
+        {
+           while(true)
+            {
+                if (Console.ReadLine().ToLower() == "shutdown")
+                    throw new CloseServerException();
+            }
         }
         public abstract void Start();
+        protected abstract void ListeningTask();
         #endregion
 
     }

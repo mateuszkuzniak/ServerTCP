@@ -17,7 +17,6 @@ namespace ServerLibrary
 
         }
         public abstract string GenerateResponse(string message);
-        //public abstract void GetAccount();
         public abstract bool GetUserStatus();
         public abstract void SetDatabaseUser(User database);
         public abstract void SetDatabaseFile(FileDb database);

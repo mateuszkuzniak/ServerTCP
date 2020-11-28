@@ -71,6 +71,10 @@
       <Project>{4171b525-7beb-4e54-b745-5fa6a810f530}</Project>
       <Name>DatabaseLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Exceptions\Exceptions.csproj">
+      <Project>{13a48993-b754-4b04-9095-a78bf595f501}</Project>
+      <Name>Exceptions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MessageLibrary\MessageLibrary.csproj">
       <Project>{94c656d2-88a8-48e4-8c4a-dc6b74d38b41}</Project>
       <Name>MessageLibrary</Name>
