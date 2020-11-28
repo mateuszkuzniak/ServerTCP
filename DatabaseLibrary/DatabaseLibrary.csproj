@@ -70,12 +70,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ExceptionLibrary\ExceptionLibrary.csproj">
-      <Project>{d7b8928b-fdf0-4047-aae2-4785fcb410ec}</Project>
-      <Name>ExceptionLibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
