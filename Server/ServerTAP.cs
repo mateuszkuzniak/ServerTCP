@@ -1,5 +1,4 @@
-﻿
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
@@ -12,7 +11,6 @@ namespace ServerLibrary
         {   
             while (true)
             {
-
                 TcpClient client = TcpListener.AcceptTcpClient();
                 NetworkStream stream = client.GetStream();
                 byte[] buffer = new byte[1024];
