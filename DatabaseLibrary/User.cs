@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SQLite;
+using MessageLibrary;
 
 namespace DatabaseLibrary
 {
@@ -85,7 +86,7 @@ namespace DatabaseLibrary
                         _command.ExecuteNonQuery();
                     }
 
-                    Console.WriteLine($"{_tableName} added successfully");
+                    Console.WriteLine(DbMessage.CreateUser(name));
                 }
                 catch (Exception e)
                 {

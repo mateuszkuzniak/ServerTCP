@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SQLite;
+using MessageLibrary;
 
 namespace DatabaseLibrary
 {
@@ -136,7 +137,7 @@ namespace DatabaseLibrary
             if (fileList.Length > 0)
                 return fileList;
             else
-                return "File list is empty!";
+                return DbMessage.invFileListERROR;
         }
         public string openFile(string fileName, int id)
         {
@@ -154,13 +155,10 @@ namespace DatabaseLibrary
                     {
                         fileList += reader.GetString(3);
                         fileList += "\n\r";
-                    }
-
-                     
+                    }                
                     reader.Close();
                 }
             }
-
             return fileList;
         }
 

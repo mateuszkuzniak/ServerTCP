@@ -12,8 +12,15 @@ namespace TCPServer
     {
         static void Main(string[] args)
         {
-            Server<LoginServerProtocol> server = new ServerTAP<LoginServerProtocol>(IPAddress.Parse("169.254.162.154"), 48569);
-            server.Start();
+            try
+            {
+                Server<LoginServerProtocol> server = new ServerTAP<LoginServerProtocol>(IPAddress.Parse("169.254.162.154"), 48569);
+                server.Start();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }

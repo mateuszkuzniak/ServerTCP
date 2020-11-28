@@ -1,8 +1,6 @@
 ﻿using System;
-
 using System.Data.SQLite;
-
-
+using MessageLibrary;
 
 namespace DatabaseLibrary
 {
@@ -25,11 +23,11 @@ namespace DatabaseLibrary
                 if (!checkForDatabaseExists())
                 {
                     SQLiteConnection.CreateFile(databaseName);
-                    Console.WriteLine($"{databaseName} was created");
+                    Console.WriteLine(DbMessage.CreateTable(databaseName));
                 }
             }
             else
-                throw new Exception("Database name cannot be empty");
+                throw new Exception(DbMessage.invDbNameERROR);
         }
 
         #region CONNECTION
@@ -66,26 +64,30 @@ namespace DatabaseLibrary
             {
                 _myDatabaseConnection.Open();
 
-                if (!checkForTableExist(tableName))
+                if (tableName.Length > 0)
                 {
-                    try
+                    if (!checkForTableExist(tableName))
                     {
-                        _command.CommandText = command;
-                        _command.ExecuteNonQuery();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine($"Error: {e.Message}");
-                    }
+                        try
+                        {
+                            _command.CommandText = command;
+                            _command.ExecuteNonQuery();
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine($"Error: {e.Message}");
+                        }
 
-                    if (checkForTableExist(tableName))
-                    {
-                        Console.WriteLine($"{tableName} table has been created");
-                        return true;
+                        if (checkForTableExist(tableName))
+                        {
+                            Console.WriteLine();
+                            return true;
+                        }
                     }
+                    else
+                        return false;
                 }
-                else
-                    return false;
+                else throw new Exception(DbMessage.invTableNameERROR);
             }
 
             return false;
@@ -96,25 +98,30 @@ namespace DatabaseLibrary
             OpenConnection();
 
 
-            try
-            {
-                _command.CommandText =
-                $"select case when exists((select * from information_schema.tables where table_name = '{tableName}')) then 1 else 0 end";
-                exists = (int)_command.ExecuteScalar() == 1;
-            }
-            catch
+            if (tableName.Length > 0)
             {
                 try
                 {
-                    exists = true;
-                    SQLiteCommand cmdOther = new SQLiteCommand($"SELECT 1 FROM {tableName} WHERE 1=0", _myDatabaseConnection);
-                    cmdOther.ExecuteNonQuery();
+                    _command.CommandText =
+                    $"select case when exists((select * from information_schema.tables where table_name = '{tableName}')) then 1 else 0 end";
+                    exists = (int)_command.ExecuteScalar() == 1;
                 }
                 catch
                 {
-                    exists = false;
+                    try
+                    {
+                        exists = true;
+                        SQLiteCommand cmdOther = new SQLiteCommand($"SELECT 1 FROM {tableName} WHERE 1=0", _myDatabaseConnection);
+                        cmdOther.ExecuteNonQuery();
+                    }
+                    catch
+                    {
+                        exists = false;
+                    }
                 }
             }
+            else
+                throw new Exception(DbMessage.invTableNameERROR);
 
             return exists;
         }
