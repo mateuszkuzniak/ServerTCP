@@ -18,7 +18,7 @@ namespace DatabaseLibrary
 
             if (!CreateTable(tableName, command))
             {
-                
+
                 OpenConnection();
                 _command.CommandText = $"UPDATE {tableName} SET isLogged = '0' WHERE isLogged = '1'";
                 _command.ExecuteNonQuery();
@@ -46,7 +46,7 @@ namespace DatabaseLibrary
             OpenConnection();
             string userNameToLower = userName.ToLower();
 
-            lock(keyLock)
+            lock (keyLock)
             {
                 _command.CommandText = $"SELECT id FROM {_tableName} WHERE user_name = '{userNameToLower}' AND isLogged = '1'";
                 if (_command.ExecuteScalar() != null)
@@ -70,7 +70,7 @@ namespace DatabaseLibrary
                     return false;
             }
         }
-        
+
         public void AddUser(string name, string pass)
         {
             name = name.ToLower().Trim(new char[] { '\r', '\n', '\0' });
@@ -119,6 +119,34 @@ namespace DatabaseLibrary
             }
 
             return user;
+        }
+
+        public string GetAllLogedUser()
+        {
+            OpenConnection();
+            string users = "";
+
+
+            lock (keyLock)
+            {
+                _command.CommandText = $"SELECT * FROM {_tableName} WHERE isLogged = '1'";
+                SQLiteDataReader reader = _command.ExecuteReader();
+
+                while (reader.Read())
+                {
+
+                    users += reader.GetString(1);
+                    users += ";";
+                }
+
+
+                reader.Close();
+            }
+
+            if (users.Length > 0)
+                return users;
+            else
+                return DbMessage.userListEmpty;
         }
 
         public void UpdateLoginStatus(Account account)

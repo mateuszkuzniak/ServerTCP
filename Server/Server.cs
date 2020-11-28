@@ -138,8 +138,11 @@ namespace ServerLibrary
         {
            while(true)
             {
-                if (Console.ReadLine().ToLower() == "shutdown")
+                string cmd = Console.ReadLine().ToLower();
+                if (cmd == "shutdown")
                     throw new CloseServerException();
+                else if (cmd == "show users")
+                    Console.WriteLine(_usersDatabase.GetAllLogedUser());
             }
         }
         public abstract void Start();
