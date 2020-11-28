@@ -71,6 +71,10 @@
       <Project>{4171b525-7beb-4e54-b745-5fa6a810f530}</Project>
       <Name>DatabaseLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MessageLibrary\MessageLibrary.csproj">
+      <Project>{94c656d2-88a8-48e4-8c4a-dc6b74d38b41}</Project>
+      <Name>MessageLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\TCPServer\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\TCPServer\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />

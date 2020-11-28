@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using DatabaseLibrary;
+using MessageLibrary;
 
 namespace ServerLibrary
 {
@@ -64,7 +64,7 @@ namespace ServerLibrary
             if (!checkPort())
             {
                 Port = 8000;
-                throw new Exception("Incorrect port value, set the port to 8000");
+                throw new Exception(ServerMessage.incorrectPort);
             }
         }
         #endregion
@@ -123,7 +123,7 @@ namespace ServerLibrary
                 }
                 catch (IOException)
                 {
-                    Console.WriteLine($"Connection with the cilent {user.Login} has been terminated");
+                    Console.WriteLine(ServerMessage.CloseConnection(user.Login));
                     if (protocol.GetUserStatus())
                         _usersDatabase.UpdateLoginStatus(protocol.GetUser());
                     break;

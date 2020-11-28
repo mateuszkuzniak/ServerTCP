@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using DatabaseLibrary;
+using MessageLibrary;
 
 namespace ServerLibrary
 {
@@ -79,25 +80,6 @@ namespace ServerLibrary
                {
                    return GetLogStatus();
                });
-
-            string GetLogStatus()
-            {
-                if (user.Status == Account.StatusCode.inv_user)
-                    return "INV_USER";
-                else if (user.Status == Account.StatusCode.user_is_logged)
-                    return "USER IS CURRENTLY LOGGED IN ";
-                else if (user.Status == Account.StatusCode.inv_pass)
-                    return "INV_PWD";
-                else if (user.Status == Account.StatusCode.logged)
-                    return "LOGGED";
-                else if (user.Status == Account.StatusCode.already_logged)
-                    return "YOU ARE ALREADY LOGGED IN";
-                else if (user.Status == Account.StatusCode.user_exists)
-                    return "USER_EXISTS";
-                else if (user.Status == Account.StatusCode.successful_registration)
-                    return "REG_OK";
-                return "UNK";
-            }
             #endregion
 
             #region FILE
@@ -190,44 +172,45 @@ namespace ServerLibrary
         }
 
         #region GET_STATUS_AND_CHECK
+
         string GetLogStatus()
         {
             if (user.Status == Account.StatusCode.inv_user)
-                return "INV_USER";
+                return ServerMessage.invUser;
             else if (user.Status == Account.StatusCode.user_is_logged)
-                return "USER IS CURRENTLY LOGGED IN ";
+                return ServerMessage.currentlyLogged;
             else if (user.Status == Account.StatusCode.inv_pass)
-                return "INV_PWD";
+                return ServerMessage.invPwd;
             else if (user.Status == Account.StatusCode.logged)
-                return "LOGGED";
+                return ServerMessage.logged;
             else if (user.Status == Account.StatusCode.already_logged)
-                return "YOU ARE ALREADY LOGGED IN";
+                return ServerMessage.alreadyLogged;
             else if (user.Status == Account.StatusCode.user_exists)
-                return "USER_EXISTS";
+                return ServerMessage.userExists;
             else if (user.Status == Account.StatusCode.successful_registration)
-                return "REG_OK";
-            return "UNK";
+                return ServerMessage.regOk;
+            return ServerMessage.unk;
         }
 
         string GetFileStatus()
         {
             if (user.FileStatus == Account.FileCode.file_added)
-                return "FILE_ADD";
+                return ServerMessage.fileAdd;
             else if (user.FileStatus == Account.FileCode.file_exists)
-                return "FILE_EXISTS";
+                return ServerMessage.fileExists;
             else if (user.FileStatus == Account.FileCode.must_be_logged)
-                return "MUST_BE_LOGGED";
+                return ServerMessage.mustBelogged;
             else if (user.FileStatus == Account.FileCode.inv_file_name)
-                return "INV_FILE_NAME";
+                return ServerMessage.invFileName;
             else if (user.FileStatus == Account.FileCode.get_all)
                 return FileDatabase.GetFileList((int)user.Id);
             else if (user.FileStatus == Account.FileCode.file_deleted)
-                return "FILE_DELETED";
+                return ServerMessage.fileDeleted;
             else if (user.FileStatus == Account.FileCode.file_deleted_error)
-                return "FILE_DELETED_ERROR";
+                return ServerMessage.fileDeletedError;
             else if (user.FileStatus == Account.FileCode.file_update)
-                return "FILE_UPDATE";
-            return "UNK";
+                return ServerMessage.fileUpdate;
+            return ServerMessage.unk;
 
         }
 
@@ -337,7 +320,7 @@ namespace ServerLibrary
             }
             else
             {
-                return "INV_COMM";
+                return ServerMessage.invComm;
             }
 
             response = responses[request];
