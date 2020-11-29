@@ -25,7 +25,11 @@ namespace DatabaseLibrary
                 _command.ExecuteNonQuery();
             }
             else
+            {
                 CreateTable(tableName, command);
+            }
+
+            Console.WriteLine(DbMessage.CreateTable(tableName));
             _tableName = tableName;
         }
 
