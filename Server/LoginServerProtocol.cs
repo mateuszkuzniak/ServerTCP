@@ -73,6 +73,12 @@ namespace ServerLibrary
                         else
                             user.Status = Account.StatusCode.inv_pass;
                     }
+                   
+                    if(userName.Length > 0)
+                        user.Status = Account.StatusCode.user_exists;
+                    else
+                        user.Status = Account.StatusCode.inv_user;
+
                 },
                 null,
                (args) =>
