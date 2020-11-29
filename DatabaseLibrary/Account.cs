@@ -24,6 +24,7 @@ namespace DatabaseLibrary
         public enum FileCode
         {
             file_exists,
+            file_does_not_exist,
             must_be_logged,
             inv_file_name,
             file_added,

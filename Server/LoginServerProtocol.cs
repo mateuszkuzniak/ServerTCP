@@ -94,13 +94,12 @@ namespace ServerLibrary
             responses[new Request(opcodes["FILEADD"], "FILEADD", null, null)] = new Response(0,
                 (fileName, text) =>
                 {
-                    if (!CheckFile(fileName))
+                    if (!CheckFile(fileName) && user.FileStatus== Account.FileCode.file_does_not_exist)
                     {
                         FileDatabase.AddFile(fileName, text, (int)user.Id);
                         user.FileStatus = Account.FileCode.file_added;
                     }
-                    else
-                        user.FileStatus = Account.FileCode.file_exists;
+
                 },
                 null,
                 (args) =>
@@ -230,11 +229,11 @@ namespace ServerLibrary
                 {
                     if (FileDatabase.FileExists(fileName, (int)user.Id))
                     {
-
+                        user.FileStatus = Account.FileCode.file_exists;
                         return true;
                     }
                     else
-                        user.FileStatus = Account.FileCode.inv_file_name;
+                        user.FileStatus = Account.FileCode.file_does_not_exist;
                 }
                 else
                     user.FileStatus = Account.FileCode.must_be_logged;
@@ -317,13 +316,13 @@ namespace ServerLibrary
                 response = responses[request];
                 response.Action();
             }
-            else if (args1 != null && args2 == null && (opcode == "FILEDELETE" || opcode == "FILEOPEN" || opcode == "FILEUPDATE"))
+            else if (args1 != null && args2 == null && (opcode == "FILEDELETE" || opcode == "FILEOPEN" ))
             {
                 request = new Request(opcodes[opcode], opcode, args1);
                 response = responses[request];
                 response.Action1(args1);
             }
-            else if (args1 != null && args2 != null && (opcode == "FILEADD" || opcode == "LOGIN" || opcode == "REGISTER"))
+            else if (args1 != null && args2 != null && (opcode == "FILEADD" || opcode == "LOGIN" || opcode == "REGISTER" || opcode == "FILEUPDATE"))
             {
 
                 request = new Request(opcodes[opcode], opcode, args1, args2);
