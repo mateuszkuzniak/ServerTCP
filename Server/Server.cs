@@ -67,7 +67,7 @@ namespace ServerLibrary
                 Port = 8000;
                 throw new Exception(ServerMessage.incorrectPort);
             }
-           
+
         }
         #endregion
 
@@ -136,7 +136,7 @@ namespace ServerLibrary
 
         public void ServerConsole()
         {
-           while(true)
+            while (true)
             {
                 string cmd = Console.ReadLine().ToLower();
                 if (cmd == "shutdown")
@@ -145,6 +145,12 @@ namespace ServerLibrary
                     Console.WriteLine(_usersDatabase.GetAllLogedUser());
             }
         }
+
+        public string GetAllLoggedUsers()
+        {
+            return _usersDatabase.GetAllLogedUser();
+        }
+
         public abstract void Start();
         protected abstract void ListeningTask();
         #endregion

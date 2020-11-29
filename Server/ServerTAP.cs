@@ -28,7 +28,7 @@ namespace ServerLibrary
         {
             running = true;
             StartListening();
-             AcceptClient();
+            AcceptClient();
         }
     }
 }
