@@ -63,7 +63,7 @@ namespace ServerLibrary
             responses[new Request(opcodes["REGISTER"], "REGISTER", null, null)] = new Response(0,
                 (userName, pass) =>
                 {
-                    if (!CheckUser(userName) && user.Status != Account.StatusCode.already_logged)
+                    if (!CheckUser(userName) && user.Status != Account.StatusCode.already_logged && user.Status != Account.StatusCode.inv_user)
                     {
                         if (pass.Length == 64)
                         {
@@ -221,6 +221,7 @@ namespace ServerLibrary
                 {
                     if (FileDatabase.FileExists(fileName, (int)user.Id))
                     {
+
                         return true;
                     }
                     else
