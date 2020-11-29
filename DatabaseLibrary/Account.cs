@@ -17,7 +17,8 @@ namespace DatabaseLibrary
             user_exists,
             already_logged,
             successful_registration,
-            can_add
+            can_add,
+            user_does_not_exist
         }
 
         public enum FileCode

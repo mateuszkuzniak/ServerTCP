@@ -63,7 +63,7 @@ namespace ServerLibrary
             responses[new Request(opcodes["REGISTER"], "REGISTER", null, null)] = new Response(0,
                 (userName, pass) =>
                 {
-                    if (!CheckUser(userName) && user.Status != Account.StatusCode.already_logged && user.Status != Account.StatusCode.inv_user)
+                    if (!CheckUser(userName) && user.Status == Account.StatusCode.user_does_not_exist)
                     {
                         if (pass.Length == 64)
                         {
@@ -73,11 +73,14 @@ namespace ServerLibrary
                         else
                             user.Status = Account.StatusCode.inv_pass;
                     }
-                   
-                    if(userName.Length > 0)
-                        user.Status = Account.StatusCode.user_exists;
-                    else
-                        user.Status = Account.StatusCode.inv_user;
+
+                   if (user.Status != Account.StatusCode.successful_registration)
+                    {
+                        if (userName.Length > 0)
+                            user.Status = Account.StatusCode.user_exists;
+                        else
+                            user.Status = Account.StatusCode.inv_user;
+                    }
 
                 },
                 null,
@@ -245,9 +248,12 @@ namespace ServerLibrary
 
             if (!user.IsLogged)
             {
-                if (userName.Length > 0 && UsersDatabase.CheckUserExist(userName))
+                if (userName.Length > 0)
                 {
-                    return true;
+                    if (UsersDatabase.CheckUserExist(userName))
+                        return true;
+                    else
+                        user.Status = Account.StatusCode.user_does_not_exist;
                 }
                 else
                     user.Status = Account.StatusCode.inv_user;
