@@ -2,6 +2,7 @@
 using System.Net;
 using ServerLibrary;
 using Exceptions;
+using System.Net.Sockets;
 
 namespace TCPServer
 {
@@ -11,18 +12,18 @@ namespace TCPServer
         {
             try
             {
-                Server<LoginServerProtocol> server = new ServerTAP<LoginServerProtocol>(IPAddress.Parse("169.254.162.154"), 48569);
+                Server<LoginServerProtocol> server = new ServerTAP<LoginServerProtocol>(IPAddress.Parse("192.168.48.56"), 1024);
                 server.Start();
             }
             catch(CloseServerException)
             {
                 Console.WriteLine("The server has shut down");
             }
-            //catch(Exception e)
-            //{
-            //    Console.WriteLine(e.Message);
-            //}
-            //Console.ReadLine();
+            catch (InvalidOperationException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            Console.ReadLine();
         }
     }
 }

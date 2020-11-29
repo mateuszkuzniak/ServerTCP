@@ -18,6 +18,7 @@ namespace ServerLibrary
         protected bool running;
         TcpListener tcpListener;
         protected delegate void TransmissionDataDelegate(NetworkStream stream);
+        bool validIp = true;
 
         #endregion
         public User _usersDatabase;
@@ -35,7 +36,7 @@ namespace ServerLibrary
                 if (!checkPort())
                 {
                     port = temp;
-                    throw new Exception("wrong port value");
+                    throw new ArgumentOutOfRangeException("Port out of range!\nPort range: 1024-49151.\nPort set to 8000");
                 }
             }
         }
@@ -60,12 +61,16 @@ namespace ServerLibrary
             _filesDatabase = new FileDb("users", "files");
             running = false;
             IPAddress = IP;
-            Port = port;
-            if (!checkPort())
+            try
+            {
+                Port = port;
+            }
+            catch (ArgumentOutOfRangeException ex)
             {
                 Port = 8000;
-                throw new Exception(ServerMessage.incorrectPort);
+                Console.WriteLine(ex.Message);
             }
+
 
         }
         #endregion
@@ -79,9 +84,17 @@ namespace ServerLibrary
 
         protected void StartListening()
         {
-            TcpListener = new TcpListener(IPAddress, Port);
-            TcpListener.Start();
+            try
+            {
+                TcpListener = new TcpListener(IPAddress, Port);
+                TcpListener.Start();
         }
+            catch (SocketException ex)
+            {
+                Console.WriteLine(ex.Message);
+                validIp = false;
+            }
+}
 
         protected abstract void AcceptClient();
 
@@ -138,7 +151,7 @@ namespace ServerLibrary
             while (true)
             {
                 string cmd = Console.ReadLine().ToLower();
-                if (cmd == "shutdown")
+                if (cmd == "shutdown" || !validIp)
                     throw new CloseServerException();
                 else if (cmd == "show users")
                     Console.WriteLine(_usersDatabase.GetAllLogedUser());
@@ -156,4 +169,3 @@ namespace ServerLibrary
 
     }
 }
-
