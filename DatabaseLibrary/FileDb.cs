@@ -4,7 +4,7 @@ using MessageLibrary;
 
 namespace DatabaseLibrary
 {
-    public class FileDb : Database
+    public class FileDb : DatabaseAbstract
     {
         string _tableName;
 

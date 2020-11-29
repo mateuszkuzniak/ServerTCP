@@ -20,7 +20,6 @@ namespace ServerLibrary
         protected delegate void TransmissionDataDelegate(NetworkStream stream);
 
         #endregion
-
         public User _usersDatabase;
         public FileDb _filesDatabase;
 

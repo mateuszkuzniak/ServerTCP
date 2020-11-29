@@ -18,11 +18,11 @@ namespace TCPServer
             {
                 Console.WriteLine("The server has shut down");
             }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            Console.ReadLine();
+            //catch(Exception e)
+            //{
+            //    Console.WriteLine(e.Message);
+            //}
+            //Console.ReadLine();
         }
     }
 }

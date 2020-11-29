@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Data.SQLite;
+using System.IO;
 using MessageLibrary;
 
 namespace DatabaseLibrary
 {
-    public class Database
+    public abstract class DatabaseAbstract
     {
         protected SQLiteCommand _command;
         protected SQLiteConnection _myDatabaseConnection;
@@ -12,7 +13,7 @@ namespace DatabaseLibrary
         protected readonly object keyLock = new object();
 
 
-        protected Database(string databaseName)
+        protected DatabaseAbstract(string databaseName)
         {
             if (databaseName != null)
             {
@@ -23,7 +24,9 @@ namespace DatabaseLibrary
                 if (!checkForDatabaseExists())
                 {
                     SQLiteConnection.CreateFile(databaseName);
-                    Console.WriteLine(DbMessage.CreateTable(databaseName));
+                    Console.WriteLine(DbMessage.CreateDatabase(databaseName));
+                    OpenConnection();
+                    CloseConnection();
                 }
             }
             else

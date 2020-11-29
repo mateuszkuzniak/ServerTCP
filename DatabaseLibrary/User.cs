@@ -4,7 +4,7 @@ using MessageLibrary;
 
 namespace DatabaseLibrary
 {
-    public class User : Database
+    public class User : DatabaseAbstract
     {
         string _tableName;
 
@@ -16,13 +16,16 @@ namespace DatabaseLibrary
                         password varchar(255) NOT NULL,
                         isLogged BOOLEAN DEFAULT '0')";
 
-            if (!CreateTable(tableName, command))
+            CreateTable(tableName, command);
+            
+            if(checkForTableExist(tableName))
             {
-
                 OpenConnection();
                 _command.CommandText = $"UPDATE {tableName} SET isLogged = '0' WHERE isLogged = '1'";
                 _command.ExecuteNonQuery();
             }
+            else
+                CreateTable(tableName, command);
             _tableName = tableName;
         }
 
