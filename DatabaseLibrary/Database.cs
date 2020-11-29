@@ -11,7 +11,6 @@ namespace DatabaseLibrary
         protected string _databaseName;
         protected readonly object keyLock = new object();
 
-
         protected DatabaseAbstract(string databaseName)
         {
             if (databaseName != null)
