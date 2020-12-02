@@ -73,6 +73,7 @@ namespace DatabaseLibrary
                         {
                             _command.CommandText = command;
                             _command.ExecuteNonQuery();
+                            Console.WriteLine(DbMessage.CreateTable(tableName));
                         }
                         catch (Exception e)
                         {

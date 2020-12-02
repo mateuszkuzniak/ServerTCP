@@ -12,7 +12,7 @@ namespace TCPServer
         {
             try
             {
-                Server<LoginServerProtocol> server = new ServerTAP<LoginServerProtocol>(IPAddress.Parse("192.168.48.56"), 1024);
+                Server<LoginServerProtocol> server = new ServerTAP<LoginServerProtocol>(IPAddress.Parse("169.254.162.154"), 8000);
                 server.Start();
             }
             catch(CloseServerException)

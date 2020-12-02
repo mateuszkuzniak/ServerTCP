@@ -17,7 +17,6 @@ namespace DatabaseLibrary
                         textFile TEXT)";
 
             CreateTable(tableName, command);
-            Console.WriteLine(DbMessage.CreateTable(tableName));
             _tableName = tableName;
 
         }

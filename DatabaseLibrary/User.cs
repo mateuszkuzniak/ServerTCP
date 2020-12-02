@@ -29,7 +29,6 @@ namespace DatabaseLibrary
                 CreateTable(tableName, command);
             }
 
-            Console.WriteLine(DbMessage.CreateTable(tableName));
             _tableName = tableName;
         }
 
