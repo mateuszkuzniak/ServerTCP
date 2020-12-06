@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="RIDER_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$/../../../Client" />
+    <content url="file://$MODULE_DIR$/../../../DatabaseLibrary" />
+    <content url="file://$MODULE_DIR$/../../../Exceptions" />
+    <content url="file://$MODULE_DIR$/../../../MessageLibrary" />
+    <content url="file://$MODULE_DIR$/../../../Server" />
+    <content url="file://$MODULE_DIR$/../../../TCP Client" />
+    <content url="file://$MODULE_DIR$/../.." />
+    <content url="file://$MODULE_DIR$/../../../UnitTests" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

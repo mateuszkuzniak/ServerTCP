@@ -29,7 +29,7 @@ namespace ServerLibrary
         public override void Start()
         { 
             Task.Run(() => ListeningTask());
-            ServerConsole();
+            //ServerConsole();
         }
 
         protected override void ListeningTask()

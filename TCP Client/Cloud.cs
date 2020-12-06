@@ -92,8 +92,6 @@ namespace TCP_Client
             c.Dock = DockStyle.Fill;
             Form1.Instance.panel.Controls.Add(c);
             Form1.Instance.panel.Controls["ConnectScreen"].BringToFront();
-
-
         }
 
         private void textBoxNewFileName_Enter(object sender, EventArgs e)
