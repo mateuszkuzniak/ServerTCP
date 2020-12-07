@@ -27,21 +27,23 @@ namespace TcpServerInterface
         private void startButton_Click(object sender, EventArgs e)
         {
             server = new ServerTAP<LoginServerProtocol>(IPAddress.Parse(IpBox.Text), int.Parse(PortBox.Text));
-            if (startButton.Text == "Start")
+            if (startButton.Text == @"Start")
             {         
                 server.Start();
                 Debug.WriteLine(IpBox);
                 Debug.WriteLine(PortBox);
-                label4.Text = IpAdress + ":" + int.Parse(Port);
-                label2.Text = "On";
-                startButton.Text = "Stop";
+                label4.Text = $@"{IpAdress} : {int.Parse(Port)}";
+                label2.Text = @"On";
+                startButton.Text = @"Stop";
+                usersButton.Enabled = true;
             }
-            else if (startButton.Text == "Stop")
+            else if (startButton.Text == @"Stop")
             {
                 //server.Stop();
-                label2.Text = "Closed";
-                label4.Text = IpAdress + ":" + int.Parse(Port);
-                startButton.Text = "Start";
+                label2.Text = @"Closed";
+                label4.Text = @"";
+                startButton.Text = @"Start";
+                usersButton.Enabled = false;
             }
         }
 
@@ -58,8 +60,6 @@ namespace TcpServerInterface
         private void usersButton_Click(object sender, EventArgs e)
         {
             String users = server.GetAllLoggedUsers();
-            //String users = "";
-            //String users = "Mateusz;Jordan;Artur";
             usersList.Clear();
             usersList.AppendText("Active Users:" + Environment.NewLine);
             foreach (var u in users.Split(';'))

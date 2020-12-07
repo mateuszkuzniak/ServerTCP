@@ -8,6 +8,7 @@
     <content url="file://$MODULE_DIR$/../../../Server" />
     <content url="file://$MODULE_DIR$/../../../TCP Client" />
     <content url="file://$MODULE_DIR$/../.." />
+    <content url="file://$MODULE_DIR$/../../../TcpServerInterface" />
     <content url="file://$MODULE_DIR$/../../../UnitTests" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

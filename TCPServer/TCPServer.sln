@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCP Client", "..\TCP Client
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "..\Client\Client.csproj", "{E98F1462-03A6-4B9F-B63F-9C99A69E69D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcpServerInterface", "..\..\TcpServerInterface\TcpServerInterface.csproj", "{2873C24E-84FA-4AEF-BA7C-5874C5FFBC97}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcpServerInterface", "..\TcpServerInterface\TcpServerInterface.csproj", "{2873C24E-84FA-4AEF-BA7C-5874C5FFBC97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

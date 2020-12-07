@@ -23,8 +23,8 @@
         #region Kod generowany przez Projektanta formularzy systemu Windows
 
         /// <summary>
-        /// Metoda wymagana do obsługi projektanta — nie należy modyfikować
-        /// jej zawartości w edytorze kodu.
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
@@ -39,6 +39,8 @@
             this.usersList = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.Logi = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // IpBox
@@ -90,22 +92,22 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(57, 171);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(76, 13);
+            this.label3.Size = new System.Drawing.Size(82, 13);
             this.label3.TabIndex = 5;
-            this.label3.Text = "Server Adress:";
+            this.label3.Text = "Server Address:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(136, 171);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(39, 13);
+            this.label4.Size = new System.Drawing.Size(0, 13);
             this.label4.TabIndex = 6;
-            this.label4.Text = "Adress";
             // 
             // usersButton
             // 
-            this.usersButton.Location = new System.Drawing.Point(243, 22);
+            this.usersButton.Enabled = false;
+            this.usersButton.Location = new System.Drawing.Point(238, 22);
             this.usersButton.Name = "usersButton";
             this.usersButton.Size = new System.Drawing.Size(100, 23);
             this.usersButton.TabIndex = 7;
@@ -115,12 +117,13 @@
             // 
             // usersList
             // 
-            this.usersList.Location = new System.Drawing.Point(243, 51);
+            this.usersList.Location = new System.Drawing.Point(238, 51);
             this.usersList.Multiline = true;
             this.usersList.Name = "usersList";
+            this.usersList.ReadOnly = true;
+            this.usersList.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.usersList.Size = new System.Drawing.Size(100, 134);
             this.usersList.TabIndex = 8;
-            this.usersList.Text = "Active Users:";
             // 
             // label5
             // 
@@ -140,11 +143,32 @@
             this.label6.TabIndex = 10;
             this.label6.Text = "Port";
             // 
+            // Logi
+            // 
+            this.Logi.Location = new System.Drawing.Point(370, 47);
+            this.Logi.Multiline = true;
+            this.Logi.Name = "Logi";
+            this.Logi.ReadOnly = true;
+            this.Logi.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.Logi.Size = new System.Drawing.Size(418, 137);
+            this.Logi.TabIndex = 11;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(367, 26);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(72, 13);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Logi Serwera:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 197);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.Logi);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.usersList);
@@ -160,7 +184,6 @@
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
@@ -176,6 +199,8 @@
         private System.Windows.Forms.TextBox usersList;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox Logi;
+        private System.Windows.Forms.Label label7;
     }
 }
 
