@@ -13,7 +13,11 @@ namespace DatabaseLibrary
             already_logged,
             successful_registration,
             can_add,
-            user_does_not_exist
+            user_does_not_exist,
+            must_be_logged,
+            change_pwd,
+            change_pwd_error
+
         }
 
         public enum FileCode

@@ -12,6 +12,8 @@ namespace MessageLibrary
         public static string userExists = "USER_EXISTS";
         public static string regOk = "REG_OK";
         public static string unk = "UNK";
+        public static string changePwd = "CHANGE_PWD";
+        public static string changePwdError = "CHANGE_PWD_ERROR";
         #endregion
 
         #region FILE

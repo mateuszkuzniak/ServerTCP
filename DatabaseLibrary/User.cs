@@ -77,6 +77,21 @@ namespace DatabaseLibrary
             }
         }
 
+        public bool ChangePassword(string userName, string oldPass, string newPass)
+        {
+            OpenConnection();
+            string userNameToLower = userName.ToLower();
+
+            lock(keyLock)
+            {
+                _command.CommandText = $"UPDATE {_tableName} SET password = {newPass} WHERE user_name = {userName}";
+                if (_command.ExecuteScalar() != null)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
         public void AddUser(string name, string pass)
         {
             name = name.ToLower().Trim(new char[] { '\r', '\n', '\0' });

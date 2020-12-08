@@ -25,6 +25,7 @@ namespace ServerLibrary
             opcodes["FILEDELETE"] = 4;
             opcodes["FILEUPDATE"] = 5;
             opcodes["FILEOPEN"] = 6;
+            opcodes["CHANGE_PWD"] = 7;
             #endregion
 
             #region LOGIN_AND_REGISTRATION
@@ -88,6 +89,30 @@ namespace ServerLibrary
                {
                    return GetLogStatus();
                });
+
+            responses[new Request(opcodes["CHANGE_PWD"], "CHANGE_PWD", null, null)] = new Response(0,
+                (oldPass, newPass) =>
+                {
+                    if (user.IsLogged)
+                    {
+                        if (UsersDatabase.CheckPassword(user.Login, oldPass))
+                        {
+                            if (UsersDatabase.ChangePassword(user.Login, oldPass, newPass))
+                                user.Status = Account.StatusCode.change_pwd;
+                            else
+                                user.Status = Account.StatusCode.change_pwd_error;
+                        }
+                        else
+                            user.Status = Account.StatusCode.inv_pass;
+                    }
+                    else
+                        user.Status = Account.StatusCode.must_be_logged;
+                },
+                null,
+                (args) =>
+                {
+                    return GetLogStatus(); ;
+                });
             #endregion
 
             #region FILE
@@ -186,6 +211,8 @@ namespace ServerLibrary
                 return ServerMessage.invUser;
             else if (user.Status == Account.StatusCode.user_is_logged)
                 return ServerMessage.currentlyLogged;
+            else if (user.Status == Account.StatusCode.must_be_logged)
+                return ServerMessage.mustBelogged;
             else if (user.Status == Account.StatusCode.inv_pass)
                 return ServerMessage.invPwd;
             else if (user.Status == Account.StatusCode.logged)
@@ -196,7 +223,11 @@ namespace ServerLibrary
                 return ServerMessage.userExists;
             else if (user.Status == Account.StatusCode.successful_registration)
                 return ServerMessage.regOk;
-            return ServerMessage.unk;
+            else if (user.Status == Account.StatusCode.change_pwd)
+                return ServerMessage.changePwd;
+            else if (user.Status == Account.StatusCode.change_pwd_error)
+                return ServerMessage.changePwdError;
+                return ServerMessage.unk;
         }
 
         string GetFileStatus()
@@ -322,7 +353,7 @@ namespace ServerLibrary
                 response = responses[request];
                 response.Action1(args1);
             }
-            else if (args1 != null && args2 != null && (opcode == "FILEADD" || opcode == "LOGIN" || opcode == "REGISTER" || opcode == "FILEUPDATE"))
+            else if (args1 != null && args2 != null && (opcode == "FILEADD" || opcode == "LOGIN" || opcode == "REGISTER" || opcode == "FILEUPDATE" || opcode == "CHANGE_PWD"))
             {
 
                 request = new Request(opcodes[opcode], opcode, args1, args2);
