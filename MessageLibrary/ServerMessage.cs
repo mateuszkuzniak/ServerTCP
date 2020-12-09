@@ -3,6 +3,7 @@ namespace MessageLibrary
 {
     public static class ServerMessage
     {
+        
         #region LOGIN
         public static string invUser = "INV_USER";
         public static string currentlyLogged = "USER IS CURRENTLY LOGGED IN ";
@@ -14,6 +15,7 @@ namespace MessageLibrary
         public static string unk = "UNK";
         public static string changePwd = "CHANGE_PWD";
         public static string changePwdError = "CHANGE_PWD_ERROR";
+        
         #endregion
 
         #region FILE

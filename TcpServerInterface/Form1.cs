@@ -67,5 +67,10 @@ namespace TcpServerInterface
                 usersList.AppendText(u + Environment.NewLine);
             }
         }
+
+        private void Logi_TextChanged(object sender, EventArgs e)
+        {
+            this.Logs.Text = "jakiś tekst";
+        }
     }
 }

@@ -39,16 +39,18 @@
             this.usersList = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.Logi = new System.Windows.Forms.TextBox();
+            this.Logs = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // IpBox
             // 
-            this.IpBox.Location = new System.Drawing.Point(60, 24);
+            this.IpBox.Location = new System.Drawing.Point(59, 24);
             this.IpBox.Name = "IpBox";
             this.IpBox.Size = new System.Drawing.Size(115, 20);
             this.IpBox.TabIndex = 0;
+            this.IpBox.Tag = "";
+            this.IpBox.Text = "127.0.0.1";
             this.IpBox.TextChanged += new System.EventHandler(this.IpBox_TextChanged);
             // 
             // PortBox
@@ -57,6 +59,7 @@
             this.PortBox.Name = "PortBox";
             this.PortBox.Size = new System.Drawing.Size(115, 20);
             this.PortBox.TabIndex = 1;
+            this.PortBox.Text = "8000";
             this.PortBox.TextChanged += new System.EventHandler(this.PortBox_TextChanged);
             // 
             // startButton
@@ -106,6 +109,7 @@
             // 
             // usersButton
             // 
+            this.usersButton.CausesValidation = false;
             this.usersButton.Enabled = false;
             this.usersButton.Location = new System.Drawing.Point(238, 22);
             this.usersButton.Name = "usersButton";
@@ -143,15 +147,18 @@
             this.label6.TabIndex = 10;
             this.label6.Text = "Port";
             // 
-            // Logi
+            // Logs
             // 
-            this.Logi.Location = new System.Drawing.Point(370, 47);
-            this.Logi.Multiline = true;
-            this.Logi.Name = "Logi";
-            this.Logi.ReadOnly = true;
-            this.Logi.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.Logi.Size = new System.Drawing.Size(418, 137);
-            this.Logi.TabIndex = 11;
+            this.Logs.CausesValidation = false;
+            this.Logs.Location = new System.Drawing.Point(370, 47);
+            this.Logs.Multiline = true;
+            this.Logs.Name = "Logs";
+            this.Logs.ReadOnly = true;
+            this.Logs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.Logs.Size = new System.Drawing.Size(418, 137);
+            this.Logs.TabIndex = 11;
+            this.Logs.Tag = "Server";
+            this.Logs.TextChanged += new System.EventHandler(this.Logi_TextChanged);
             // 
             // label7
             // 
@@ -168,7 +175,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 197);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.Logi);
+            this.Controls.Add(this.Logs);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.usersList);
@@ -184,6 +191,7 @@
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion
@@ -199,8 +207,8 @@
         private System.Windows.Forms.TextBox usersList;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox Logi;
         private System.Windows.Forms.Label label7;
+        public System.Windows.Forms.TextBox Logs;
     }
 }
 

@@ -10,7 +10,7 @@
         public string Args3 { get; set; }
 
 
-        public Request(int code, string opcode, string args1 = null,  string args2 = null, string args3 = null) 
+        public Request(int code, string opcode, string args1, string args2, string args3)
         {
             Code = code;
             Opcode = opcode;
@@ -19,23 +19,32 @@
             Args3 = args3;
         }
 
-        //public Request(int code, string opcode, string args1)
-        //{
-        //    Code = code;
-        //    Opcode = opcode;
-        //    Args1 = args1;
-        //}
+        public Request(int code, string opcode, string args1, string args2 )
+        {
+            Code = code;
+            Opcode = opcode;
+            Args1 = args1;
+            Args2 = args2;
 
-        //public Request(int code, string opcode)
-        //{
-        //    Code = code;
-        //    Opcode = opcode;
-        //}
+        }
 
-        //public override int GetHashCode()
-        //{
-        //    return Code;
-        //}
+        public Request(int code, string opcode, string args1)
+        {
+            Code = code;
+            Opcode = opcode;
+            Args1 = args1;
+        }
+
+        public Request(int code, string opcode)
+        {
+            Code = code;
+            Opcode = opcode;
+        }
+
+        public override int GetHashCode()
+        {
+            return Code;
+        }
 
         public override bool Equals(object obj)
         {
