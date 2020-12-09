@@ -7,7 +7,7 @@ namespace DatabaseLibrary
     public class User : DatabaseAbstract
     {
         string _tableName;
-
+        public string TableName {get => _tableName;}
         public User(string databaseName, string tableName) : base(databaseName)
         {
             string command = $@"CREATE TABLE {tableName}(
@@ -17,12 +17,10 @@ namespace DatabaseLibrary
                         isLogged BOOLEAN DEFAULT '0')";
 
             CreateTable(tableName, command);
-            
-            if(checkForTableExist(tableName))
+
+            if (checkForTableExist(tableName))
             {
-                OpenConnection();
-                _command.CommandText = $"UPDATE {tableName} SET isLogged = '0' WHERE isLogged = '1'";
-                _command.ExecuteNonQuery();
+                MakeLogOut(tableName);
             }
             else
             {
@@ -32,6 +30,12 @@ namespace DatabaseLibrary
             _tableName = tableName;
         }
 
+        public void MakeLogOut(string tableName)
+        {
+            OpenConnection();
+            _command.CommandText = $"UPDATE {tableName} SET isLogged = '0' WHERE isLogged = '1'";
+            _command.ExecuteNonQuery();
+        }
         public bool CheckUserExist(string userName)
         {
             OpenConnection();
@@ -82,7 +86,7 @@ namespace DatabaseLibrary
             OpenConnection();
             string userNameToLower = userName.ToLower();
 
-            lock(keyLock)
+            lock (keyLock)
             {
                 _command.CommandText = $"UPDATE {_tableName} SET password = {newPass} WHERE user_name = {userName}";
                 if (_command.ExecuteScalar() != null)

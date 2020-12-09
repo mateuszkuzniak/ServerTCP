@@ -16,7 +16,6 @@ namespace ServerLibrary
         int port;
         int bufferSize = 1024;
         protected bool running;
-        TcpListener tcpListener;
         protected delegate void TransmissionDataDelegate(NetworkStream stream);
         bool validIp = true;
 
@@ -50,7 +49,7 @@ namespace ServerLibrary
             }
         }
 
-        protected TcpListener TcpListener { get => tcpListener; set => tcpListener = value; }
+        protected TcpListener TcpListener { get; set; }
 
         #endregion
 
@@ -88,13 +87,13 @@ namespace ServerLibrary
             {
                 TcpListener = new TcpListener(IPAddress, Port);
                 TcpListener.Start();
-        }
+            }
             catch (SocketException ex)
             {
                 Console.WriteLine(ex.Message);
                 validIp = false;
             }
-}
+        }
 
         protected abstract void AcceptClient();
 
@@ -164,7 +163,11 @@ namespace ServerLibrary
         }
 
         public abstract void Start();
-        protected abstract void ListeningTask();
+        public void Stop()
+        {
+            _usersDatabase.MakeLogOut(_usersDatabase.TableName);
+            TcpListener.Stop();
+        }
         #endregion
 
     }

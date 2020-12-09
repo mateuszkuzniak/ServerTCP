@@ -26,20 +26,21 @@ namespace TcpServerInterface
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            server = new ServerTAP<LoginServerProtocol>(IPAddress.Parse(IpBox.Text), int.Parse(PortBox.Text));
+           
             if (startButton.Text == @"Start")
-            {         
+            {
+                server = new ServerTAP<LoginServerProtocol>(IPAddress.Parse(IpBox.Text), int.Parse(PortBox.Text));
                 server.Start();
                 Debug.WriteLine(IpBox);
                 Debug.WriteLine(PortBox);
-                label4.Text = $@"{IpAdress} : {int.Parse(Port)}";
+                label4.Text = $@"{IpBox.Text} : {PortBox.Text}";
                 label2.Text = @"On";
                 startButton.Text = @"Stop";
                 usersButton.Enabled = true;
             }
             else if (startButton.Text == @"Stop")
             {
-                //server.Stop();
+                server.Stop();
                 label2.Text = @"Closed";
                 label4.Text = @"";
                 startButton.Text = @"Start";

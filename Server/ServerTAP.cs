@@ -12,7 +12,7 @@ namespace ServerLibrary
         {
             try
             {
-                while (true)
+                while (running)
                 {
                     TcpClient client = TcpListener.AcceptTcpClient();
                     NetworkStream stream = client.GetStream();
@@ -27,16 +27,11 @@ namespace ServerLibrary
 }
 
         public override void Start()
-        { 
-            Task.Run(() => ListeningTask());
-            //ServerConsole();
-        }
-
-        protected override void ListeningTask()
         {
             running = true;
             StartListening();
-            AcceptClient();
+            Task.Run(() => AcceptClient());
         }
+
     }
 }
