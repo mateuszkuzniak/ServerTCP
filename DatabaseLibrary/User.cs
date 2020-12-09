@@ -88,7 +88,7 @@ namespace DatabaseLibrary
 
             lock (keyLock)
             {
-                _command.CommandText = $"UPDATE {_tableName} SET password = '{newPass}' WHERE user_name = '{userName}' && password = '{oldPass}'";
+                _command.CommandText = $"UPDATE {_tableName} SET password = '{newPass}' WHERE user_name = '{userName}' AND password = '{oldPass}'";
                 _command.ExecuteScalar();
                 if(CheckPassword(userName, newPass))
                     return true;
