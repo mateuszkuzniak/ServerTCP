@@ -22,8 +22,8 @@
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
+        /// <summary>
+        /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
@@ -37,6 +37,7 @@
             this.buttonSaveFile = new System.Windows.Forms.Button();
             this.buttonDeleteFile = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.buttonChangePwd = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBoxFiles
@@ -77,7 +78,7 @@
             // 
             // buttonAddNewFile
             // 
-            this.buttonAddNewFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.buttonAddNewFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (238)));
             this.buttonAddNewFile.Location = new System.Drawing.Point(255, 3);
             this.buttonAddNewFile.Name = "buttonAddNewFile";
             this.buttonAddNewFile.Size = new System.Drawing.Size(120, 107);
@@ -127,10 +128,21 @@
             this.label1.TabIndex = 10;
             this.label1.Text = "File name";
             // 
+            // buttonChangePwd
+            // 
+            this.buttonChangePwd.Location = new System.Drawing.Point(129, 3);
+            this.buttonChangePwd.Name = "buttonChangePwd";
+            this.buttonChangePwd.Size = new System.Drawing.Size(120, 107);
+            this.buttonChangePwd.TabIndex = 11;
+            this.buttonChangePwd.Text = "Change password";
+            this.buttonChangePwd.UseVisualStyleBackColor = true;
+            this.buttonChangePwd.Click += new System.EventHandler(this.buttonChangePwd_Click);
+            // 
             // Cloud
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.buttonChangePwd);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonDeleteFile);
             this.Controls.Add(this.buttonSaveFile);
@@ -144,8 +156,9 @@
             this.Size = new System.Drawing.Size(500, 500);
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
+
+        private System.Windows.Forms.Button buttonChangePwd;
 
         #endregion
         private System.Windows.Forms.RichTextBox textBoxFileText;

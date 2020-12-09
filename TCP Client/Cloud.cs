@@ -104,5 +104,17 @@ namespace TCP_Client
             if (textBoxNewFileName.Text.Equals(""))
                 label1.Visible = true;
         }
+
+        private void buttonChangePwd_Click(object sender, EventArgs e)
+        {
+            Size size = new Size(416, 339);
+            f.Size = size;
+
+            Cloud cs = new Cloud();
+            cs.Dock = DockStyle.Fill;
+            Form1.Instance.panel.Controls.Clear();
+            Form1.Instance.panel.Controls.Add(cs);
+            Form1.Instance.panel.Controls["Cloud"].BringToFront();
+        }
     }
 }

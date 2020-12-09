@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChangePasswordScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ChangePasswordScreen.Designer.cs">
+      <DependentUpon>ChangePasswordScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cloud.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -73,6 +79,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ChangePasswordScreen.resx">
+      <DependentUpon>ChangePasswordScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cloud.resx">
       <DependentUpon>Cloud.cs</DependentUpon>
     </EmbeddedResource>

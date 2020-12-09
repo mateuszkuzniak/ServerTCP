@@ -25,14 +25,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="74e09c78-aade-422c-9de6-db2bd0607f20" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../TCP Client/Cloud.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../TCP Client/Cloud.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TCP Client/Cloud.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../TCP Client/Cloud.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TCP Client/TCP Client.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../TCP Client/TCP Client.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TCPServer/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TCPServer/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TCPServer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TCPServer/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TCPServer/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TCPServer/riderModule.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCPServer.sln" beforeDir="false" afterPath="$PROJECT_DIR$/TCPServer.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TcpServerInterface/Form1.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../TcpServerInterface/Form1.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TcpServerInterface/Form1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../TcpServerInterface/Form1.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TcpServerInterface/TcpServerInterface.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../TcpServerInterface/TcpServerInterface.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TcpServerInterface/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/../TcpServerInterface/packages.config" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,12 +42,14 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../TCP Client/Cloud.cs" />
         <option value="$PROJECT_DIR$/Program.cs" />
         <option value="$PROJECT_DIR$/../TCP Client/ConnectScreen.cs" />
         <option value="$PROJECT_DIR$/TcpServerInterface/Class1.cs" />
         <option value="$PROJECT_DIR$/../TcpServerInterface/Program.cs" />
         <option value="$PROJECT_DIR$/../TcpServerInterface/Form1.cs" />
+        <option value="$PROJECT_DIR$/../TCP Client/ChangePasswordScreen.cs" />
+        <option value="$PROJECT_DIR$/../TCP Client/Cloud.cs" />
+        <option value="$PROJECT_DIR$/../TCP Client/ChangePasswordScreen.Designer.cs" />
       </list>
     </option>
   </component>
@@ -134,6 +133,7 @@
       <workItem from="1606930378430" duration="1937000" />
       <workItem from="1607371671843" duration="1042000" />
       <workItem from="1607373135241" duration="2784000" />
+      <workItem from="1607468315888" duration="1847000" />
     </task>
     <servers />
   </component>

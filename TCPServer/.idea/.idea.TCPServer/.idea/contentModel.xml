@@ -70,6 +70,9 @@
     <e p="C:\Users\JordanK\Desktop\ServerTCP-GUI\ServerTCP\TCP Client" t="IncludeRecursive">
       <e p="App.config" t="Include" />
       <e p="bin" t="ExcludeRecursive" />
+      <e p="ChangePasswordScreen.cs" t="Include" />
+      <e p="ChangePasswordScreen.Designer.cs" t="Include" />
+      <e p="ChangePasswordScreen.resx" t="Include" />
       <e p="Cloud.cs" t="Include" />
       <e p="Cloud.Designer.cs" t="Include" />
       <e p="Cloud.resx" t="Include" />
