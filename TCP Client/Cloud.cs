@@ -58,9 +58,10 @@ namespace TCP_Client
         {
             if (listBoxFiles.SelectedItem != null)
             {
-                Messages.sendMessage(Form1.Instance.connection, new string[] { "FILEUPDATE", listBoxFiles.SelectedItem.ToString(), textBoxFileText.Text });
-            MessageBox.Show(Messages.receiveMessage(Form1.Instance.connection));
-        }
+                Messages.sendMessage(Form1.Instance.connection,
+                    new string[] {"FILEUPDATE", listBoxFiles.SelectedItem.ToString(), textBoxFileText.Text});
+                MessageBox.Show(Messages.receiveMessage(Form1.Instance.connection));
+            }
             else
                 MessageBox.Show("Select file");
         }
@@ -110,11 +111,11 @@ namespace TCP_Client
             Size size = new Size(416, 339);
             f.Size = size;
 
-            Cloud cs = new Cloud();
-            cs.Dock = DockStyle.Fill;
-            Form1.Instance.panel.Controls.Clear();
-            Form1.Instance.panel.Controls.Add(cs);
-            Form1.Instance.panel.Controls["Cloud"].BringToFront();
+            ChangePasswordScreen cps = new ChangePasswordScreen();
+            cps.Dock = DockStyle.Fill;
+            //Form1.Instance.panel.Controls.Clear();
+            Form1.Instance.panel.Controls.Add(cps);
+            Form1.Instance.panel.Controls["ChangePasswordScreen"].BringToFront();
         }
     }
 }

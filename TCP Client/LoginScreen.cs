@@ -97,7 +97,7 @@ namespace TCP_Client
             Form1.Instance.panel.Controls.Clear();
             Form1.Instance.panel.Controls.Add(cs);
             Form1.Instance.panel.Controls["Cloud"].BringToFront();
-
+            
         }
 
         private void textBoxPassword_Enter(object sender, EventArgs e)
