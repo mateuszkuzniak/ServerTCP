@@ -84,12 +84,13 @@ namespace DatabaseLibrary
         public bool ChangePassword(string userName, string oldPass, string newPass)
         {
             OpenConnection();
-            string userNameToLower = userName.ToLower();
+            userName = userName.ToLower();
 
             lock (keyLock)
             {
-                _command.CommandText = $"UPDATE {_tableName} SET password = {newPass} WHERE user_name = {userName}";
-                if (_command.ExecuteScalar() != null)
+                _command.CommandText = $"UPDATE {_tableName} SET password = '{newPass}' WHERE user_name = '{userName}' && password = '{oldPass}'";
+                _command.ExecuteScalar();
+                if(CheckPassword(userName, newPass))
                     return true;
                 else
                     return false;
