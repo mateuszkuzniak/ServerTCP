@@ -43,6 +43,7 @@ namespace ServerLibrary
                                 user = UsersDatabase.GetUserWithDatabase(userName);
                                 UsersDatabase.UpdateLoginStatus(user);
                                 user.Status = Account.StatusCode.logged;
+                                loginUserServer(user.Id, user.Login);
                             }
                             else
                             {
