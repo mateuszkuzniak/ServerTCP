@@ -146,6 +146,7 @@
             this.Logs.Size = new System.Drawing.Size(395, 137);
             this.Logs.TabIndex = 11;
             this.Logs.Tag = "Server";
+            this.Logs.TextChanged += new System.EventHandler(this.Logs_TextChanged);
             // 
             // label7
             // 

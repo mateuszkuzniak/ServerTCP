@@ -45,6 +45,7 @@ namespace TcpServerInterface
                 server.Stop();
                 label2.Text = @"Closed";
                 label4.Text = @"";
+                startButton.Text = @"Start";
             }
         }
 
@@ -56,6 +57,11 @@ namespace TcpServerInterface
         private void PortBox_TextChanged(object sender, EventArgs e)
         {
             Port = PortBox.Text.ToString();
+        }
+
+        private void Logs_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
