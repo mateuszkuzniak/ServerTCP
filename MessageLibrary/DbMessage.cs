@@ -7,20 +7,5 @@ namespace MessageLibrary
         public static string invTableNameERROR = "Tablename cannot be empty";
         public static string invFileListERROR = "File list is empty!";
         public static string userListEmpty = "User list is empty!";
-
-
-        public static string CreateDatabase(string tableName)
-        {
-            return $"{tableName} database has been created";
-        }
-        public static string CreateTable(string tableName)
-        {
-            return $"{tableName} table has been created";
-        }
-
-        public static string CreateUser(string userName)
-        {
-            return $"User {userName} added successfully";
-        }
     }
 }

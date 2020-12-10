@@ -2,9 +2,10 @@
 using System.Data.SQLite;
 using MessageLibrary;
 
+
 namespace DatabaseLibrary
 {
-    public abstract class DatabaseAbstract
+    public abstract class DatabaseAbstract : Logger
     {
         protected SQLiteCommand _command;
         protected SQLiteConnection _myDatabaseConnection;
@@ -22,10 +23,11 @@ namespace DatabaseLibrary
                 if (!checkForDatabaseExists())
                 {
                     SQLiteConnection.CreateFile(databaseName);
-                    Console.WriteLine(DbMessage.CreateDatabase(databaseName));
                     OpenConnection();
                     CloseConnection();
+                    createDatabaseLOG(databaseName);
                 }
+                   
             }
             else
                 throw new Exception(DbMessage.invDbNameERROR);
@@ -73,21 +75,23 @@ namespace DatabaseLibrary
                         {
                             _command.CommandText = command;
                             _command.ExecuteNonQuery();
-                            Console.WriteLine(DbMessage.CreateTable(tableName));
+                            createTableLOG(_databaseName, tableName);
                         }
                         catch (Exception e)
                         {
-                            Console.WriteLine($"Error: {e.Message}");
+                            error("Database.CreateTable", e.Message);
                         }
 
                         if (checkForTableExist(tableName))
                         {
-                            Console.WriteLine();
                             return true;
                         }
                     }
                     else
+                    {
+                        existsTableLOG(_databaseName, tableName);
                         return false;
+                    }
                 }
                 else throw new Exception(DbMessage.invTableNameERROR);
             }

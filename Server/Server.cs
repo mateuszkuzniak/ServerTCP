@@ -6,10 +6,11 @@ using System.Text;
 using DatabaseLibrary;
 using MessageLibrary;
 using Exceptions;
+using System.Windows.Forms;
 
 namespace ServerLibrary
 {
-    public abstract class Server<T> where T : CommunicationProtocol, new()
+    public abstract class Server<T> : Logger where T : CommunicationProtocol, new()
     {
         #region FIELDS;
         IPAddress iPAddress;
@@ -22,19 +23,27 @@ namespace ServerLibrary
         #endregion
         public User _usersDatabase;
         public FileDb _filesDatabase;
+        //protected TextBox Logs { get; set; }
 
         #region PROPERTIES
-        public IPAddress IPAddress { get => iPAddress; set { if (!running) iPAddress = value; else throw new Exception("The IP address cannot be changed while the server is running"); } }
+        public IPAddress IPAddress { get => iPAddress; set {
+                if (!running)
+                {
+                    iPAddress = value;
+                    setIpServer(value.ToString());
+                }
+                else throw new Exception("The IP address cannot be changed while the server is running"); } }
 
         public int Port
         {
             get => port; set
             {
                 int temp = port;
-                if (!running) port = value; else throw new Exception("The port cannot be changed while the server is running");
+                if (!running) { port = value; setPortServer(port); } else throw new Exception("The port cannot be changed while the server is running");
                 if (!checkPort())
                 {
                     port = temp;
+                    setPortServer(port);
                     throw new ArgumentOutOfRangeException("Port out of range!\nPort range: 1024-49151.\nPort set to 8000");
                 }
             }
@@ -54,12 +63,14 @@ namespace ServerLibrary
         #endregion
 
         #region CONSTRUCTORS
-        public Server(IPAddress IP, int port)
+        public Server(IPAddress IP, int port, TextBox textBox)
         {
+            Logs = textBox;
             _usersDatabase = new User("users", "users");
             _filesDatabase = new FileDb("users", "files");
             running = false;
             IPAddress = IP;
+           
             try
             {
                 Port = port;
@@ -67,7 +78,7 @@ namespace ServerLibrary
             catch (ArgumentOutOfRangeException ex)
             {
                 Port = 8000;
-                Console.WriteLine(ex.Message);
+                error("Server()", ex.Message);
             }
 
 
@@ -87,10 +98,11 @@ namespace ServerLibrary
             {
                 TcpListener = new TcpListener(IPAddress, Port);
                 TcpListener.Start();
+                startServer();
             }
             catch (SocketException ex)
             {
-                Console.WriteLine(ex.Message);
+                error("Server.TcpListener", ex.Message);
                 validIp = false;
             }
         }
@@ -136,24 +148,15 @@ namespace ServerLibrary
                 }
                 catch (IOException)
                 {
-                    Console.WriteLine(ServerMessage.CloseConnection(user.Login));
+                    if (user.Id != null)
+                        closeClientConnectionServer((int)user.Id, user.Login);
+                    else
+                        closeClientConnectionServer();
                     if (protocol.GetUserStatus())
                         _usersDatabase.UpdateLoginStatus(protocol.GetUser());
                     break;
                 }
 
-            }
-        }
-
-        public void ServerConsole()
-        {
-            while (true)
-            {
-                string cmd = Console.ReadLine().ToLower();
-                if (cmd == "shutdown" || !validIp)
-                    throw new CloseServerException();
-                else if (cmd == "show users")
-                    Console.WriteLine(_usersDatabase.GetAllLogedUser());
             }
         }
 

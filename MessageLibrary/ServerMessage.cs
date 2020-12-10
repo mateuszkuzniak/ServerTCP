@@ -36,10 +36,6 @@ namespace MessageLibrary
         public static string incorrectPort = "Incorrect port value, set the port to 8000";
         #endregion
 
-        public static string CloseConnection(string userName)
-        {
-            return $"Connection with the cilent {userName} has been terminated";
-        }
 
     }
 }

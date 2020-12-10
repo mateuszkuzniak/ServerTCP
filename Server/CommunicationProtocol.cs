@@ -1,8 +1,10 @@
 ﻿using DatabaseLibrary;
+using System.Windows.Forms;
+using MessageLibrary;
 
 namespace ServerLibrary
 {
-    public abstract class CommunicationProtocol
+    public abstract class CommunicationProtocol : Logger
     {
         public User UsersDatabase { get; set; }
         public FileDb FileDatabase { get; set; }

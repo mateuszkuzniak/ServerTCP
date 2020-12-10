@@ -59,7 +59,7 @@ namespace DatabaseLibrary
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Error: " + e.ToString());
+                    error("FileDb.AddFile", e.Message);
                     return false;
                 }
             }
@@ -84,7 +84,7 @@ namespace DatabaseLibrary
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Error: " + e.ToString());
+                    error("FileDb.AddFile", e.Message);
                 }
             }
         }
@@ -106,7 +106,7 @@ namespace DatabaseLibrary
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Error: " + e.ToString());
+                    error("FileDb.AddFile", e.Message);
                 }
             }
             return false;

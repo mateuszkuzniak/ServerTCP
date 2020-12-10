@@ -42,7 +42,7 @@
             this.textBoxIp.Name = "textBoxIp";
             this.textBoxIp.Size = new System.Drawing.Size(134, 29);
             this.textBoxIp.TabIndex = 3;
-            this.textBoxIp.Text = "IP Address";
+            this.textBoxIp.Text = "127.0.0.1";
             this.textBoxIp.Enter += new System.EventHandler(this.textBoxIp_Enter);
             this.textBoxIp.Leave += new System.EventHandler(this.textBoxIp_Leave);
             // 
@@ -54,7 +54,7 @@
             this.textBoxPort.Name = "textBoxPort";
             this.textBoxPort.Size = new System.Drawing.Size(134, 29);
             this.textBoxPort.TabIndex = 4;
-            this.textBoxPort.Text = "Port";
+            this.textBoxPort.Text = "8000";
             this.textBoxPort.Enter += new System.EventHandler(this.textBoxPort_Enter);
             this.textBoxPort.Leave += new System.EventHandler(this.textBoxPort_Leave);
             // 

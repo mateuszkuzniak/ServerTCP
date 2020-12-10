@@ -112,11 +112,11 @@ namespace DatabaseLibrary
                         _command.ExecuteNonQuery();
                     }
 
-                    Console.WriteLine(DbMessage.CreateUser(name));
+                    newUserLOG(name);
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("The specified username is taken. Error: " + e.GetHashCode());
+                    addUserErrorLOG(e.Message);
                 }
             }
         }
@@ -136,7 +136,6 @@ namespace DatabaseLibrary
                 {
                     user.Id = reader.GetInt16(0);
                     user.Login = reader.GetString(1);
-                    //user.Pass = reader.GetString(2);
                     user.IsLogged = reader.GetBoolean(3);
                 }
 

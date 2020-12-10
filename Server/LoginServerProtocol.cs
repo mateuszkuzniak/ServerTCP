@@ -32,6 +32,7 @@ namespace ServerLibrary
             responses[new Request(opcodes["LOGIN"], "LOGIN", null, null)] = new Response(0,
                 (userName, pass) =>
                 {
+                    loginAttempServer();
                     if (CheckUser(userName))
                     {
                         userName = userName.ToLower().Trim(new char[] { '\r', '\n', '\0' });
@@ -64,6 +65,7 @@ namespace ServerLibrary
             responses[new Request(opcodes["REGISTER"], "REGISTER", null, null)] = new Response(0,
                 (userName, pass) =>
                 {
+                    registrationAttempServer();
                     if (!CheckUser(userName) && user.Status == Account.StatusCode.user_does_not_exist)
                     {
                         if (pass.Length == 64)
@@ -121,6 +123,7 @@ namespace ServerLibrary
                 {
                     if (!CheckFile(fileName) && user.FileStatus== Account.FileCode.file_does_not_exist)
                     {
+                        userAddFileServer(user.Id, user.Login);
                         FileDatabase.AddFile(fileName, text, (int)user.Id);
                         user.FileStatus = Account.FileCode.file_added;
                     }
@@ -156,7 +159,10 @@ namespace ServerLibrary
                     {
                         FileDatabase.DeleteFile(fileName, (int)user.Id);
                         if (!FileDatabase.FileExists(fileName, (int)user.Id))
+                        {
+                            userDelFileServer(user.Id, user.Login);
                             user.FileStatus = Account.FileCode.file_deleted;
+                        }
                         else
                             user.FileStatus = Account.FileCode.file_deleted_error;
                     }
@@ -174,6 +180,7 @@ namespace ServerLibrary
 
                     if (CheckFile(fileName))
                     {
+                        userUpdateFileServer(user.Id, user.Login);
                         FileDatabase.UpdateFile(fileName, (int)user.Id, text);
                         user.FileStatus = Account.FileCode.file_update;
                     }
@@ -190,7 +197,7 @@ namespace ServerLibrary
                  {
                      if (CheckFile(fileName))
                      {
-
+                         userOpenFileServer(user.Id, user.Login);
                          user.FileStatus = Account.FileCode.file_open;
                      }
                  },
@@ -328,6 +335,10 @@ namespace ServerLibrary
 
             if (opcode == "EXIT")
             {
+                if (user.Id != null)
+                    exitClientServer((int)user.Id, user.Login);
+                else
+                    exitClientServer();
                 throw new IOException();
             }
             else if (tokens.Length > 1)

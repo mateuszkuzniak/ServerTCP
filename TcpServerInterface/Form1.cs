@@ -29,7 +29,8 @@ namespace TcpServerInterface
            
             if (startButton.Text == @"Start")
             {
-                server = new ServerTAP<LoginServerProtocol>(IPAddress.Parse(IpBox.Text), int.Parse(PortBox.Text));
+                Logs.Text = null;
+                server = new ServerTAP<LoginServerProtocol>(IPAddress.Parse(IpBox.Text), int.Parse(PortBox.Text), Logs);
                 server.Start();
                 Debug.WriteLine(IpBox);
                 Debug.WriteLine(PortBox);
@@ -71,7 +72,6 @@ namespace TcpServerInterface
 
         private void Logi_TextChanged(object sender, EventArgs e)
         {
-            this.Logs.Text = "jakiś tekst";
         }
     }
 }

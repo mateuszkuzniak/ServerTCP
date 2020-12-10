@@ -1,13 +1,15 @@
-﻿using System;
+﻿using MessageLibrary;
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ServerLibrary
 {
     public class ServerTAP<T> : Server<T> where T : CommunicationProtocol, new()
     {
-        public ServerTAP(IPAddress IP, int port) : base(IP, port) { }
+        public ServerTAP(IPAddress IP, int port, TextBox textBox) : base(IP, port, textBox) { }
         protected override void AcceptClient()
         {
             try
@@ -17,12 +19,14 @@ namespace ServerLibrary
                     TcpClient client = TcpListener.AcceptTcpClient();
                     NetworkStream stream = client.GetStream();
                     byte[] buffer = new byte[1024];
+                    connectClientServer(((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString());
                     Task.Run(() => BeginDataTransmission(stream));
+                    
                 }
         }
             catch (InvalidOperationException ex)
             {
-                Console.WriteLine(ex.Message);
+                error("ServerTAP.AcceptClient",ex.Message);
             }
 }
 
