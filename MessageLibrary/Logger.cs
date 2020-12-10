@@ -71,7 +71,7 @@ namespace MessageLibrary
         protected void closeClientConnectionServer(int id = 0, string login = null) { cw($"Connection with the cilent {((id != 0) ? $"({id}) { login}" : "")} has been terminated"); }
         protected void exitClientServer(int id = 0, string login = null) { cw($"Client {((id != 0) ? $"({id}) {login}" : "")} has logged out"); }
         protected void loginAttempServer() { cw("Login attemp"); }
-        protected void loginUserServer(int id, string login) { cw($"User ({id}) {login} is logged in"); }
+        protected void loginUserServer(int? id, string login) { cw($"User ({id}) {login} is logged in"); }
         protected void registrationAttempServer() { cw("Registration attemp"); }
         protected void userAddFileServer(int? id, string login) { cw($"User ({id}) {login} added a file"); }
         protected void userDelFileServer(int? id, string login) { cw($"User ({id}) {login} deleted a file"); }
