@@ -30,22 +30,21 @@ namespace TcpServerInterface
             if (startButton.Text == @"Start")
             {
                 Logs.Text = null;
-                server = new ServerTAP<LoginServerProtocol>(IPAddress.Parse(IpBox.Text), int.Parse(PortBox.Text), Logs);
+                server = new ServerTAP<LoginServerProtocol>(IPAddress.Parse(IpBox.Text), int.Parse(PortBox.Text), Logs, this.usersList);
                 server.Start();
                 Debug.WriteLine(IpBox);
                 Debug.WriteLine(PortBox);
                 label4.Text = $@"{IpBox.Text} : {PortBox.Text}";
                 label2.Text = @"On";
                 startButton.Text = @"Stop";
-                usersButton.Enabled = true;
+
+                Task.Run(() => server.GetAllLoggedUsers());
             }
             else if (startButton.Text == @"Stop")
             {
                 server.Stop();
                 label2.Text = @"Closed";
                 label4.Text = @"";
-                startButton.Text = @"Start";
-                usersButton.Enabled = false;
             }
         }
 
@@ -57,21 +56,6 @@ namespace TcpServerInterface
         private void PortBox_TextChanged(object sender, EventArgs e)
         {
             Port = PortBox.Text.ToString();
-        }
-
-        private void usersButton_Click(object sender, EventArgs e)
-        {
-            String users = server.GetAllLoggedUsers();
-            usersList.Clear();
-            usersList.AppendText("Active Users:" + Environment.NewLine);
-            foreach (var u in users.Split(';'))
-            {
-                usersList.AppendText(u + Environment.NewLine);
-            }
-        }
-
-        private void Logi_TextChanged(object sender, EventArgs e)
-        {
         }
     }
 }
