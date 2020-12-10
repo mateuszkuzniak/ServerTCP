@@ -11,6 +11,7 @@ namespace MessageLibrary
     {
         private delegate void SafeCallDelegate(string text);
         public static TextBox Logs { get; set; }
+        public static TextBox UsersList { get; set; }
 
         private void cw(string mess)
         {
@@ -26,10 +27,30 @@ namespace MessageLibrary
             }
         }
 
+        protected void getUserList(string mess)
+        {
+            if (Logs.InvokeRequired)
+            {
+                var d = new SafeCallDelegate(getUserList);
+                UsersList.Invoke(d, new object[] { mess });
+            }
+            else
+            {
+                UsersList.Text = Time(); 
+                UsersList.AppendText(Environment.NewLine);
+                UsersList.AppendText(mess);
+            }
+        }
+
         public static string invDbNameERROR = "Database name cannot be empty";
         string Date()
         {
             return DateTime.Now.ToString();
+        }
+
+        string Time()
+        {
+            return DateTime.Now.ToLongTimeString();
         }
         protected void error(string fun, string mes) { cw($"ERROR({fun}): {mes}"); }
 
@@ -50,6 +71,7 @@ namespace MessageLibrary
         protected void closeClientConnectionServer(int id = 0, string login = null) { cw($"Connection with the cilent {((id != 0) ? $"({id}) { login}" : "")} has been terminated"); }
         protected void exitClientServer(int id = 0, string login = null) { cw($"Client {((id != 0) ? $"({id}) {login}" : "")} has logged out"); }
         protected void loginAttempServer() { cw("Login attemp"); }
+        protected void loginUserServer(int id, string login) { cw($"User ({id}) {login} is logged in"); }
         protected void registrationAttempServer() { cw("Registration attemp"); }
         protected void userAddFileServer(int? id, string login) { cw($"User ({id}) {login} added a file"); }
         protected void userDelFileServer(int? id, string login) { cw($"User ({id}) {login} deleted a file"); }
