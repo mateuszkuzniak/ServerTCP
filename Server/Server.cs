@@ -7,6 +7,7 @@ using DatabaseLibrary;
 using MessageLibrary;
 using Exceptions;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace ServerLibrary
 {
@@ -63,9 +64,10 @@ namespace ServerLibrary
         #endregion
 
         #region CONSTRUCTORS
-        public Server(IPAddress IP, int port, TextBox textBox)
+        public Server(IPAddress IP, int port, TextBox textBox, TextBox userList)
         {
             Logs = textBox;
+            UsersList = userList;
             _usersDatabase = new User("users", "users");
             _filesDatabase = new FileDb("users", "files");
             running = false;
@@ -160,17 +162,23 @@ namespace ServerLibrary
             }
         }
 
-        public string GetAllLoggedUsers()
+        public void GetAllLoggedUsers()
         {
-            return _usersDatabase.GetAllLogedUser();
+            while (running)
+            {
+                getUserList(_usersDatabase.GetAllLogedUser());
+                Thread.Sleep(1000);
+            }
         }
 
         public abstract void Start();
         public void Stop()
         {
+            running = false;
             _usersDatabase.MakeLogOut(_usersDatabase.TableName);
             TcpListener.Stop();
         }
+
         #endregion
 
     }

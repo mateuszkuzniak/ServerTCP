@@ -9,7 +9,7 @@ namespace ServerLibrary
 {
     public class ServerTAP<T> : Server<T> where T : CommunicationProtocol, new()
     {
-        public ServerTAP(IPAddress IP, int port, TextBox textBox) : base(IP, port, textBox) { }
+        public ServerTAP(IPAddress IP, int port, TextBox textBox, TextBox usersList) : base(IP, port, textBox, usersList) { }
         protected override void AcceptClient()
         {
             try

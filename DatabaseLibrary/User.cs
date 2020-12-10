@@ -159,9 +159,9 @@ namespace DatabaseLibrary
 
                 while (reader.Read())
                 {
-
-                    users += reader.GetString(1);
-                    users += ";";
+                    users += $"id: ({reader.GetInt16(0)}) ";
+                    users += $"login: {reader.GetString(1)}";
+                    users += Environment.NewLine;
                 }
 
 
