@@ -50,7 +50,7 @@
             // 
             // textBoxFileText
             // 
-            this.textBoxFileText.Location = new System.Drawing.Point(122, 116);
+            this.textBoxFileText.Location = new System.Drawing.Point(126, 116);
             this.textBoxFileText.Margin = new System.Windows.Forms.Padding(0);
             this.textBoxFileText.Name = "textBoxFileText";
             this.textBoxFileText.Size = new System.Drawing.Size(368, 381);

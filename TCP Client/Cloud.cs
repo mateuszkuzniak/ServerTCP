@@ -74,16 +74,12 @@ namespace TCP_Client
             if(!msg.Equals("FILE_EXISTS") && !msg.Equals("INV_FILE_NAME"))
                 listBoxFiles.Items.Add(textBoxNewFileName.Text.ToLower());
             textBoxNewFileName.Text = "";
+            textBoxFileText.Text = String.Empty;
         }
 
 
         private void buttonLogout_Click(object sender, EventArgs e)
         {
-            //foreach (var el in listBoxFiles.Items)
-            //{
-            //    listBoxFiles.Items.Remove(el);
-            //    listBoxFiles.Show();
-            //}
             listBoxFiles.Items.Clear();
             Messages.sendMessage(Form1.Instance.connection, new string[] { "EXIT" });
             Size size = new Size(416, 339);
@@ -98,6 +94,7 @@ namespace TCP_Client
         private void textBoxNewFileName_Enter(object sender, EventArgs e)
         {
                 label1.Visible = false;
+                textBoxFileText.Text = String.Empty;
         }
 
         private void textBoxNewFileName_Leave(object sender, EventArgs e)
