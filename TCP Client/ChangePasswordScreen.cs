@@ -37,16 +37,22 @@ namespace TCP_Client
                 Connection con = f.connection;
                 Password oldPwd = new Password(textBoxOldPwd.Text);
                 Password newPwd = new Password(textBoxNewPwd.Text);
+                if (!Password.isValid(textBoxNewPwd.Text))
+                    throw new LoginScreenExceptions("Password is not safe!\nPassword must contain:\n" +
+                                                    "\t-at least one uppercase letter\n" +
+                                                    "\t-at least one lowercase letter\n" +
+                                                    "\t-at least one number\n" +
+                                                    "\t-at least one symblol(*, &, #, !, @, %)");
                 
                 Messages.sendMessage(con, new string[3] { "CHANGE_PWD", oldPwd._Password, newPwd._Password});
 
                 string receivedMsg = Messages.receiveMessage(con);
 
                 if (receivedMsg.Equals("CHANGE_PWD_ERROR"))
-                    MessageBox.Show("Invalid password");
+                    MessageBox.Show(@"Invalid password");
                 else if (receivedMsg.Equals("CHANGE_PWD"))
                 {
-                    MessageBox.Show("Password changed successfully");
+                    MessageBox.Show(@"Password changed successfully");
                     buttonBack_Click(sender, e);
                 }
                 else
@@ -57,6 +63,42 @@ namespace TCP_Client
             catch(LoginScreenExceptions ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void textBoxOldPwd_Enter(object sender, EventArgs e)
+        {
+            if (textBoxOldPwd.Text.Equals("Password"))
+            {
+                textBoxOldPwd.Text = "";
+                textBoxOldPwd.ForeColor = Color.Black;
+            }
+        }
+
+        private void textBoxOldPwd_Leave(object sender, EventArgs e)
+        {
+            if (textBoxOldPwd.Text.Equals(""))
+            {
+                textBoxOldPwd.Text = "Password";
+                textBoxOldPwd.ForeColor = Color.Silver;
+            }
+        }
+
+        private void textBoxNewPwd_Enter(object sender, EventArgs e)
+        {
+            if (textBoxNewPwd.Text.Equals("Password"))
+            {
+                textBoxNewPwd.Text = "";
+                textBoxNewPwd.ForeColor = Color.Black;
+            }
+        }
+
+        private void textBoxNewPwd_Leave(object sender, EventArgs e)
+        {
+            if (textBoxNewPwd.Text.Equals(""))
+            {
+                textBoxNewPwd.Text = "Password";
+                textBoxNewPwd.ForeColor = Color.Silver;
             }
         }
     }

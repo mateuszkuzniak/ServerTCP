@@ -62,12 +62,12 @@ namespace TCP_Client
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (238)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (238)));
             this.label1.Location = new System.Drawing.Point(36, 30);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(267, 55);
+            this.label1.Size = new System.Drawing.Size(339, 39);
             this.label1.TabIndex = 9;
-            this.label1.Text = "Logowanie";
+            this.label1.Text = "Changing password";
             // 
             // textBoxNewPwd
             // 
@@ -79,6 +79,8 @@ namespace TCP_Client
             this.textBoxNewPwd.Size = new System.Drawing.Size(134, 29);
             this.textBoxNewPwd.TabIndex = 8;
             this.textBoxNewPwd.Text = "Password";
+            this.textBoxNewPwd.Enter += new System.EventHandler(this.textBoxNewPwd_Enter);
+            this.textBoxNewPwd.Leave += new System.EventHandler(this.textBoxNewPwd_Leave);
             // 
             // textBoxOldPwd
             // 
@@ -90,6 +92,8 @@ namespace TCP_Client
             this.textBoxOldPwd.Size = new System.Drawing.Size(134, 29);
             this.textBoxOldPwd.TabIndex = 7;
             this.textBoxOldPwd.Text = "Password";
+            this.textBoxOldPwd.Enter += new System.EventHandler(this.textBoxOldPwd_Enter);
+            this.textBoxOldPwd.Leave += new System.EventHandler(this.textBoxOldPwd_Leave);
             // 
             // checkBoxShowPass
             // 
