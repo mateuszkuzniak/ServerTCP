@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Client;
 using System.Net.Sockets;
 using Exceptions;
+using Client;
 
 namespace TCP_Client
 {
@@ -61,10 +62,16 @@ namespace TCP_Client
             {
                 Account acc = new Account(textBoxLogin.Text, textBoxPassword.Text);
                 Form1 f = Form1.Instance;
+                if (!Password.isValid(textBoxPassword.Text))
+                    throw new LoginScreenExceptions("Password is not safe!\nPassword must contain:\n" +
+                                                    "\t-at least one uppercase letter\n" +
+                                                    "\t-at least one lowercase letter\n" +
+                                                    "\t-at least one number\n" +
+                                                    "\t-at least one symblol(*, &, #, !, @, %)");
 
                 Connection con = f.connection;
 
-                Messages.sendMessage(con, new string[3] { "REGISTER", acc.Login.ToLower(), acc.Password._Password });
+                Messages.sendMessage(con, new string[3] {"REGISTER", acc.Login.ToLower(), acc.Password._Password});
 
                 string receivedMsg = Messages.receiveMessage(con);
 
@@ -81,7 +88,7 @@ namespace TCP_Client
                 MessageBox.Show(ex.Message);
             }
         }
-
+        
         private void checkBoxShowPass_CheckedChanged(object sender, EventArgs e)
         {
             textBoxPassword.PasswordChar = checkBoxShowPass.Checked ? '\0' : '*';
