@@ -169,6 +169,7 @@ namespace ServerLibrary
                 getUserList(_usersDatabase.GetAllLogedUser());
                 Thread.Sleep(1000);
             }
+            serverStop();
         }
 
         public abstract void Start();

@@ -26,6 +26,7 @@ namespace ServerLibrary
             opcodes["FILEUPDATE"] = 5;
             opcodes["FILEOPEN"] = 6;
             opcodes["CHANGE_PWD"] = 7;
+            opcodes["GETLOGS"] = 8;
             #endregion
 
             #region LOGIN_AND_REGISTRATION
@@ -78,7 +79,7 @@ namespace ServerLibrary
                             user.Status = Account.StatusCode.inv_pass;
                     }
 
-                   if (user.Status != Account.StatusCode.successful_registration)
+                    if (user.Status != Account.StatusCode.successful_registration)
                     {
                         if (userName.Length > 0)
                             user.Status = Account.StatusCode.user_exists;
@@ -122,9 +123,9 @@ namespace ServerLibrary
             responses[new Request(opcodes["FILEADD"], "FILEADD", null, null)] = new Response(0,
                 (fileName, text) =>
                 {
-                    if (!CheckFile(fileName) && user.FileStatus== Account.FileCode.file_does_not_exist)
+                    if (!CheckFile(fileName) && user.FileStatus == Account.FileCode.file_does_not_exist)
                     {
-                        userAddFileServer(user.Id, user.Login);
+                        userAddFileServer(user.Id, user.Login, fileName);
                         FileDatabase.AddFile(fileName, text, (int)user.Id);
                         user.FileStatus = Account.FileCode.file_added;
                     }
@@ -161,7 +162,7 @@ namespace ServerLibrary
                         FileDatabase.DeleteFile(fileName, (int)user.Id);
                         if (!FileDatabase.FileExists(fileName, (int)user.Id))
                         {
-                            userDelFileServer(user.Id, user.Login);
+                            userDelFileServer(user.Id, user.Login, fileName);
                             user.FileStatus = Account.FileCode.file_deleted;
                         }
                         else
@@ -181,7 +182,7 @@ namespace ServerLibrary
 
                     if (CheckFile(fileName))
                     {
-                        userUpdateFileServer(user.Id, user.Login);
+                        userUpdateFileServer(user.Id, user.Login, fileName);
                         FileDatabase.UpdateFile(fileName, (int)user.Id, text);
                         user.FileStatus = Account.FileCode.file_update;
                     }
@@ -198,7 +199,7 @@ namespace ServerLibrary
                  {
                      if (CheckFile(fileName))
                      {
-                         userOpenFileServer(user.Id, user.Login);
+                         userOpenFileServer(user.Id, user.Login, fileName);
                          user.FileStatus = Account.FileCode.file_open;
                      }
                  },
@@ -208,6 +209,21 @@ namespace ServerLibrary
                          return FileDatabase.openFile(fileName, (int)user.Id);
                      return GetFileStatus();
                  });
+
+            responses[new Request(opcodes["GETLOGS"], "GETLOGS")] = new Response(0,
+               () =>
+               {
+                   if (user.IsLogged)
+                   {
+                       user.FileStatus = Account.FileCode.get_logs;
+                   }
+                   else
+                       user.FileStatus = Account.FileCode.must_be_logged;
+               },
+               (args) =>
+               {
+                   return GetFileStatus();
+               });
             #endregion
         }
 
@@ -235,7 +251,7 @@ namespace ServerLibrary
                 return ServerMessage.changePwd;
             else if (user.Status == Account.StatusCode.change_pwd_error)
                 return ServerMessage.changePwdError;
-                return ServerMessage.unk;
+            return ServerMessage.unk;
         }
 
         string GetFileStatus()
@@ -256,6 +272,8 @@ namespace ServerLibrary
                 return ServerMessage.fileDeletedError;
             else if (user.FileStatus == Account.FileCode.file_update)
                 return ServerMessage.fileUpdate;
+            else if (user.FileStatus == Account.FileCode.get_logs)
+                return getLogs(user.Login);
             return ServerMessage.unk;
 
         }
@@ -352,14 +370,14 @@ namespace ServerLibrary
             Request request;
 
 
-            if (args1 == null && args2 == null && opcode == "FILEALL")
+            if (args1 == null && args2 == null && (opcode == "FILEALL" || opcode == "GETLOGS"))
             {
 
                 request = new Request(opcodes[opcode], opcode);
                 response = responses[request];
                 response.Action();
             }
-            else if (args1 != null && args2 == null && (opcode == "FILEDELETE" || opcode == "FILEOPEN" ))
+            else if (args1 != null && args2 == null && (opcode == "FILEDELETE" || opcode == "FILEOPEN"))
             {
                 request = new Request(opcodes[opcode], opcode, args1);
                 response = responses[request];

@@ -31,7 +31,8 @@ namespace DatabaseLibrary
             file_deleted,
             file_deleted_error,
             file_update,
-            file_open
+            file_open,
+            get_logs
 
         }
 
