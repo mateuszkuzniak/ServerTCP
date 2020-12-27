@@ -65,7 +65,8 @@ namespace DatabaseLibrary
         {
             if (checkForDatabaseExists())
             {
-                _myDatabaseConnection.Open();
+                //_myDatabaseConnection.Open();
+                OpenConnection();
 
                 if (tableName.Length > 0)
                 {

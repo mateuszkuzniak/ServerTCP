@@ -14,7 +14,11 @@ namespace DatabaseLibrary
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         user_name varchar(50) NOT NULL UNIQUE,
                         password varchar(255) NOT NULL,
-                        isLogged BOOLEAN DEFAULT '0')";
+                        isLogged BOOLEAN DEFAULT '0',
+                        email varchar(255),
+                        firstName varchar(255),
+                        secondName varchar(255), 
+                        phone int(9) CHECK(phone BETWEEN 100000000 AND 999999999))";
 
             CreateTable(tableName, command);
 
