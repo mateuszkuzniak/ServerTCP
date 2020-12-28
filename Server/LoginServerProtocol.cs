@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using DatabaseLibrary;
 using MessageLibrary;
 
@@ -20,14 +21,16 @@ namespace ServerLibrary
             #region OPCODE
             opcodes["LOGIN"] = 0;
             opcodes["REGISTER"] = 1;
-            opcodes["FILEADD"] = 2;
-            opcodes["FILEALL"] = 3;
-            opcodes["FILEDELETE"] = 4;
-            opcodes["FILEUPDATE"] = 5;
-            opcodes["FILEOPEN"] = 6;
-            opcodes["CHANGE_PWD"] = 7;
-            opcodes["GETLOGS"] = 8;
-            opcodes["GETUSER"] = 9;
+            opcodes["CHANGE_PWD"] = 2;
+            opcodes["GETUSER"] = 3;
+            opcodes["UPDATEUSERDATA"] = 4;
+            opcodes["FILEADD"] = 5;
+            opcodes["FILEALL"] = 6;
+            opcodes["FILEDELETE"] = 7;
+            opcodes["FILEUPDATE"] = 8;
+            opcodes["FILEOPEN"] = 9;
+            opcodes["GETLOGS"] = 10;
+
             #endregion
 
             #region LOGIN_AND_REGISTRATION
@@ -120,19 +123,35 @@ namespace ServerLibrary
                 });
 
             responses[new Request(opcodes["GETUSER"], "GETUSER")] = new Response(0,
-           () =>
-           {
-               if (user.IsLogged)
+               () =>
                {
-                   user.Status = Account.StatusCode.get_all_user_data;
-               }
-               else
-                   user.Status = Account.StatusCode.must_be_logged;
-           },
-           (args) =>
-           {
-               return GetLogStatus();
-           });
+                   if (user.IsLogged)
+                   {
+                       user.Status = Account.StatusCode.get_all_user_data;
+                   }
+                   else
+                       user.Status = Account.StatusCode.must_be_logged;
+               },
+               (args) =>
+               {
+                   return GetLogStatus();
+               });
+            responses[new Request(opcodes["UPDATEUSERDATA"], "UPDATEUSERDATA", null)] = new Response(0,
+                (string data) =>
+                {
+                    var tokens = SplitUserData(data);
+                    if (user.IsLogged)
+                    {
+                        if (ValidUserData(tokens))
+                            UsersDatabase.UpdateUserData((int)user.Id, tokens);
+                    }
+                    else
+                        user.Status = Account.StatusCode.must_be_logged;
+                },
+                (args) =>
+                {
+                    return GetLogStatus();
+                });
 
             #endregion
 
@@ -272,7 +291,19 @@ namespace ServerLibrary
                 return ServerMessage.changePwdError;
             else if (user.Status == Account.StatusCode.get_all_user_data)
                 return UsersDatabase.GetListData((int)user.Id, DatabaseAbstract.DatabaseType.User);
-            return ServerMessage.unk;
+            else if (user.Status == Account.StatusCode.inv_mail)
+                return ServerMessage.invMail;
+            else if (user.Status == Account.StatusCode.inv_first_name)
+                return ServerMessage.invFirstName;
+            else if (user.Status == Account.StatusCode.inv_second_name)
+                return ServerMessage.invSecondName;
+            else if (user.Status == Account.StatusCode.inv_phone_number)
+                return ServerMessage.invPhoneNumber;
+            else if (user.Status == Account.StatusCode.user_valid_data)
+                return ServerMessage.userValidData;
+
+
+                return ServerMessage.unk;
         }
 
         string GetFileStatus()
@@ -338,10 +369,11 @@ namespace ServerLibrary
             else
                 user.Status = Account.StatusCode.already_logged;
             return false;
-
         }
 
-        
+
+
+
 
         #endregion
 
@@ -364,6 +396,48 @@ namespace ServerLibrary
         public override void SetDatabaseUser(User database)
         {
             UsersDatabase = database;
+        }
+        #endregion
+
+        #region ADDITIONAL_FUNC
+        string[] SplitUserData(string data)
+        {
+            string[] tokens = data.Split(new char[] { ' ' });
+            string[] temp = new string[4];
+            if (tokens.Length < 4)
+            {
+                temp = new string[4];
+                for (int i = 0; i < 4; i++)
+                {
+                    if (i > tokens.Length - 1)
+                        temp[i] = "";
+                    else
+                    {
+                        temp[i] = tokens[i];
+                    }
+                }
+                return temp;
+            }
+            else
+                return tokens;
+        }
+
+        bool ValidUserData(string[] data)
+        {
+            if (data[0].Length > 0 && (!Regex.IsMatch(data[0], @"[@]") || !Regex.IsMatch(data[0], @"[.]")))
+                user.Status = Account.StatusCode.inv_mail;
+            else if (data[1].Length > 0 && !Regex.IsMatch(data[1], @"^[a-zA-Z]+$"))
+                user.Status = Account.StatusCode.inv_first_name;
+            else if (data[2].Length > 0 && !Regex.IsMatch(data[2], @"^[a-zA-Z]+$"))
+                user.Status = Account.StatusCode.inv_second_name;
+            else if (data[3].Length > 0 && (!Regex.IsMatch(data[3], @"^[0-9]+$") || data[3].Length < 9 || data[3].Length > 9))
+                user.Status = Account.StatusCode.inv_phone_number;
+            else
+            {
+                user.Status = Account.StatusCode.user_valid_data;
+                return true;
+            }
+            return false;
         }
         #endregion
 
