@@ -16,7 +16,14 @@ namespace MessageLibrary
         public static string unk = "UNK";
         public static string changePwd = "CHANGE_PWD";
         public static string changePwdError = "CHANGE_PWD_ERROR";
-        
+        #endregion
+
+        #region USER
+        public static string invMail = "INV_MAIL";
+        public static string invFirstName = "INV_FIRST_NAME";
+        public static string invSecondName = "INV_SECOND_NAME";
+        public static string invPhoneNumber = "INV_PHONE_NUMBER";
+        public static string userValidData = "USER_VALID_DATA";
         #endregion
 
         #region FILE
