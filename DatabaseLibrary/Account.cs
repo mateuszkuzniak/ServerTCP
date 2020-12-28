@@ -17,7 +17,12 @@ namespace DatabaseLibrary
             must_be_logged,
             change_pwd,
             change_pwd_error,
-            get_all_user_data
+            get_all_user_data,
+            inv_mail,
+            inv_first_name,
+            inv_second_name,
+            inv_phone_number,
+            user_valid_data
 
         }
 
