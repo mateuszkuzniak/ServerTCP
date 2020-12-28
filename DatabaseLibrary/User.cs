@@ -6,8 +6,7 @@ namespace DatabaseLibrary
 {
     public class User : DatabaseAbstract
     {
-        string _tableName;
-        public string TableName {get => _tableName;}
+        public string TableName {get => _tableUsers; }
         public User(string databaseName, string tableName) : base(databaseName)
         {
             string command = $@"CREATE TABLE {tableName}(
@@ -31,7 +30,7 @@ namespace DatabaseLibrary
                 CreateTable(tableName, command);
             }
 
-            _tableName = tableName;
+           _tableUsers = tableName;
         }
 
         public void MakeLogOut(string tableName)
@@ -47,7 +46,7 @@ namespace DatabaseLibrary
 
             lock (keyLock)
             {
-                _command.CommandText = $"SELECT id FROM {_tableName} WHERE user_name = '{userNameToLower}'";
+                _command.CommandText = $"SELECT id FROM {_tableUsers} WHERE user_name = '{userNameToLower}'";
                 if (_command.ExecuteScalar() != null)
                     return true;
                 else
@@ -62,7 +61,7 @@ namespace DatabaseLibrary
 
             lock (keyLock)
             {
-                _command.CommandText = $"SELECT id FROM {_tableName} WHERE user_name = '{userNameToLower}' AND isLogged = '1'";
+                _command.CommandText = $"SELECT id FROM {_tableUsers} WHERE user_name = '{userNameToLower}' AND isLogged = '1'";
                 if (_command.ExecuteScalar() != null)
                     return true;
                 else
@@ -77,7 +76,7 @@ namespace DatabaseLibrary
 
             lock (keyLock)
             {
-                _command.CommandText = $"SELECT id FROM {_tableName} WHERE user_name = '{userNameToLower}' AND password = '{pass}'";
+                _command.CommandText = $"SELECT id FROM {_tableUsers} WHERE user_name = '{userNameToLower}' AND password = '{pass}'";
                 if (_command.ExecuteScalar() != null)
                     return true;
                 else
@@ -92,7 +91,7 @@ namespace DatabaseLibrary
 
             lock (keyLock)
             {
-                _command.CommandText = $"UPDATE {_tableName} SET password = '{newPass}' WHERE user_name = '{userName}' AND password = '{oldPass}'";
+                _command.CommandText = $"UPDATE {_tableUsers} SET password = '{newPass}' WHERE user_name = '{userName}' AND password = '{oldPass}'";
                 _command.ExecuteScalar();
                 if(CheckPassword(userName, newPass))
                     return true;
@@ -105,13 +104,13 @@ namespace DatabaseLibrary
         {
             name = name.ToLower().Trim(new char[] { '\r', '\n', '\0' });
             OpenConnection();
-            if (checkForTableExist(_tableName))
+            if (checkForTableExist(_tableUsers))
             {
                 try
                 {
                     lock (keyLock)
                     {
-                        _command.CommandText = $"INSERT INTO {_tableName} (user_name, password)" +
+                        _command.CommandText = $"INSERT INTO {_tableUsers} (user_name, password)" +
                                              $"VALUES('{name}','{pass}')";
                         _command.ExecuteNonQuery();
                     }
@@ -133,7 +132,7 @@ namespace DatabaseLibrary
 
             lock (keyLock)
             {
-                _command.CommandText = $"SELECT * FROM {_tableName} WHERE user_name = '{userNameToLower}'";
+                _command.CommandText = $"SELECT * FROM {_tableUsers} WHERE user_name = '{userNameToLower}'";
                 SQLiteDataReader reader = _command.ExecuteReader();
 
                 while (reader.Read())
@@ -142,7 +141,6 @@ namespace DatabaseLibrary
                     user.Login = reader.GetString(1);
                     user.IsLogged = reader.GetBoolean(3);
                 }
-
 
                 reader.Close();
             }
@@ -158,7 +156,7 @@ namespace DatabaseLibrary
 
             lock (keyLock)
             {
-                _command.CommandText = $"SELECT * FROM {_tableName} WHERE isLogged = '1'";
+                _command.CommandText = $"SELECT * FROM {_tableUsers} WHERE isLogged = '1'";
                 SQLiteDataReader reader = _command.ExecuteReader();
 
                 while (reader.Read())
@@ -185,12 +183,12 @@ namespace DatabaseLibrary
             {
                 if (account.IsLogged)
                 {
-                    _command.CommandText = $"UPDATE {_tableName} SET isLogged = '0' WHERE id='{account.Id}'";
+                    _command.CommandText = $"UPDATE {_tableUsers} SET isLogged = '0' WHERE id='{account.Id}'";
                     account.IsLogged = false;
                 }
                 else
                 {
-                    _command.CommandText = $"UPDATE {_tableName} SET isLogged = '1' WHERE id='{account.Id}'";
+                    _command.CommandText = $"UPDATE {_tableUsers} SET isLogged = '1' WHERE id='{account.Id}'";
                     account.IsLogged = true;
                 }
                 _command.ExecuteNonQuery();

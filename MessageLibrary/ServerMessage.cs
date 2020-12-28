@@ -11,6 +11,7 @@ namespace MessageLibrary
         public static string logged = "LOGGED";
         public static string alreadyLogged = "YOU ARE ALREADY LOGGED IN";
         public static string userExists = "USER_EXISTS";
+        public static string userDoesNotExists = "USER_DOES_NOT_EXISTS";
         public static string regOk = "REG_OK";
         public static string unk = "UNK";
         public static string changePwd = "CHANGE_PWD";

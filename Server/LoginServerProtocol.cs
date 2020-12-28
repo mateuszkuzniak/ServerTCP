@@ -27,6 +27,7 @@ namespace ServerLibrary
             opcodes["FILEOPEN"] = 6;
             opcodes["CHANGE_PWD"] = 7;
             opcodes["GETLOGS"] = 8;
+            opcodes["GETUSER"] = 9;
             #endregion
 
             #region LOGIN_AND_REGISTRATION
@@ -117,6 +118,22 @@ namespace ServerLibrary
                 {
                     return GetLogStatus(); ;
                 });
+
+            responses[new Request(opcodes["GETUSER"], "GETUSER")] = new Response(0,
+           () =>
+           {
+               if (user.IsLogged)
+               {
+                   user.Status = Account.StatusCode.get_all_user_data;
+               }
+               else
+                   user.Status = Account.StatusCode.must_be_logged;
+           },
+           (args) =>
+           {
+               return GetLogStatus();
+           });
+
             #endregion
 
             #region FILE
@@ -245,12 +262,16 @@ namespace ServerLibrary
                 return ServerMessage.alreadyLogged;
             else if (user.Status == Account.StatusCode.user_exists)
                 return ServerMessage.userExists;
+            else if (user.Status == Account.StatusCode.user_does_not_exist)
+                return ServerMessage.userDoesNotExists;
             else if (user.Status == Account.StatusCode.successful_registration)
                 return ServerMessage.regOk;
             else if (user.Status == Account.StatusCode.change_pwd)
                 return ServerMessage.changePwd;
             else if (user.Status == Account.StatusCode.change_pwd_error)
                 return ServerMessage.changePwdError;
+            else if (user.Status == Account.StatusCode.get_all_user_data)
+                return UsersDatabase.GetListData((int)user.Id, DatabaseAbstract.DatabaseType.User);
             return ServerMessage.unk;
         }
 
@@ -265,7 +286,7 @@ namespace ServerLibrary
             else if (user.FileStatus == Account.FileCode.inv_file_name)
                 return ServerMessage.invFileName;
             else if (user.FileStatus == Account.FileCode.get_all)
-                return FileDatabase.GetFileList((int)user.Id);
+                return FileDatabase.GetListData((int)user.Id, DatabaseAbstract.DatabaseType.File);
             else if (user.FileStatus == Account.FileCode.file_deleted)
                 return ServerMessage.fileDeleted;
             else if (user.FileStatus == Account.FileCode.file_deleted_error)
@@ -319,6 +340,8 @@ namespace ServerLibrary
             return false;
 
         }
+
+        
 
         #endregion
 

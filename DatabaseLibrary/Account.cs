@@ -16,7 +16,8 @@ namespace DatabaseLibrary
             user_does_not_exist,
             must_be_logged,
             change_pwd,
-            change_pwd_error
+            change_pwd_error,
+            get_all_user_data
 
         }
 
@@ -47,6 +48,7 @@ namespace DatabaseLibrary
         public bool IsLogged { get => isLogged; set => isLogged = value; }
         public StatusCode Status { get => status; set => status = value; }
         public FileCode FileStatus { get => fileStatus; set => fileStatus = value; }
+        
 
         /// <summary>
         /// Funkcja czyszcząca obiekt
@@ -56,7 +58,6 @@ namespace DatabaseLibrary
             Id = null;
             Login = null;
             IsLogged = false;
-
         }
     }
 }

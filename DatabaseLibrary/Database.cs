@@ -7,10 +7,19 @@ namespace DatabaseLibrary
 {
     public abstract class DatabaseAbstract : Logger
     {
+        public enum DatabaseType
+        {
+            File,
+            User
+        }
+
         protected SQLiteCommand _command;
         protected SQLiteConnection _myDatabaseConnection;
         protected string _databaseName;
         protected readonly object keyLock = new object();
+        protected string _tableUsers;
+        protected string _tableFiles;
+
 
         protected DatabaseAbstract(string databaseName)
         {
@@ -131,6 +140,47 @@ namespace DatabaseLibrary
                 throw new Exception(DbMessage.invTableNameERROR);
 
             return exists;
+        }
+
+        public string GetListData(int id, DatabaseType type)
+        {
+            OpenConnection();
+            string tableName;
+            string data = "";
+
+            if (type == DatabaseType.File)
+                tableName = _tableFiles;
+            else
+                tableName = _tableUsers;
+
+
+            if (checkForTableExist(tableName))
+            {
+                lock (keyLock)
+                {
+                    _command.CommandText = $"SELECT * FROM {tableName} WHERE userId = '{id}'";
+                    SQLiteDataReader reader = _command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        data += reader.GetString(2);
+                        data += ";";
+                        if(type == DatabaseType.User)
+                        {
+                            data += reader.GetString(5) + ";";
+                            data += reader.GetString(6) + ";";
+                            data += reader.GetString(7) + ";";
+                            data += reader.GetInt32(8).ToString() + ";";
+                        }
+                    }
+
+                    reader.Close();
+                }
+            }
+
+            if (data.Length > 0)
+                return data;
+            else
+                return DbMessage.invFileListERROR;
         }
     }
 }
