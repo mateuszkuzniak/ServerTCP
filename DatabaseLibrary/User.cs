@@ -148,6 +148,36 @@ namespace DatabaseLibrary
             return user;
         }
 
+        public void UpdateLoginStatus(Account account)
+        {
+            OpenConnection();
+            lock (keyLock)
+            {
+                if (account.IsLogged)
+                {
+                    _command.CommandText = $"UPDATE {_tableUsers} SET isLogged = '0' WHERE id='{account.Id}'";
+                    account.IsLogged = false;
+                }
+                else
+                {
+                    _command.CommandText = $"UPDATE {_tableUsers} SET isLogged = '1' WHERE id='{account.Id}'";
+                    account.IsLogged = true;
+                }
+                _command.ExecuteNonQuery();
+            }
+        }
+
+        public void UpdateUserData(int id, string[] data)
+        {
+            OpenConnection();
+
+            lock (keyLock)
+            {
+                _command.CommandText = $"UPDATE {_tableUsers} SET email = '{data[0]}', firstName = '{data[1]}', secondName = '{data[2]}', phone ='{data[3]}' WHERE id = '{id}'";
+                _command.ExecuteScalar();
+            }
+        }
+
         public string GetAllLogedUser()
         {
             OpenConnection();
@@ -174,25 +204,6 @@ namespace DatabaseLibrary
                 return users;
             else
                 return DbMessage.userListEmpty;
-        }
-
-        public void UpdateLoginStatus(Account account)
-        {
-            OpenConnection();
-            lock (keyLock)
-            {
-                if (account.IsLogged)
-                {
-                    _command.CommandText = $"UPDATE {_tableUsers} SET isLogged = '0' WHERE id='{account.Id}'";
-                    account.IsLogged = false;
-                }
-                else
-                {
-                    _command.CommandText = $"UPDATE {_tableUsers} SET isLogged = '1' WHERE id='{account.Id}'";
-                    account.IsLogged = true;
-                }
-                _command.ExecuteNonQuery();
-            }
         }
     }
 }
