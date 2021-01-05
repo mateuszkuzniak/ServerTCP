@@ -8,6 +8,7 @@ using MessageLibrary;
 using Exceptions;
 using System.Windows.Forms;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace ServerLibrary
 {
@@ -72,7 +73,7 @@ namespace ServerLibrary
             _filesDatabase = new FileDb("users", "files");
             running = false;
             IPAddress = IP;
-           
+
             try
             {
                 Port = port;
@@ -125,6 +126,67 @@ namespace ServerLibrary
             return message.Trim(new char[] { '\r', '\n', '\0' });
         }
 
+        int HowManyParts(int size)
+        {
+            int parts = size / bufferSize;
+            if (parts * bufferSize < size)
+                return parts + 1;
+            else
+                return parts;
+        }
+
+
+        List<byte[]> DivideIntoParts(string response)
+        {
+            var responseByte = ASCIIEncoding.UTF8.GetBytes(response);
+            int parts = HowManyParts(response.Length);
+            List<byte[]> newBuffer = new List<byte[]>();
+
+            byte[] tempBuffer = new byte[bufferSize];
+            int x = 0;
+            for (int i = 0; i < parts; i++)
+            {
+                for (int j = 0; j < bufferSize; j++)
+                {
+                    if (x < responseByte.Length)
+                    {
+                        tempBuffer[j] = responseByte[x];
+                        x++;
+                    }
+                    else
+                    {
+                        x = 0;
+                        break;
+                    }
+
+                }
+                newBuffer.Add(tempBuffer);
+            }
+
+            return newBuffer;
+
+        }
+
+        void SendBuffer(string response, NetworkStream stream)
+        {
+            byte[] buffer = new byte[Buffer_size];
+
+            if (response.Length >= buffer.Length)
+            {
+                var newBuffer = DivideIntoParts(response);
+                foreach(var buff in newBuffer)
+                    stream.Write(buff, 0, buff.Length);
+            }
+            else
+            {
+                buffer = ASCIIEncoding.UTF8.GetBytes(response);
+                stream.Write(buffer, 0, buffer.Length);
+            }
+
+            buffer = new byte[Buffer_size];
+
+        }
+
         protected void BeginDataTransmission(NetworkStream stream)
         {
             Account user = new Account();
@@ -133,7 +195,7 @@ namespace ServerLibrary
             protocol.SetDatabaseFile(_filesDatabase);
             string message = "";
             string response;
-            byte[] buffer;
+            
 
 
 
@@ -143,10 +205,11 @@ namespace ServerLibrary
                 try
                 {
                     message = ReadMessage(stream);
-                    response = protocol.GenerateResponse(message);
-                    buffer = ASCIIEncoding.UTF8.GetBytes(response);
-                    stream.Write(buffer, 0, buffer.Length);
-                    buffer = new byte[Buffer_size];
+                    response = protocol.GenerateResponse(message + "ENDMESS");
+                    SendBuffer(response, stream);
+                    //buffer = ASCIIEncoding.UTF8.GetBytes(response);
+                   // stream.Write(buffer, 0, buffer.Length);
+                    //buffer = new byte[Buffer_size];
                 }
                 catch (IOException)
                 {
