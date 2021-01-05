@@ -78,7 +78,9 @@ namespace MessageLibrary
         {
             var userPath = $"{directoryLogsPath}{userName}.txt";
             if (File.Exists(userPath))
-                return File.ReadAllText(userPath);
+            {
+                return string.Join(Environment.NewLine, File.ReadAllLines(userPath));
+            }
             else
                 return null;
         }
