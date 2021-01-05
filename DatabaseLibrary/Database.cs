@@ -141,6 +141,11 @@ namespace DatabaseLibrary
 
             return exists;
         }
+        
+        private string AddSeparator(string data, string separator)
+        {
+            return data += separator;
+        }
 
         public string GetListData(int id, DatabaseType type)
         {
@@ -158,18 +163,35 @@ namespace DatabaseLibrary
             {
                 lock (keyLock)
                 {
-                    _command.CommandText = $"SELECT * FROM {tableName} WHERE userId = '{id}'";
+                    if (type == DatabaseType.File)
+                        _command.CommandText = $"SELECT * FROM {tableName} WHERE userId = '{id}'";
+                    else
+                        _command.CommandText = $"SELECT * FROM {tableName} WHERE id = '{id}'";
+
                     SQLiteDataReader reader = _command.ExecuteReader();
+
                     while (reader.Read())
                     {
-                        data += reader.GetString(2);
-                        data += ";";
+                        if(type==DatabaseType.File)
+                        {
+                            data += reader.GetString(2);
+                            data = AddSeparator(data, ";");
+                        }
                         if(type == DatabaseType.User)
                         {
-                            data += reader.GetString(5) + ";";
-                            data += reader.GetString(6) + ";";
-                            data += reader.GetString(7) + ";";
-                            data += reader.GetInt32(8).ToString() + ";";
+                            if (!reader.IsDBNull(4))
+                                data += reader.GetString(4);
+                            data = AddSeparator(data, ";");
+                            if (!reader.IsDBNull(5))
+                                data += reader.GetString(5);
+                            data = AddSeparator(data, ";");
+                            if (!reader.IsDBNull(6))
+                                data += reader.GetString(6);
+                            data = AddSeparator(data, ";");
+                            if (!reader.IsDBNull(7))
+                                data += reader.GetInt32(7).ToString();
+                            data = AddSeparator(data, ";");
+
                         }
                     }
 

@@ -49,33 +49,33 @@
             // 
             // textBoxLogin
             // 
-            this.textBoxLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (238)));
+            this.textBoxLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.textBoxLogin.ForeColor = System.Drawing.Color.Silver;
             this.textBoxLogin.Location = new System.Drawing.Point(128, 135);
             this.textBoxLogin.Name = "textBoxLogin";
             this.textBoxLogin.Size = new System.Drawing.Size(134, 29);
             this.textBoxLogin.TabIndex = 1;
-            this.textBoxLogin.Text = "Login";
+            this.textBoxLogin.Text = "mateusz";
             this.textBoxLogin.Enter += new System.EventHandler(this.textBoxLogin_Enter);
             this.textBoxLogin.Leave += new System.EventHandler(this.textBoxLogin_Leave);
             // 
             // textBoxPassword
             // 
-            this.textBoxPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (238)));
+            this.textBoxPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.textBoxPassword.ForeColor = System.Drawing.Color.Silver;
             this.textBoxPassword.Location = new System.Drawing.Point(128, 190);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.PasswordChar = '*';
             this.textBoxPassword.Size = new System.Drawing.Size(134, 29);
             this.textBoxPassword.TabIndex = 2;
-            this.textBoxPassword.Text = "Password";
+            this.textBoxPassword.Text = "!Q2w3e4r";
             this.textBoxPassword.Enter += new System.EventHandler(this.textBoxPassword_Enter);
             this.textBoxPassword.Leave += new System.EventHandler(this.textBoxPassword_Leave);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (238)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label1.Location = new System.Drawing.Point(110, 31);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(177, 55);
@@ -116,6 +116,7 @@
             this.Size = new System.Drawing.Size(400, 300);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion
