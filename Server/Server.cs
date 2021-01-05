@@ -205,8 +205,8 @@ namespace ServerLibrary
                 try
                 {
                     message = ReadMessage(stream);
-                    response = protocol.GenerateResponse(message + "ENDMESS");
-                    SendBuffer(response, stream);
+                    response = protocol.GenerateResponse(message);
+                    SendBuffer(response + "ENDMESS", stream);
                     //buffer = ASCIIEncoding.UTF8.GetBytes(response);
                    // stream.Write(buffer, 0, buffer.Length);
                     //buffer = new byte[Buffer_size];
