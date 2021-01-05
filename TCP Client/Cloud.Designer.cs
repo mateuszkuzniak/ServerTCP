@@ -38,6 +38,8 @@
             this.buttonDeleteFile = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonChangePwd = new System.Windows.Forms.Button();
+            this.buttonLogs = new System.Windows.Forms.Button();
+            this.buttonUser = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBoxFiles
@@ -47,13 +49,14 @@
             this.listBoxFiles.Name = "listBoxFiles";
             this.listBoxFiles.Size = new System.Drawing.Size(120, 290);
             this.listBoxFiles.TabIndex = 0;
+            this.listBoxFiles.DoubleClick += new System.EventHandler(this.listBoxFiles_DoubleClick);
             // 
             // textBoxFileText
             // 
             this.textBoxFileText.Location = new System.Drawing.Point(126, 116);
             this.textBoxFileText.Margin = new System.Windows.Forms.Padding(0);
             this.textBoxFileText.Name = "textBoxFileText";
-            this.textBoxFileText.Size = new System.Drawing.Size(368, 381);
+            this.textBoxFileText.Size = new System.Drawing.Size(371, 348);
             this.textBoxFileText.TabIndex = 2;
             this.textBoxFileText.Text = "";
             // 
@@ -78,7 +81,7 @@
             // 
             // buttonAddNewFile
             // 
-            this.buttonAddNewFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (238)));
+            this.buttonAddNewFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.buttonAddNewFile.Location = new System.Drawing.Point(255, 3);
             this.buttonAddNewFile.Name = "buttonAddNewFile";
             this.buttonAddNewFile.Size = new System.Drawing.Size(120, 107);
@@ -138,10 +141,32 @@
             this.buttonChangePwd.UseVisualStyleBackColor = true;
             this.buttonChangePwd.Click += new System.EventHandler(this.buttonChangePwd_Click);
             // 
+            // buttonLogs
+            // 
+            this.buttonLogs.Location = new System.Drawing.Point(422, 471);
+            this.buttonLogs.Name = "buttonLogs";
+            this.buttonLogs.Size = new System.Drawing.Size(75, 23);
+            this.buttonLogs.TabIndex = 12;
+            this.buttonLogs.Text = "Logs";
+            this.buttonLogs.UseVisualStyleBackColor = true;
+            this.buttonLogs.Click += new System.EventHandler(this.buttonLogs_Click);
+            // 
+            // buttonUser
+            // 
+            this.buttonUser.Location = new System.Drawing.Point(341, 471);
+            this.buttonUser.Name = "buttonUser";
+            this.buttonUser.Size = new System.Drawing.Size(75, 23);
+            this.buttonUser.TabIndex = 13;
+            this.buttonUser.Text = "User";
+            this.buttonUser.UseVisualStyleBackColor = true;
+            this.buttonUser.Click += new System.EventHandler(this.buttonUser_Click);
+            // 
             // Cloud
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.buttonUser);
+            this.Controls.Add(this.buttonLogs);
             this.Controls.Add(this.buttonChangePwd);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonDeleteFile);
@@ -156,6 +181,7 @@
             this.Size = new System.Drawing.Size(500, 500);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         private System.Windows.Forms.Button buttonChangePwd;
@@ -170,5 +196,7 @@
         private System.Windows.Forms.Button buttonDeleteFile;
         private System.Windows.Forms.ListBox listBoxFiles;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buttonLogs;
+        private System.Windows.Forms.Button buttonUser;
     }
 }

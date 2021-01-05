@@ -35,7 +35,7 @@ namespace TCP_Client
 
                 string receivedMsg = Messages.receiveMessage(con);
 
-                if (receivedMsg.Equals("INV_USER"))
+                if (receivedMsg.Equals("USER_DOES_NOT_EXISTS"))
                     MessageBox.Show("User does not exist");
                 else if (receivedMsg.Equals("USER IS CURRENTLY LOGGED IN "))
                     MessageBox.Show("User is currently logged in");

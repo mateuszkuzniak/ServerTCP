@@ -114,5 +114,31 @@ namespace TCP_Client
             Form1.Instance.panel.Controls.Add(cps);
             Form1.Instance.panel.Controls["ChangePasswordScreen"].BringToFront();
         }
+
+        private void listBoxFiles_DoubleClick(object sender, EventArgs e)
+        {
+            if (listBoxFiles.SelectedItem != null)
+            {
+                Messages.sendMessage(Form1.Instance.connection, new string[] { "FILEOPEN", listBoxFiles.SelectedItem.ToString().ToLower() });
+                string text = Messages.receiveMessage(Form1.Instance.connection);
+                textBoxFileText.Text = text;
+            }
+            else
+                MessageBox.Show("Select file");
+        }
+
+        private void buttonLogs_Click(object sender, EventArgs e)
+        {
+            LogsScreen ls = new LogsScreen();
+            Form1.Instance.panel.Controls.Add(ls);
+            Form1.Instance.panel.Controls["LogsScreen"].BringToFront();
+        }
+
+        private void buttonUser_Click(object sender, EventArgs e)
+        {
+            UserScreen us = new UserScreen();
+            Form1.Instance.panel.Controls.Add(us);
+            Form1.Instance.panel.Controls["UserScreen"].BringToFront();
+        }
     }
 }
