@@ -19,14 +19,14 @@ namespace TCP_Client
         {
             InitializeComponent();
             Messages.sendMessage(Form1.Instance.connection, new string[] { "GETLOGS" });
-            string logs = Messages.receiveMessage(Form1.Instance.connection);
+            string logs = Messages.receiveLongMessage(Form1.Instance.connection);
             textBoxLogs.Text = logs;
         }
 
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
             Messages.sendMessage(Form1.Instance.connection, new string[] { "GETLOGS" });
-            string logs = Messages.receiveMessage(Form1.Instance.connection);
+            string logs = Messages.receiveLongMessage(Form1.Instance.connection);
             textBoxLogs.Text = logs;
         }
 
