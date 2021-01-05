@@ -469,7 +469,6 @@ namespace ServerLibrary
 
             if (args1 == null && args2 == null && (opcode == "FILEALL" || opcode == "GETLOGS"))
             {
-
                 request = new Request(opcodes[opcode], opcode);
                 response = responses[request];
                 response.Action();
