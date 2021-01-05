@@ -467,7 +467,7 @@ namespace ServerLibrary
             Request request;
 
 
-            if (args1 == null && args2 == null && (opcode == "FILEALL" || opcode == "GETLOGS"))
+            if (args1 == null && args2 == null && (opcode == "FILEALL" || opcode == "GETLOGS" || opcode == "GETUSER"))
             {
 
                 request = new Request(opcodes[opcode], opcode);

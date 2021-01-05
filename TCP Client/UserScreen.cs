@@ -7,14 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Client;
 
 namespace TCP_Client
 {
     public partial class UserScreen : UserControl
     {
+        Form1 f = Form1.Instance;
+
         public UserScreen()
         {
             InitializeComponent();
+            Messages.sendMessage(Form1.Instance.connection, new string[] { "GETUSER" });
+            string text = Messages.receiveMessage(Form1.Instance.connection);
+            MessageBox.Show(text);
         }
 
         private void buttonBack_Click(object sender, EventArgs e)
