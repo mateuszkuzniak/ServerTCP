@@ -144,6 +144,8 @@ namespace ServerLibrary
                     {
                         if (ValidUserData(tokens))
                             UsersDatabase.UpdateUserData((int)user.Id, tokens);
+                        else
+                            user.Status = Account.StatusCode.user_inv_data;
                     }
                     else
                         user.Status = Account.StatusCode.must_be_logged;
@@ -301,9 +303,9 @@ namespace ServerLibrary
                 return ServerMessage.invPhoneNumber;
             else if (user.Status == Account.StatusCode.user_valid_data)
                 return ServerMessage.userValidData;
-
-
-                return ServerMessage.unk;
+            else if (user.Status == Account.StatusCode.user_inv_data)
+                return ServerMessage.userInvData;
+            return ServerMessage.unk;
         }
 
         string GetFileStatus()
@@ -428,7 +430,7 @@ namespace ServerLibrary
                 user.Status = Account.StatusCode.inv_mail;
             else if (data[1].Length > 0 && !Regex.IsMatch(data[1], @"^[a-zA-Z]+$"))
                 user.Status = Account.StatusCode.inv_first_name;
-            else if (data[2].Length > 0 && !Regex.IsMatch(data[2], @"^[a-zA-Z]+$"))
+            else if (data[2].Length > 0 && !Regex.IsMatch(data[2], @"^[a-zA-Z]+(\-[a-zA-Z]+)?$"))
                 user.Status = Account.StatusCode.inv_second_name;
             else if (data[3].Length > 0 && (!Regex.IsMatch(data[3], @"^[0-9]+$") || data[3].Length < 9 || data[3].Length > 9))
                 user.Status = Account.StatusCode.inv_phone_number;
