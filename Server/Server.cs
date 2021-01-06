@@ -146,6 +146,7 @@ namespace ServerLibrary
             int x = 0;
             for (int i = 0; i < parts; i++)
             {
+                tempBuffer = new byte[bufferSize];
                 for (int j = 0; j < bufferSize; j++)
                 {
                     if (x < responseByte.Length)
@@ -174,8 +175,10 @@ namespace ServerLibrary
             if (response.Length >= buffer.Length)
             {
                 var newBuffer = DivideIntoParts(response);
-                foreach(var buff in newBuffer)
+                foreach (var buff in newBuffer)
+                {
                     stream.Write(buff, 0, buff.Length);
+                }
             }
             else
             {
@@ -208,7 +211,7 @@ namespace ServerLibrary
                     response = protocol.GenerateResponse(message);
                     SendBuffer(response + "ENDMESS", stream);
                     //buffer = ASCIIEncoding.UTF8.GetBytes(response);
-                   // stream.Write(buffer, 0, buffer.Length);
+                    // stream.Write(buffer, 0, buffer.Length);
                     //buffer = new byte[Buffer_size];
                 }
                 catch (IOException)
