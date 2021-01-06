@@ -23,6 +23,9 @@ namespace TCP_Client
 
         private void buttonBack_Click(object sender, EventArgs e)
         {
+            Form1.Instance.panel.Controls.Remove(Form1.Instance.panel.Controls["UserScreen"]);
+            UserScreen us = new UserScreen();
+            Form1.Instance.panel.Controls.Add(us);
             Form1.Instance.panel.Controls["UserScreen"].BringToFront();
         }
 
@@ -34,6 +37,7 @@ namespace TCP_Client
                 Messages.sendMessage(Form1.Instance.connection, new string[] { "UPDATEUSERDATA", data });
                 Messages.receiveMessage(Form1.Instance.connection);
                 MessageBox.Show("User profile saved");
+                buttonBack_Click(sender, e);
             }
             else
             {
@@ -48,7 +52,7 @@ namespace TCP_Client
                 MessageBox.Show("Invalid Email");
             else if (textBoxFirstName.TextLength > 0 && !Regex.IsMatch(textBoxFirstName.Text, @"^[a-zA-Z]+$"))
                 MessageBox.Show("Invalid first name");
-            else if (textBoxLastName.TextLength > 0 && !Regex.IsMatch(textBoxLastName.Text, @"^[a-zA-Z]+$"))
+            else if (textBoxLastName.TextLength > 0 && !Regex.IsMatch(textBoxLastName.Text, @"^[a-zA-Z]+(-[a-zA-Z]+)?$"))
                 MessageBox.Show("Invalid last name");
             else if (textBoxPhone.TextLength > 0 && (!Regex.IsMatch(textBoxPhone.Text, @"^[0-9]+$") || textBoxPhone.Text.Length < 9 || textBoxPhone.Text.Length > 9))
                 MessageBox.Show("Invalid phone number");
