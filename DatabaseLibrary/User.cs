@@ -173,7 +173,7 @@ namespace DatabaseLibrary
 
             lock (keyLock)
             {
-                _command.CommandText = $"UPDATE {_tableUsers} SET email = '{data[0]}', firstName = '{data[1]}', secondName = '{data[2]}', phone ='{data[3]}' WHERE id = '{id}'";
+                _command.CommandText = $"UPDATE {_tableUsers} SET email = '{data[0]}', firstName = '{data[1]}', secondName = '{data[2]}', phone ='{int.Parse(data[3])}' WHERE id = '{id}'";
                 _command.ExecuteScalar();
             }
         }
