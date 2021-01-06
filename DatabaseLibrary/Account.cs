@@ -22,8 +22,8 @@ namespace DatabaseLibrary
             inv_first_name,
             inv_second_name,
             inv_phone_number,
-            user_valid_data
-
+            user_valid_data,
+            user_inv_data
         }
 
         public enum FileCode
