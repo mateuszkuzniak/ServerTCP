@@ -22,9 +22,9 @@ namespace TCP_Client
             string text = Messages.receiveMessage(Form1.Instance.connection);
             MessageBox.Show(text);
             string[] data = text.Split(';');
-            labelName.Text = $"{data[1]} {data[2]} {data[3]}";
+            labelName.Text = $"{data[1]} {data[2]}";
             labelEmail.Text = data[0];
-            labelPhone.Text = data[4];
+            labelPhone.Text = data[3];
         }
 
         private void buttonBack_Click(object sender, EventArgs e)
@@ -34,6 +34,7 @@ namespace TCP_Client
 
         private void buttonEdit_Click(object sender, EventArgs e)
         {
+            Form1.Instance.panel.Controls.Remove(Form1.Instance.panel.Controls["EditUserScreen"]);
             EditUserScreen eus = new EditUserScreen();
             Form1.Instance.panel.Controls.Add(eus);
             Form1.Instance.panel.Controls["EditUserScreen"].BringToFront();

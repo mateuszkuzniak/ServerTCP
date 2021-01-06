@@ -124,6 +124,7 @@ namespace TCP_Client
 
         private void buttonUser_Click(object sender, EventArgs e)
         {
+            Form1.Instance.panel.Controls.Remove(Form1.Instance.panel.Controls["UserScreen"]);
             UserScreen us = new UserScreen();
             Form1.Instance.panel.Controls.Add(us);
             Form1.Instance.panel.Controls["UserScreen"].BringToFront();
