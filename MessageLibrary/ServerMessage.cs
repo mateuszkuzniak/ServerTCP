@@ -24,6 +24,7 @@ namespace MessageLibrary
         public static string invSecondName = "INV_SECOND_NAME";
         public static string invPhoneNumber = "INV_PHONE_NUMBER";
         public static string userValidData = "USER_VALID_DATA";
+        public static string userInvData = "USER_INV_DATA";
         #endregion
 
         #region FILE
