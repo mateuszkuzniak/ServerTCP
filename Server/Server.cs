@@ -186,7 +186,7 @@ namespace ServerLibrary
                 stream.Write(buffer, 0, buffer.Length);
             }
 
-            buffer = new byte[Buffer_size];
+           // buffer = new byte[Buffer_size];
 
         }
 
@@ -196,7 +196,7 @@ namespace ServerLibrary
             CommunicationProtocol protocol = new T();
             protocol.SetDatabaseUser(_usersDatabase);
             protocol.SetDatabaseFile(_filesDatabase);
-            string message = "";
+            string message;
             string response;
             
 
@@ -210,9 +210,6 @@ namespace ServerLibrary
                     message = ReadMessage(stream);
                     response = protocol.GenerateResponse(message);
                     SendBuffer(response + "ENDMESS", stream);
-                    //buffer = ASCIIEncoding.UTF8.GetBytes(response);
-                    // stream.Write(buffer, 0, buffer.Length);
-                    //buffer = new byte[Buffer_size];
                 }
                 catch (IOException)
                 {
