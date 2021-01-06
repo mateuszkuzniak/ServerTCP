@@ -30,9 +30,8 @@ namespace TCP_Client
         {
             if (ValidUserData())
             {
-                string data = $"{textBoxEmail.Text} {textBoxFirstName.Text} {textBoxSecondName.Text} {textBoxLastName.Text} {textBoxPhone.Text}";
+                string data = $"{textBoxEmail.Text} {textBoxFirstName.Text} {textBoxLastName.Text} {textBoxPhone.Text}";
                 Messages.sendMessage(Form1.Instance.connection, new string[] { "UPDATEUSERDATA", data });
-                Messages.receiveMessage(Form1.Instance.connection);
                 MessageBox.Show("User profile saved");
             }
             else
