@@ -21,6 +21,8 @@ namespace TCP_Client
             Messages.sendMessage(Form1.Instance.connection, new string[] { "GETLOGS" });
             string logs = Messages.receiveLongMessage(Form1.Instance.connection);
             textBoxLogs.Text = logs;
+            textBoxLogs.Select(textBoxLogs.TextLength + 1, 0);
+            textBoxLogs.ScrollToCaret();
         }
 
         private void buttonRefresh_Click(object sender, EventArgs e)
