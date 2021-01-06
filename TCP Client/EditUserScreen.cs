@@ -48,8 +48,6 @@ namespace TCP_Client
                 MessageBox.Show("Invalid Email");
             else if (textBoxFirstName.TextLength > 0 && !Regex.IsMatch(textBoxFirstName.Text, @"^[a-zA-Z]+$"))
                 MessageBox.Show("Invalid first name");
-            else if (textBoxSecondName.TextLength > 0 && !Regex.IsMatch(textBoxSecondName.Text, @"^[a-zA-Z]+$"))
-                MessageBox.Show("Invalid second name");
             else if (textBoxLastName.TextLength > 0 && !Regex.IsMatch(textBoxLastName.Text, @"^[a-zA-Z]+$"))
                 MessageBox.Show("Invalid last name");
             else if (textBoxPhone.TextLength > 0 && (!Regex.IsMatch(textBoxPhone.Text, @"^[0-9]+$") || textBoxPhone.Text.Length < 9 || textBoxPhone.Text.Length > 9))
