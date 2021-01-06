@@ -473,7 +473,7 @@ namespace ServerLibrary
                 response = responses[request];
                 response.Action();
             }
-            else if (args1 != null && args2 == null && (opcode == "FILEDELETE" || opcode == "FILEOPEN"))
+            else if (args1 != null && args2 == null && (opcode == "FILEDELETE" || opcode == "FILEOPEN" || opcode == "UPDATEUSERDATA"))
             {
                 request = new Request(opcodes[opcode], opcode, args1);
                 response = responses[request];

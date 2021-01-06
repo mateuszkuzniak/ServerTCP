@@ -33,7 +33,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.labelName = new System.Windows.Forms.Label();
+            this.labelEmail = new System.Windows.Forms.Label();
+            this.labelPhone = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buttonBack
@@ -86,20 +88,40 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "Phone";
             // 
-            // label4
+            // labelName
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(159, 114);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "label4";
+            this.labelName.AutoSize = true;
+            this.labelName.Location = new System.Drawing.Point(159, 114);
+            this.labelName.Name = "labelName";
+            this.labelName.Size = new System.Drawing.Size(35, 13);
+            this.labelName.TabIndex = 5;
+            this.labelName.Text = "label4";
+            // 
+            // labelEmail
+            // 
+            this.labelEmail.AutoSize = true;
+            this.labelEmail.Location = new System.Drawing.Point(171, 230);
+            this.labelEmail.Name = "labelEmail";
+            this.labelEmail.Size = new System.Drawing.Size(35, 13);
+            this.labelEmail.TabIndex = 6;
+            this.labelEmail.Text = "label5";
+            // 
+            // labelPhone
+            // 
+            this.labelPhone.AutoSize = true;
+            this.labelPhone.Location = new System.Drawing.Point(162, 351);
+            this.labelPhone.Name = "labelPhone";
+            this.labelPhone.Size = new System.Drawing.Size(35, 13);
+            this.labelPhone.TabIndex = 7;
+            this.labelPhone.Text = "label6";
             // 
             // UserScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.labelPhone);
+            this.Controls.Add(this.labelEmail);
+            this.Controls.Add(this.labelName);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -119,6 +141,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label labelName;
+        private System.Windows.Forms.Label labelEmail;
+        private System.Windows.Forms.Label labelPhone;
     }
 }

@@ -21,6 +21,10 @@ namespace TCP_Client
             Messages.sendMessage(Form1.Instance.connection, new string[] { "GETUSER" });
             string text = Messages.receiveMessage(Form1.Instance.connection);
             MessageBox.Show(text);
+            string[] data = text.Split(';');
+            labelName.Text = $"{data[1]} {data[2]} {data[3]}";
+            labelEmail.Text = data[0];
+            labelPhone.Text = data[4];
         }
 
         private void buttonBack_Click(object sender, EventArgs e)
