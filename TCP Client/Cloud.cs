@@ -129,6 +129,7 @@ namespace TCP_Client
 
         private void buttonLogs_Click(object sender, EventArgs e)
         {
+            Form1.Instance.panel.Controls.Remove(Form1.Instance.panel.Controls["LogsScreen"]);
             LogsScreen ls = new LogsScreen();
             Form1.Instance.panel.Controls.Add(ls);
             Form1.Instance.panel.Controls["LogsScreen"].BringToFront();
