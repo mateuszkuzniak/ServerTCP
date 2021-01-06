@@ -6,7 +6,7 @@ namespace DatabaseLibrary
 {
     public class User : DatabaseAbstract
     {
-        public string TableName {get => _tableUsers; }
+        public string TableName { get => _tableUsers; }
         public User(string databaseName, string tableName) : base(databaseName)
         {
             string command = $@"CREATE TABLE {tableName}(
@@ -30,7 +30,7 @@ namespace DatabaseLibrary
                 CreateTable(tableName, command);
             }
 
-           _tableUsers = tableName;
+            _tableUsers = tableName;
         }
 
         public void MakeLogOut(string tableName)
@@ -93,7 +93,7 @@ namespace DatabaseLibrary
             {
                 _command.CommandText = $"UPDATE {_tableUsers} SET password = '{newPass}' WHERE user_name = '{userName}' AND password = '{oldPass}'";
                 _command.ExecuteScalar();
-                if(CheckPassword(userName, newPass))
+                if (CheckPassword(userName, newPass))
                     return true;
                 else
                     return false;
@@ -167,14 +167,43 @@ namespace DatabaseLibrary
             }
         }
 
+        string CheckNull(string[] data, int position)
+        {
+
+            for (int i = position + 1; i < data.Length; i++)
+                if (!StringIsNull(data[i]))
+                    return ",";
+            return "";
+        }
+
+        bool DataIsNull(string[] data)
+        {
+            foreach (var d in data)
+                if (!StringIsNull(d))
+                    return false;
+            return true;
+        }
+
+        bool StringIsNull(string data)
+        {
+            if (data == "")
+                return true;
+            return false;
+        }
+
         public void UpdateUserData(int id, string[] data)
         {
             OpenConnection();
 
             lock (keyLock)
             {
-                _command.CommandText = $"UPDATE {_tableUsers} SET email = '{data[0]}', firstName = '{data[1]}', secondName = '{data[2]}', phone ='{int.Parse(data[3])}' WHERE id = '{id}'";
-                _command.ExecuteScalar();
+                _command.CommandText = $"UPDATE {_tableUsers} SET {((!StringIsNull(data[0])) ? "email = '" + data[0] + $"'{CheckNull(data, 0)}" : "")}" +
+                    $"{ ((!StringIsNull(data[1])) ? " firstName = '" + data[1] + $"'{CheckNull(data, 1)}" : "")}" +
+                    $"{ ((!StringIsNull(data[2])) ? " secondName = '" + data[2] + $"'{CheckNull(data, 2)}" : "")}" +
+                    $"{ ((!StringIsNull(data[3])) ? " phone = '" + int.Parse(data[3]) + "'" : "")}";
+
+                if (!DataIsNull(data))
+                    _command.ExecuteScalar();
             }
         }
 
