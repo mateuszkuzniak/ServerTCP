@@ -43,11 +43,12 @@ namespace Client
             {
                 con.Stream.Read(con.Buffer, 0, con.bufferSize);
                 msg += Encoding.UTF8.GetString(con.Buffer);
-                if (msg.EndsWith("ENDMESS"))
+                if (msg.Contains("ENDMESS"))
                 {
                     end = true;
                     msg = msg.Remove(msg.IndexOf("ENDMESS"), msg.Length - msg.IndexOf("ENDMESS"));
                 }
+                con.Buffer = new byte[con.bufferSize];
             }
             return msg;
         }
