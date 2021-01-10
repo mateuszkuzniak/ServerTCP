@@ -30,7 +30,6 @@
         {
             this.textBoxLogs = new System.Windows.Forms.RichTextBox();
             this.buttonBack = new System.Windows.Forms.Button();
-            this.buttonRefresh = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxLogs
@@ -52,21 +51,10 @@
             this.buttonBack.UseVisualStyleBackColor = true;
             this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
             // 
-            // buttonRefresh
-            // 
-            this.buttonRefresh.Location = new System.Drawing.Point(394, 3);
-            this.buttonRefresh.Name = "buttonRefresh";
-            this.buttonRefresh.Size = new System.Drawing.Size(103, 26);
-            this.buttonRefresh.TabIndex = 2;
-            this.buttonRefresh.Text = "Refresh";
-            this.buttonRefresh.UseVisualStyleBackColor = true;
-            this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
-            // 
             // LogsScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.buttonRefresh);
             this.Controls.Add(this.buttonBack);
             this.Controls.Add(this.textBoxLogs);
             this.Name = "LogsScreen";
@@ -79,6 +67,5 @@
 
         private System.Windows.Forms.RichTextBox textBoxLogs;
         private System.Windows.Forms.Button buttonBack;
-        private System.Windows.Forms.Button buttonRefresh;
     }
 }

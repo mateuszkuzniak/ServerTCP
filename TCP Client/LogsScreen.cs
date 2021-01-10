@@ -25,13 +25,6 @@ namespace TCP_Client
             textBoxLogs.ScrollToCaret();
         }
 
-        private void buttonRefresh_Click(object sender, EventArgs e)
-        {
-            Messages.sendMessage(Form1.Instance.connection, new string[] { "GETLOGS" });
-            string logs = Messages.receiveLongMessage(Form1.Instance.connection);
-            textBoxLogs.Text = logs;
-        }
-
         private void buttonBack_Click(object sender, EventArgs e)
         {
             Form1.Instance.panel.Controls["Cloud"].BringToFront();

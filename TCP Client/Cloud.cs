@@ -30,18 +30,6 @@ namespace TCP_Client
             listBoxFiles.Update();
         }
 
-        private void buttonShowFile_Click(object sender, EventArgs e)
-        {
-            if (listBoxFiles.SelectedItem != null)
-            {
-                Messages.sendMessage(Form1.Instance.connection, new string[] { "FILEOPEN", listBoxFiles.SelectedItem.ToString().ToLower() });
-                string text = Messages.receiveMessage(Form1.Instance.connection);
-                textBoxFileText.Text = text;
-            }
-            else
-                MessageBox.Show("Select file");
-        }
-
         private void buttonDeleteFile_Click(object sender, EventArgs e)
         {
             if (listBoxFiles.SelectedItem != null)
@@ -126,6 +114,8 @@ namespace TCP_Client
         {
             Form1.Instance.panel.Controls.Remove(Form1.Instance.panel.Controls["UserScreen"]);
             UserScreen us = new UserScreen();
+            Size size = new Size(235, 189);
+            f.Size = size;
             Form1.Instance.panel.Controls.Add(us);
             Form1.Instance.panel.Controls["UserScreen"].BringToFront();
         }

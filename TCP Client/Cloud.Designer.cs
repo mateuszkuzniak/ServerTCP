@@ -33,7 +33,6 @@
             this.textBoxNewFileName = new System.Windows.Forms.TextBox();
             this.buttonLogout = new System.Windows.Forms.Button();
             this.buttonAddNewFile = new System.Windows.Forms.Button();
-            this.buttonShowFile = new System.Windows.Forms.Button();
             this.buttonSaveFile = new System.Windows.Forms.Button();
             this.buttonDeleteFile = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -47,7 +46,7 @@
             this.listBoxFiles.FormattingEnabled = true;
             this.listBoxFiles.Location = new System.Drawing.Point(3, 116);
             this.listBoxFiles.Name = "listBoxFiles";
-            this.listBoxFiles.Size = new System.Drawing.Size(120, 290);
+            this.listBoxFiles.Size = new System.Drawing.Size(120, 316);
             this.listBoxFiles.TabIndex = 0;
             this.listBoxFiles.SelectedIndexChanged += new System.EventHandler(this.listBoxFiles_SelectedIndexChanged);
             // 
@@ -89,16 +88,6 @@
             this.buttonAddNewFile.Text = "Add new file";
             this.buttonAddNewFile.UseVisualStyleBackColor = true;
             this.buttonAddNewFile.Click += new System.EventHandler(this.buttonAddNewFile_Click);
-            // 
-            // buttonShowFile
-            // 
-            this.buttonShowFile.Location = new System.Drawing.Point(3, 412);
-            this.buttonShowFile.Name = "buttonShowFile";
-            this.buttonShowFile.Size = new System.Drawing.Size(119, 23);
-            this.buttonShowFile.TabIndex = 7;
-            this.buttonShowFile.Text = "Show file";
-            this.buttonShowFile.UseVisualStyleBackColor = true;
-            this.buttonShowFile.Click += new System.EventHandler(this.buttonShowFile_Click);
             // 
             // buttonSaveFile
             // 
@@ -171,7 +160,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonDeleteFile);
             this.Controls.Add(this.buttonSaveFile);
-            this.Controls.Add(this.buttonShowFile);
             this.Controls.Add(this.buttonAddNewFile);
             this.Controls.Add(this.buttonLogout);
             this.Controls.Add(this.textBoxNewFileName);
@@ -191,7 +179,6 @@
         private System.Windows.Forms.TextBox textBoxNewFileName;
         private System.Windows.Forms.Button buttonLogout;
         private System.Windows.Forms.Button buttonAddNewFile;
-        private System.Windows.Forms.Button buttonShowFile;
         private System.Windows.Forms.Button buttonSaveFile;
         private System.Windows.Forms.Button buttonDeleteFile;
         private System.Windows.Forms.ListBox listBoxFiles;
