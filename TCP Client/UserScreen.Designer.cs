@@ -55,7 +55,7 @@
             this.buttonEdit.Location = new System.Drawing.Point(129, 119);
             this.buttonEdit.Name = "buttonEdit";
             this.buttonEdit.Size = new System.Drawing.Size(75, 23);
-            this.buttonEdit.TabIndex = 1;
+            this.buttonEdit.TabIndex = 5;
             this.buttonEdit.Text = "Save";
             this.buttonEdit.UseVisualStyleBackColor = true;
             this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
@@ -67,7 +67,7 @@
             this.label1.Location = new System.Drawing.Point(11, 5);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(98, 24);
-            this.label1.TabIndex = 2;
+            this.label1.TabIndex = 6;
             this.label1.Text = "First name";
             // 
             // label2
@@ -77,7 +77,7 @@
             this.label2.Location = new System.Drawing.Point(52, 56);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(57, 24);
-            this.label2.TabIndex = 3;
+            this.label2.TabIndex = 8;
             this.label2.Text = "Email";
             // 
             // label3
@@ -87,7 +87,7 @@
             this.label3.Location = new System.Drawing.Point(43, 80);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(66, 24);
-            this.label3.TabIndex = 4;
+            this.label3.TabIndex = 9;
             this.label3.Text = "Phone";
             // 
             // textBoxFirstName
@@ -95,21 +95,21 @@
             this.textBoxFirstName.Location = new System.Drawing.Point(115, 5);
             this.textBoxFirstName.Name = "textBoxFirstName";
             this.textBoxFirstName.Size = new System.Drawing.Size(100, 20);
-            this.textBoxFirstName.TabIndex = 5;
+            this.textBoxFirstName.TabIndex = 1;
             // 
             // textBoxEmail
             // 
             this.textBoxEmail.Location = new System.Drawing.Point(115, 57);
             this.textBoxEmail.Name = "textBoxEmail";
             this.textBoxEmail.Size = new System.Drawing.Size(100, 20);
-            this.textBoxEmail.TabIndex = 6;
+            this.textBoxEmail.TabIndex = 3;
             // 
             // textBoxPhone
             // 
             this.textBoxPhone.Location = new System.Drawing.Point(115, 83);
             this.textBoxPhone.Name = "textBoxPhone";
             this.textBoxPhone.Size = new System.Drawing.Size(100, 20);
-            this.textBoxPhone.TabIndex = 7;
+            this.textBoxPhone.TabIndex = 4;
             // 
             // label4
             // 
@@ -118,7 +118,7 @@
             this.label4.Location = new System.Drawing.Point(13, 31);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(96, 24);
-            this.label4.TabIndex = 8;
+            this.label4.TabIndex = 7;
             this.label4.Text = "Last name";
             // 
             // textBoxLastName
@@ -126,7 +126,7 @@
             this.textBoxLastName.Location = new System.Drawing.Point(115, 31);
             this.textBoxLastName.Name = "textBoxLastName";
             this.textBoxLastName.Size = new System.Drawing.Size(100, 20);
-            this.textBoxLastName.TabIndex = 9;
+            this.textBoxLastName.TabIndex = 2;
             // 
             // UserScreen
             // 

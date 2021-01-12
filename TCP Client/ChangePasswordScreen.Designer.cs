@@ -62,16 +62,16 @@ namespace TCP_Client
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (238)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label1.Location = new System.Drawing.Point(36, 30);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(339, 39);
-            this.label1.TabIndex = 9;
+            this.label1.TabIndex = 6;
             this.label1.Text = "Changing password";
             // 
             // textBoxNewPwd
             // 
-            this.textBoxNewPwd.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (238)));
+            this.textBoxNewPwd.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.textBoxNewPwd.ForeColor = System.Drawing.Color.Silver;
             this.textBoxNewPwd.Location = new System.Drawing.Point(101, 189);
             this.textBoxNewPwd.Name = "textBoxNewPwd";
@@ -84,7 +84,7 @@ namespace TCP_Client
             // 
             // textBoxOldPwd
             // 
-            this.textBoxOldPwd.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (238)));
+            this.textBoxOldPwd.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.textBoxOldPwd.ForeColor = System.Drawing.Color.Silver;
             this.textBoxOldPwd.Location = new System.Drawing.Point(101, 134);
             this.textBoxOldPwd.Name = "textBoxOldPwd";
@@ -101,7 +101,7 @@ namespace TCP_Client
             this.checkBoxShowPass.Location = new System.Drawing.Point(263, 199);
             this.checkBoxShowPass.Name = "checkBoxShowPass";
             this.checkBoxShowPass.Size = new System.Drawing.Size(101, 17);
-            this.checkBoxShowPass.TabIndex = 6;
+            this.checkBoxShowPass.TabIndex = 9;
             this.checkBoxShowPass.Text = "Show password";
             this.checkBoxShowPass.UseVisualStyleBackColor = true;
             this.checkBoxShowPass.CheckedChanged += new System.EventHandler(this.checkBoxShowPass_CheckedChanged);
@@ -120,6 +120,7 @@ namespace TCP_Client
             this.Size = new System.Drawing.Size(400, 300);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         private System.Windows.Forms.Button buttonSubmit;

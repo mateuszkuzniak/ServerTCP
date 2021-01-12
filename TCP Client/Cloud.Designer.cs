@@ -47,7 +47,7 @@
             this.listBoxFiles.Location = new System.Drawing.Point(3, 116);
             this.listBoxFiles.Name = "listBoxFiles";
             this.listBoxFiles.Size = new System.Drawing.Size(120, 316);
-            this.listBoxFiles.TabIndex = 0;
+            this.listBoxFiles.TabIndex = 9;
             this.listBoxFiles.SelectedIndexChanged += new System.EventHandler(this.listBoxFiles_SelectedIndexChanged);
             // 
             // textBoxFileText
@@ -56,7 +56,7 @@
             this.textBoxFileText.Margin = new System.Windows.Forms.Padding(0);
             this.textBoxFileText.Name = "textBoxFileText";
             this.textBoxFileText.Size = new System.Drawing.Size(371, 348);
-            this.textBoxFileText.TabIndex = 2;
+            this.textBoxFileText.TabIndex = 4;
             this.textBoxFileText.Text = "";
             // 
             // textBoxNewFileName
@@ -73,7 +73,7 @@
             this.buttonLogout.Location = new System.Drawing.Point(3, 3);
             this.buttonLogout.Name = "buttonLogout";
             this.buttonLogout.Size = new System.Drawing.Size(120, 107);
-            this.buttonLogout.TabIndex = 4;
+            this.buttonLogout.TabIndex = 0;
             this.buttonLogout.Text = "Log out";
             this.buttonLogout.UseVisualStyleBackColor = true;
             this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
@@ -84,7 +84,7 @@
             this.buttonAddNewFile.Location = new System.Drawing.Point(255, 3);
             this.buttonAddNewFile.Name = "buttonAddNewFile";
             this.buttonAddNewFile.Size = new System.Drawing.Size(120, 107);
-            this.buttonAddNewFile.TabIndex = 6;
+            this.buttonAddNewFile.TabIndex = 2;
             this.buttonAddNewFile.Text = "Add new file";
             this.buttonAddNewFile.UseVisualStyleBackColor = true;
             this.buttonAddNewFile.Click += new System.EventHandler(this.buttonAddNewFile_Click);
@@ -94,7 +94,7 @@
             this.buttonSaveFile.Location = new System.Drawing.Point(4, 441);
             this.buttonSaveFile.Name = "buttonSaveFile";
             this.buttonSaveFile.Size = new System.Drawing.Size(119, 23);
-            this.buttonSaveFile.TabIndex = 8;
+            this.buttonSaveFile.TabIndex = 5;
             this.buttonSaveFile.Text = "Save file";
             this.buttonSaveFile.UseVisualStyleBackColor = true;
             this.buttonSaveFile.Click += new System.EventHandler(this.buttonSaveFile_Click);
@@ -104,7 +104,7 @@
             this.buttonDeleteFile.Location = new System.Drawing.Point(4, 471);
             this.buttonDeleteFile.Name = "buttonDeleteFile";
             this.buttonDeleteFile.Size = new System.Drawing.Size(119, 23);
-            this.buttonDeleteFile.TabIndex = 9;
+            this.buttonDeleteFile.TabIndex = 6;
             this.buttonDeleteFile.Text = "Delete file";
             this.buttonDeleteFile.UseVisualStyleBackColor = true;
             this.buttonDeleteFile.Click += new System.EventHandler(this.buttonDeleteFile_Click);
@@ -125,7 +125,7 @@
             this.buttonChangePwd.Location = new System.Drawing.Point(129, 3);
             this.buttonChangePwd.Name = "buttonChangePwd";
             this.buttonChangePwd.Size = new System.Drawing.Size(120, 107);
-            this.buttonChangePwd.TabIndex = 11;
+            this.buttonChangePwd.TabIndex = 1;
             this.buttonChangePwd.Text = "Change password";
             this.buttonChangePwd.UseVisualStyleBackColor = true;
             this.buttonChangePwd.Click += new System.EventHandler(this.buttonChangePwd_Click);
@@ -135,7 +135,7 @@
             this.buttonLogs.Location = new System.Drawing.Point(422, 471);
             this.buttonLogs.Name = "buttonLogs";
             this.buttonLogs.Size = new System.Drawing.Size(75, 23);
-            this.buttonLogs.TabIndex = 12;
+            this.buttonLogs.TabIndex = 8;
             this.buttonLogs.Text = "Logs";
             this.buttonLogs.UseVisualStyleBackColor = true;
             this.buttonLogs.Click += new System.EventHandler(this.buttonLogs_Click);
@@ -145,7 +145,7 @@
             this.buttonUser.Location = new System.Drawing.Point(341, 471);
             this.buttonUser.Name = "buttonUser";
             this.buttonUser.Size = new System.Drawing.Size(75, 23);
-            this.buttonUser.TabIndex = 13;
+            this.buttonUser.TabIndex = 7;
             this.buttonUser.Text = "User";
             this.buttonUser.UseVisualStyleBackColor = true;
             this.buttonUser.Click += new System.EventHandler(this.buttonUser_Click);

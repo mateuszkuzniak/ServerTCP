@@ -38,7 +38,7 @@
             this.textBoxLogs.Name = "textBoxLogs";
             this.textBoxLogs.ReadOnly = true;
             this.textBoxLogs.Size = new System.Drawing.Size(494, 462);
-            this.textBoxLogs.TabIndex = 0;
+            this.textBoxLogs.TabIndex = 1;
             this.textBoxLogs.Text = "";
             // 
             // buttonBack
@@ -46,7 +46,7 @@
             this.buttonBack.Location = new System.Drawing.Point(3, 3);
             this.buttonBack.Name = "buttonBack";
             this.buttonBack.Size = new System.Drawing.Size(103, 26);
-            this.buttonBack.TabIndex = 1;
+            this.buttonBack.TabIndex = 0;
             this.buttonBack.Text = "Back";
             this.buttonBack.UseVisualStyleBackColor = true;
             this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
