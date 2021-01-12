@@ -122,9 +122,19 @@ namespace TCP_Client
 
         private void listBoxFiles_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Messages.sendMessage(Form1.Instance.connection, new string[] { "FILEOPEN", listBoxFiles.SelectedItem.ToString().ToLower() });
-            string text = Messages.receiveMessage(Form1.Instance.connection);
-            textBoxFileText.Text = text;
+            if (listBoxFiles.SelectedItem != null)
+            {
+                try
+                {
+                    Messages.sendMessage(Form1.Instance.connection, new string[] { "FILEOPEN", listBoxFiles.SelectedItem.ToString().ToLower() });
+                    string text = Messages.receiveMessage(Form1.Instance.connection);
+                    textBoxFileText.Text = text;
+                }
+                catch (System.NullReferenceException)
+                {
+
+                }
+            }
         }
     }
 }
