@@ -1,8 +1,6 @@
 # ServerTCP
 
-ul.numeric { list-style-type: decimal; } 
-
-<ul class="numeric">
+<ol list-style-type: decimal>
   <li> Punkt 1 </li>
   <li> punkt 2 </li>
 
