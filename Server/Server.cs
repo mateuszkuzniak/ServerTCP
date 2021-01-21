@@ -5,7 +5,6 @@ using System.Net.Sockets;
 using System.Text;
 using DatabaseLibrary;
 using MessageLibrary;
-using Exceptions;
 using System.Windows.Forms;
 using System.Threading;
 using System.Collections.Generic;
@@ -21,11 +20,10 @@ namespace ServerLibrary
         protected bool running;
         protected delegate void TransmissionDataDelegate(NetworkStream stream);
         bool validIp = true;
-
-        #endregion
         public User _usersDatabase;
         public FileDb _filesDatabase;
-        //protected TextBox Logs { get; set; }
+        #endregion
+
 
         #region PROPERTIES
         public IPAddress IPAddress { get => iPAddress; set {

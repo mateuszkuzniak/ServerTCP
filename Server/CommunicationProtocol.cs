@@ -1,5 +1,4 @@
 ﻿using DatabaseLibrary;
-using System.Windows.Forms;
 using MessageLibrary;
 
 namespace ServerLibrary
@@ -11,7 +10,6 @@ namespace ServerLibrary
 
         protected CommunicationProtocol()
         {
-
         }
         public abstract string GenerateResponse(string message);
         public abstract bool GetUserStatus();

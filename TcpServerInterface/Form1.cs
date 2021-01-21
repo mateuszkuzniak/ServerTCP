@@ -16,8 +16,6 @@ namespace TcpServerInterface
 {
     public partial class Form1 : Form
     {
-        String IpAdress;
-        String Port;
         Server<LoginServerProtocol> server;
         public Form1()
         {
@@ -49,19 +47,5 @@ namespace TcpServerInterface
             }
         }
 
-        private void IpBox_TextChanged(object sender, EventArgs e)
-        {
-            IpAdress = IpBox.Text.ToString();
-        }
-
-        private void PortBox_TextChanged(object sender, EventArgs e)
-        {
-            Port = PortBox.Text.ToString();
-        }
-
-        private void Logs_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

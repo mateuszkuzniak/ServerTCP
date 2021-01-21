@@ -51,7 +51,6 @@
             this.IpBox.TabIndex = 0;
             this.IpBox.Tag = "";
             this.IpBox.Text = "127.0.0.1";
-            this.IpBox.TextChanged += new System.EventHandler(this.IpBox_TextChanged);
             // 
             // PortBox
             // 
@@ -60,7 +59,6 @@
             this.PortBox.Size = new System.Drawing.Size(115, 20);
             this.PortBox.TabIndex = 1;
             this.PortBox.Text = "8000";
-            this.PortBox.TextChanged += new System.EventHandler(this.PortBox_TextChanged);
             // 
             // startButton
             // 
@@ -146,7 +144,6 @@
             this.Logs.Size = new System.Drawing.Size(395, 137);
             this.Logs.TabIndex = 11;
             this.Logs.Tag = "Server";
-            this.Logs.TextChanged += new System.EventHandler(this.Logs_TextChanged);
             // 
             // label7
             // 

@@ -17,6 +17,7 @@ namespace MessageLibrary
         private string directoryLogsName = "Logs";
         private string serverLogsFileName = "serverLogs.txt";
         private string directoryLogsPath = "./Logs/";
+        public static string invDbNameERROR = "Database name cannot be empty";
 
         private void cw(string mess)
         {
@@ -85,7 +86,7 @@ namespace MessageLibrary
                 return null;
         }
 
-        public static string invDbNameERROR = "Database name cannot be empty";
+
         string Date()
         {
             return DateTime.Now.ToString();
