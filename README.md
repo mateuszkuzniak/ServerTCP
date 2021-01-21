@@ -1,8 +1,8 @@
 # ServerTCP
 
 <ol list-style-type: decimal>
-  <li>### Punkt 1 </li>
-  <li>### punkt 2 </li>
+  ###<li> Punkt 1 </li>
+  ###<li> punkt 2 </li>
 
 ### Class diagram
 
