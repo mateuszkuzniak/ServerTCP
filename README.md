@@ -1,5 +1,11 @@
 # ServerTCP
 
+ul.numeric { list-style-type: decimal; } 
+
+<ul class="numeric">
+  <li> Punkt 1 </li>
+  <li> punkt 2 </li>
+
 ### Class diagram
 
 <p align="center">
