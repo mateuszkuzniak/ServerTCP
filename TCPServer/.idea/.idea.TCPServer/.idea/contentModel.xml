@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\JordanK\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\JordanK\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_TCPServer.222476010.00" t="ExcludeRecursive" />
+    <e p="C:\Users\JordanK\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\JordanK\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_TCPServer.222476010.00" t="ExcludeRecursive" />
     <e p="C:\Users\JordanK\Desktop\ServerTCP-GUI\ServerTCP\Client" t="IncludeRecursive">
       <e p="Account.cs" t="Include" />
       <e p="App.config" t="Include" />
@@ -86,6 +86,9 @@
       <e p="LoginScreen.cs" t="Include" />
       <e p="LoginScreen.Designer.cs" t="Include" />
       <e p="LoginScreen.resx" t="Include" />
+      <e p="LogsScreen.cs" t="Include" />
+      <e p="LogsScreen.Designer.cs" t="Include" />
+      <e p="LogsScreen.resx" t="Include" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="Program.cs" t="Include" />
       <e p="Properties" t="Include">
