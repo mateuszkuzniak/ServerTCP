@@ -42,7 +42,7 @@
             this.checkBoxShowPass.Location = new System.Drawing.Point(290, 200);
             this.checkBoxShowPass.Name = "checkBoxShowPass";
             this.checkBoxShowPass.Size = new System.Drawing.Size(101, 17);
-            this.checkBoxShowPass.TabIndex = 0;
+            this.checkBoxShowPass.TabIndex = 2;
             this.checkBoxShowPass.Text = "Show password";
             this.checkBoxShowPass.UseVisualStyleBackColor = true;
             this.checkBoxShowPass.CheckedChanged += new System.EventHandler(this.checkBoxShowPass_CheckedChanged);
@@ -54,8 +54,8 @@
             this.textBoxLogin.Location = new System.Drawing.Point(128, 135);
             this.textBoxLogin.Name = "textBoxLogin";
             this.textBoxLogin.Size = new System.Drawing.Size(134, 29);
-            this.textBoxLogin.TabIndex = 1;
-            this.textBoxLogin.Text = "Login";
+            this.textBoxLogin.TabIndex = 0;
+            this.textBoxLogin.Text = "mateusz";
             this.textBoxLogin.Enter += new System.EventHandler(this.textBoxLogin_Enter);
             this.textBoxLogin.Leave += new System.EventHandler(this.textBoxLogin_Leave);
             // 
@@ -67,27 +67,27 @@
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.PasswordChar = '*';
             this.textBoxPassword.Size = new System.Drawing.Size(134, 29);
-            this.textBoxPassword.TabIndex = 2;
-            this.textBoxPassword.Text = "Password";
+            this.textBoxPassword.TabIndex = 1;
+            this.textBoxPassword.Text = "!Q2w3e4r";
             this.textBoxPassword.Enter += new System.EventHandler(this.textBoxPassword_Enter);
             this.textBoxPassword.Leave += new System.EventHandler(this.textBoxPassword_Leave);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (238)));
-            this.label1.Location = new System.Drawing.Point(63, 31);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label1.Location = new System.Drawing.Point(110, 31);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(267, 55);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Logowanie";
+            this.label1.Size = new System.Drawing.Size(177, 55);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Sign in";
             // 
             // buttonLogin
             // 
             this.buttonLogin.Location = new System.Drawing.Point(128, 243);
             this.buttonLogin.Name = "buttonLogin";
             this.buttonLogin.Size = new System.Drawing.Size(134, 29);
-            this.buttonLogin.TabIndex = 4;
+            this.buttonLogin.TabIndex = 3;
             this.buttonLogin.Text = "Log in";
             this.buttonLogin.UseVisualStyleBackColor = true;
             this.buttonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
@@ -97,7 +97,7 @@
             this.buttonSignup.Location = new System.Drawing.Point(268, 243);
             this.buttonSignup.Name = "buttonSignup";
             this.buttonSignup.Size = new System.Drawing.Size(110, 29);
-            this.buttonSignup.TabIndex = 5;
+            this.buttonSignup.TabIndex = 4;
             this.buttonSignup.Text = "Sign up";
             this.buttonSignup.UseVisualStyleBackColor = true;
             this.buttonSignup.Click += new System.EventHandler(this.buttonSignup_Click);

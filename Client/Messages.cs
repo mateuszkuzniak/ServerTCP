@@ -29,7 +29,27 @@ namespace Client
                 msg = msg.Remove(msg.IndexOf("\n\r"), msg.Length - msg.IndexOf("\n\r"));
             if(msg.Contains("\0"))
                 msg = msg.Remove(msg.IndexOf("\0"), msg.Length - msg.IndexOf("\0"));
+            if (msg.Contains("ENDMESS"))
+                msg = msg.Remove(msg.IndexOf("ENDMESS"), msg.Length - msg.IndexOf("ENDMESS"));
             con.Buffer = new byte[con.bufferSize];
+            return msg;
+        }
+
+        public static string receiveLongMessage(Connection con)
+        {
+            string msg = "";
+            bool end = false;
+            while(!end)
+            {
+                con.Stream.Read(con.Buffer, 0, con.bufferSize);
+                msg += Encoding.UTF8.GetString(con.Buffer);
+                if (msg.Contains("ENDMESS"))
+                {
+                    end = true;
+                    msg = msg.Remove(msg.IndexOf("ENDMESS"), msg.Length - msg.IndexOf("ENDMESS"));
+                }
+                con.Buffer = new byte[con.bufferSize];
+            }
             return msg;
         }
     }

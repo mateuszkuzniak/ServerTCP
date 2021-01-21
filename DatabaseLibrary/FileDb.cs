@@ -6,8 +6,6 @@ namespace DatabaseLibrary
 {
     public class FileDb : DatabaseAbstract
     {
-        string _tableName;
-
         public FileDb(string databaseName, string tableName) : base(databaseName)
         {
             string command = $@"CREATE TABLE {tableName}(
@@ -17,7 +15,7 @@ namespace DatabaseLibrary
                         textFile TEXT)";
 
             CreateTable(tableName, command);
-            _tableName = tableName;
+            _tableFiles = tableName;
 
         }
 
@@ -28,7 +26,7 @@ namespace DatabaseLibrary
 
             lock (keyLock)
             {
-                _command.CommandText = $"SELECT id FROM {_tableName} WHERE fileName = '{nameToLower}' AND userId = {userId}";
+                _command.CommandText = $"SELECT id FROM {_tableFiles} WHERE fileName = '{nameToLower}' AND userId = {userId}";
                 if (_command.ExecuteScalar() != null)
                     return true;
                 else
@@ -40,13 +38,13 @@ namespace DatabaseLibrary
         {
             string nameToLower = fileName.ToLower();
             OpenConnection();
-            if (checkForTableExist(_tableName))
+            if (checkForTableExist(_tableFiles))
             {
                 try
                 {
                     lock (keyLock)
                     {
-                        _command.CommandText = $"INSERT INTO {_tableName} (userId, fileName, textFile)" +
+                        _command.CommandText = $"INSERT INTO {_tableFiles} (userId, fileName, textFile)" +
                                              $"VALUES('{id}','{nameToLower}','{text}')";
                         _command.ExecuteNonQuery();
                     }
@@ -59,7 +57,7 @@ namespace DatabaseLibrary
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Error: " + e.ToString());
+                    error("FileDb.AddFile", e.Message);
                     return false;
                 }
             }
@@ -71,20 +69,20 @@ namespace DatabaseLibrary
         {
             fileName = fileName.ToLower();
             OpenConnection();
-            if (checkForTableExist(_tableName))
+            if (checkForTableExist(_tableFiles))
             {
                 try
                 {
                     lock (keyLock)
                     {
-                        _command.CommandText = $"DELETE FROM {_tableName} WHERE userId = '{id}' AND fileName = '{fileName}'";
+                        _command.CommandText = $"DELETE FROM {_tableFiles} WHERE userId = '{id}' AND fileName = '{fileName}'";
                         _command.ExecuteNonQuery();
                     }
 
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Error: " + e.ToString());
+                    error("FileDb.AddFile", e.Message);
                 }
             }
         }
@@ -93,63 +91,36 @@ namespace DatabaseLibrary
         {
             fileName = fileName.ToLower();
             OpenConnection();
-            if (checkForTableExist(_tableName))
+            if (checkForTableExist(_tableFiles))
             {
                 try
                 {
                     lock (keyLock)
                     {
-                        _command.CommandText = $"UPDATE {_tableName} SET textFile = '{newText}' WHERE userId = '{id}' AND fileName = '{fileName}'";
+                        _command.CommandText = $"UPDATE {_tableFiles} SET textFile = '{newText}' WHERE userId = '{id}' AND fileName = '{fileName}'";
                         _command.ExecuteNonQuery();
                     }
                     return true;
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Error: " + e.ToString());
+                    error("FileDb.AddFile", e.Message);
                 }
             }
             return false;
         }
 
-        public string GetFileList(int id)
-        {
-            OpenConnection();
-            string fileList = "";
-
-            if (checkForTableExist(_tableName))
-            {
-                lock (keyLock)
-                {
-                    _command.CommandText = $"SELECT * FROM {_tableName} WHERE userId = '{id}'";
-                    SQLiteDataReader reader = _command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        fileList += reader.GetString(2);
-                        fileList += ";";
-                    }
-
-
-                    reader.Close();
-                }
-            }
-
-            if (fileList.Length > 0)
-                return fileList;
-            else
-                return DbMessage.invFileListERROR;
-        }
         public string openFile(string fileName, int id)
         {
             fileName = fileName.ToLower();
             OpenConnection();
             string fileList = "";
 
-            if (checkForTableExist(_tableName))
+            if (checkForTableExist(_tableFiles))
             {
                 lock (keyLock)
                 {
-                    _command.CommandText = $"SELECT * FROM {_tableName} WHERE userId = '{id}' AND fileName ='{fileName}'";
+                    _command.CommandText = $"SELECT * FROM {_tableFiles} WHERE userId = '{id}' AND fileName ='{fileName}'";
                     SQLiteDataReader reader = _command.ExecuteReader();
                     while (reader.Read())
                     {

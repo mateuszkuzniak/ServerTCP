@@ -13,7 +13,17 @@ namespace DatabaseLibrary
             already_logged,
             successful_registration,
             can_add,
-            user_does_not_exist
+            user_does_not_exist,
+            must_be_logged,
+            change_pwd,
+            change_pwd_error,
+            get_all_user_data,
+            inv_mail,
+            inv_first_name,
+            inv_second_name,
+            inv_phone_number,
+            user_valid_data,
+            user_inv_data
         }
 
         public enum FileCode
@@ -27,7 +37,8 @@ namespace DatabaseLibrary
             file_deleted,
             file_deleted_error,
             file_update,
-            file_open
+            file_open,
+            get_logs
 
         }
 
@@ -42,6 +53,7 @@ namespace DatabaseLibrary
         public bool IsLogged { get => isLogged; set => isLogged = value; }
         public StatusCode Status { get => status; set => status = value; }
         public FileCode FileStatus { get => fileStatus; set => fileStatus = value; }
+        
 
         /// <summary>
         /// Funkcja czyszcząca obiekt
@@ -51,7 +63,6 @@ namespace DatabaseLibrary
             Id = null;
             Login = null;
             IsLogged = false;
-
         }
     }
 }

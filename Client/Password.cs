@@ -14,18 +14,12 @@ namespace Client
 
         public Password(string password)
         {
-            if (!isValid(password))
-                throw new LoginScreenExceptions("Password is not safe!\nPassword must contain:\n" +
-                    "\t-at least one uppercase letter\n" +
-                    "\t-at least one lowercase letter\n" +
-                    "\t-at least one number\n" +
-                    "\t-at least one symblol(*, &, #, !, @, %)");
             _password = SHA256Hash(password);
         }
 
         public string _Password { get => _password; set => _password = value; }
 
-        public bool isValid(string password)
+        public static bool isValid(string password)
         {
             if (password.Length < 7)
                 return false;

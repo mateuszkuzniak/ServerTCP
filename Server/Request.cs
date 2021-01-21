@@ -7,13 +7,25 @@
 
         public string Args1 { get; set; }
         public string Args2 { get; set; }
+        public string Args3 { get; set; }
 
-        public Request(int code, string opcode, string args1,  string args2) 
+
+        public Request(int code, string opcode, string args1, string args2, string args3)
         {
             Code = code;
             Opcode = opcode;
             Args1 = args1;
             Args2 = args2;
+            Args3 = args3;
+        }
+
+        public Request(int code, string opcode, string args1, string args2 )
+        {
+            Code = code;
+            Opcode = opcode;
+            Args1 = args1;
+            Args2 = args2;
+
         }
 
         public Request(int code, string opcode, string args1)

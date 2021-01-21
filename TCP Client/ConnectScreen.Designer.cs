@@ -41,8 +41,8 @@
             this.textBoxIp.Location = new System.Drawing.Point(128, 135);
             this.textBoxIp.Name = "textBoxIp";
             this.textBoxIp.Size = new System.Drawing.Size(134, 29);
-            this.textBoxIp.TabIndex = 3;
-            this.textBoxIp.Text = "IP Address";
+            this.textBoxIp.TabIndex = 0;
+            this.textBoxIp.Text = "127.0.0.1";
             this.textBoxIp.Enter += new System.EventHandler(this.textBoxIp_Enter);
             this.textBoxIp.Leave += new System.EventHandler(this.textBoxIp_Leave);
             // 
@@ -53,8 +53,8 @@
             this.textBoxPort.Location = new System.Drawing.Point(128, 190);
             this.textBoxPort.Name = "textBoxPort";
             this.textBoxPort.Size = new System.Drawing.Size(134, 29);
-            this.textBoxPort.TabIndex = 4;
-            this.textBoxPort.Text = "Port";
+            this.textBoxPort.TabIndex = 1;
+            this.textBoxPort.Text = "8000";
             this.textBoxPort.Enter += new System.EventHandler(this.textBoxPort_Enter);
             this.textBoxPort.Leave += new System.EventHandler(this.textBoxPort_Leave);
             // 
@@ -73,7 +73,7 @@
             this.buttonConnect.Location = new System.Drawing.Point(128, 243);
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(134, 29);
-            this.buttonConnect.TabIndex = 1;
+            this.buttonConnect.TabIndex = 2;
             this.buttonConnect.Text = "Connect";
             this.buttonConnect.UseVisualStyleBackColor = true;
             this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);

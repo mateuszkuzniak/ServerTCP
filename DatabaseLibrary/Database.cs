@@ -2,14 +2,24 @@
 using System.Data.SQLite;
 using MessageLibrary;
 
+
 namespace DatabaseLibrary
 {
-    public abstract class DatabaseAbstract
+    public abstract class DatabaseAbstract : Logger
     {
+        public enum DatabaseType
+        {
+            File,
+            User
+        }
+
         protected SQLiteCommand _command;
         protected SQLiteConnection _myDatabaseConnection;
         protected string _databaseName;
         protected readonly object keyLock = new object();
+        protected string _tableUsers;
+        protected string _tableFiles;
+
 
         protected DatabaseAbstract(string databaseName)
         {
@@ -22,10 +32,11 @@ namespace DatabaseLibrary
                 if (!checkForDatabaseExists())
                 {
                     SQLiteConnection.CreateFile(databaseName);
-                    Console.WriteLine(DbMessage.CreateDatabase(databaseName));
                     OpenConnection();
                     CloseConnection();
+                    createDatabaseLOG(databaseName);
                 }
+                   
             }
             else
                 throw new Exception(DbMessage.invDbNameERROR);
@@ -63,7 +74,8 @@ namespace DatabaseLibrary
         {
             if (checkForDatabaseExists())
             {
-                _myDatabaseConnection.Open();
+                //_myDatabaseConnection.Open();
+                OpenConnection();
 
                 if (tableName.Length > 0)
                 {
@@ -73,21 +85,23 @@ namespace DatabaseLibrary
                         {
                             _command.CommandText = command;
                             _command.ExecuteNonQuery();
-                            Console.WriteLine(DbMessage.CreateTable(tableName));
+                            createTableLOG(_databaseName, tableName);
                         }
                         catch (Exception e)
                         {
-                            Console.WriteLine($"Error: {e.Message}");
+                            error("Database.CreateTable", e.Message);
                         }
 
                         if (checkForTableExist(tableName))
                         {
-                            Console.WriteLine();
                             return true;
                         }
                     }
                     else
+                    {
+                        existsTableLOG(_databaseName, tableName);
                         return false;
+                    }
                 }
                 else throw new Exception(DbMessage.invTableNameERROR);
             }
@@ -126,6 +140,69 @@ namespace DatabaseLibrary
                 throw new Exception(DbMessage.invTableNameERROR);
 
             return exists;
+        }
+        
+        private string AddSeparator(string data, string separator)
+        {
+            return data += separator;
+        }
+
+        public string GetListData(int id, DatabaseType type)
+        {
+            OpenConnection();
+            string tableName;
+            string data = "";
+
+            if (type == DatabaseType.File)
+                tableName = _tableFiles;
+            else
+                tableName = _tableUsers;
+
+
+            if (checkForTableExist(tableName))
+            {
+                lock (keyLock)
+                {
+                    if (type == DatabaseType.File)
+                        _command.CommandText = $"SELECT * FROM {tableName} WHERE userId = '{id}'";
+                    else
+                        _command.CommandText = $"SELECT * FROM {tableName} WHERE id = '{id}'";
+
+                    SQLiteDataReader reader = _command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        if(type==DatabaseType.File)
+                        {
+                            data += reader.GetString(2);
+                            data = AddSeparator(data, ";");
+                        }
+                        if(type == DatabaseType.User)
+                        {
+                            if (!reader.IsDBNull(4))
+                                data += reader.GetString(4);
+                            data = AddSeparator(data, ";");
+                            if (!reader.IsDBNull(5))
+                                data += reader.GetString(5);
+                            data = AddSeparator(data, ";");
+                            if (!reader.IsDBNull(6))
+                                data += reader.GetString(6);
+                            data = AddSeparator(data, ";");
+                            if (!reader.IsDBNull(7))
+                                data += reader.GetInt32(7).ToString();
+                            data = AddSeparator(data, ";");
+
+                        }
+                    }
+
+                    reader.Close();
+                }
+            }
+
+            if (data.Length > 0)
+                return data;
+            else
+                return DbMessage.invFileListERROR;
         }
     }
 }

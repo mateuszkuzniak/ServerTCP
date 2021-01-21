@@ -3,6 +3,7 @@ namespace MessageLibrary
 {
     public static class ServerMessage
     {
+        
         #region LOGIN
         public static string invUser = "INV_USER";
         public static string currentlyLogged = "USER IS CURRENTLY LOGGED IN ";
@@ -10,8 +11,20 @@ namespace MessageLibrary
         public static string logged = "LOGGED";
         public static string alreadyLogged = "YOU ARE ALREADY LOGGED IN";
         public static string userExists = "USER_EXISTS";
+        public static string userDoesNotExists = "USER_DOES_NOT_EXISTS";
         public static string regOk = "REG_OK";
         public static string unk = "UNK";
+        public static string changePwd = "CHANGE_PWD";
+        public static string changePwdError = "CHANGE_PWD_ERROR";
+        #endregion
+
+        #region USER
+        public static string invMail = "INV_MAIL";
+        public static string invFirstName = "INV_FIRST_NAME";
+        public static string invSecondName = "INV_SECOND_NAME";
+        public static string invPhoneNumber = "INV_PHONE_NUMBER";
+        public static string userValidData = "USER_VALID_DATA";
+        public static string userInvData = "USER_INV_DATA";
         #endregion
 
         #region FILE
@@ -32,10 +45,6 @@ namespace MessageLibrary
         public static string incorrectPort = "Incorrect port value, set the port to 8000";
         #endregion
 
-        public static string CloseConnection(string userName)
-        {
-            return $"Connection with the cilent {userName} has been terminated";
-        }
 
     }
 }
