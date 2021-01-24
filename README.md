@@ -174,7 +174,7 @@
 ###Wybrane fragmenty kodu 
 <ul list-style-type: disc >
 <li>Międzywątkowa synchronizacja logera - zapis logów</li>
-```cs
+```csharp
         private delegate void SafeCallDelegate(string text);
 		
 		private void cw(string mess)
@@ -205,8 +205,9 @@
         }
 		
 ```
+
 <li>Dzielenie wiadomości na pakiery</li>
-```cs
+```csharp
         int HowManyParts(int size)
         {
             int parts = size / bufferSize;
@@ -249,9 +250,10 @@
 
         }
 ```
+
 <li>Sprawdzenie poprawności danych - panel użytkownika</li>
-```cs
-        bool ValidUserData(string[] data)
+ ```csharp
+         bool ValidUserData(string[] data)
         {
             if (data[0].Length > 0 && (!Regex.IsMatch(data[0], @"[@]") || !Regex.IsMatch(data[0], @"[.]")))
                 user.Status = Account.StatusCode.inv_mail;
@@ -269,9 +271,10 @@
             return false;
         }
 ```
+
 <li>Komunikacja serwer -> klienta</li>
-```cs
- string GetLogStatus()
+ ```csharp
+  string GetLogStatus()
         {
             if (user.Status == Account.StatusCode.inv_user)
                 return ServerMessage.invUser;
@@ -337,8 +340,8 @@
 ```
 
 <li> Sprawdzenei poprawności hasła </li>
-```cs
-        public static bool isValid(string password)
+ ```csharp
+         public static bool isValid(string password)
         {
             if (password.Length < 7)
                 return false;
@@ -356,9 +359,10 @@
             return true;
         }
 ```
+
 <li> Pobranie listy plików/użytkowników </li>
-```cs
-		public string GetListData(int id, DatabaseType type)
+ ```csharp
+ 		public string GetListData(int id, DatabaseType type)
         {
             OpenConnection();
             string tableName;
@@ -416,6 +420,7 @@
                 return DbMessage.invFileListERROR;
         }
 ```
+
 ## Zespół
 - Poduct Owner: Jordan Kondracki
 - Scrum Team:
