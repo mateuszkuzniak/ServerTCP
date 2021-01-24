@@ -60,7 +60,7 @@
 ### Diagram przypadków użycia
 
 <p align="center">
-  <img src=""/Documentation/Diagram_przypadkow_uzycia.png">
+  <img src=""/Documentation/Diagram_przypadkow_uzycia.jpg">
 </p>
 
 ### Diagram klas
