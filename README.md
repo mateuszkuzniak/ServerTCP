@@ -171,7 +171,7 @@
   <img src="/Documentation/app6_pwd.JPG">
 </p>
 
-###Wybrane fragmenty kodu 
+### Wybrane fragmenty kodu 
 
 <ul list-style-type: disc >
 <li>Międzywątkowa synchronizacja logera - zapis logów</li>
@@ -257,7 +257,7 @@
 <li>Sprawdzenie poprawności danych - panel użytkownika</li>
 
  ```csharp
-         bool ValidUserData(string[] data)
+        bool ValidUserData(string[] data)
         {
             if (data[0].Length > 0 && (!Regex.IsMatch(data[0], @"[@]") || !Regex.IsMatch(data[0], @"[.]")))
                 user.Status = Account.StatusCode.inv_mail;
@@ -279,7 +279,7 @@
 <li>Komunikacja serwer -> klienta</li>
 
  ```csharp
-  string GetLogStatus()
+		string GetLogStatus()
         {
             if (user.Status == Account.StatusCode.inv_user)
                 return ServerMessage.invUser;
@@ -320,7 +320,7 @@
             return ServerMessage.unk;
         }
 
-        string GetFileStatus()
+		string GetFileStatus()
         {
             if (user.FileStatus == Account.FileCode.file_added)
                 return ServerMessage.fileAdd;
@@ -347,7 +347,7 @@
 <li> Sprawdzenei poprawności hasła </li>
 
  ```csharp
-         public static bool isValid(string password)
+		public static bool isValid(string password)
         {
             if (password.Length < 7)
                 return false;
@@ -369,7 +369,7 @@
 <li> Pobranie listy plików/użytkowników </li>
 
  ```csharp
- 		public string GetListData(int id, DatabaseType type)
+		public string GetListData(int id, DatabaseType type)
         {
             OpenConnection();
             string tableName;
