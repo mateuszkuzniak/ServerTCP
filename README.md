@@ -120,43 +120,43 @@
 ### Aplikacja - widok startowy
 
 <p align="center">
-  <img src="/Documentation/app1.jpg">
+  <img src="/Documentation/app1.JPG">
 </p>
 
 ### Aplikacja - logowanie
 
 <p align="center">
-  <img src="/Documentation/app2.jpg">
+  <img src="/Documentation/app2.JPG">
 </p>
 
 ### Aplikacja - panel główny użytkownika
 
 <p align="center">
-  <img src="/Documentation/app3.jpg">
+  <img src="/Documentation/app3.JPG">
 </p>
 
 ### Aplikacja - logi
 
 <p align="center">
-  <img src="/Documentation/app4.jpg">
+  <img src="/Documentation/app4.JPG">
 </p>
 
 ### Aplikacja - panel użytkownika
 
 <p align="center">
-  <img src="/Documentation/app5_user.jpg">
+  <img src="/Documentation/app5_user.JPG">
 </p>
 
 ### Aplikacja - usuwanie pliku
 
 <p align="center">
-  <img src="/Documentation/app6_delete.jpg">
+  <img src="/Documentation/app6_delete.JPG">
 </p>
 
 ### Aplikacja - zmiana hasła
 
 <p align="center">
-  <img src="/Documentation/app6_pwd.jpg">
+  <img src="/Documentation/app6_pwd.JPG">
 </p>
 
 ## Zespół
