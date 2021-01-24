@@ -172,6 +172,7 @@
 </p>
 
 ###Wybrane fragmenty kodu 
+
 <ul list-style-type: disc >
 <li>Międzywątkowa synchronizacja logera - zapis logów</li>
 
