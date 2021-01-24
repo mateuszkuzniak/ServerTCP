@@ -7,12 +7,12 @@
 
 ### Słownik
 <ul list-style-type: disc >
-<li>IPv4 (adres IP) – adres wykorzystywany do komunikacji (format xxx.xxx.xxx.xxx -> np. 168.154.202.2),</li>
+<li>```IPv4``` (adres IP) – adres wykorzystywany do komunikacji (format xxx.xxx.xxx.xxx -> np. 168.154.202.2),</li>
 <li> port  - jeden z parametrów gniazda, który umożliwia nawiązanie połączenia,</li>
 <li>asynchroniczność – sposób przesyłania danych pozwalający na nieregularne wysyłanie danych. Pozwala obsługiwać więcej niż 1 klienta na raz,</li>
 <li>TCP – niezawodny protokół komunikacyjny stosowany do przesyłania danych między procesami uruchomionymi na różnych maszynach,</li>
 <li>baza danych – zbiór danych zapisanych zgodnie z określonymi regułami,</li>
-<li>SQLite – system zarządzania bazą danych, obsługujący język SQL, </li>
+<li>```SQLite``` – system zarządzania bazą danych, obsługujący język SQL, </li>
 <li>logi – historia aktywności.</li>
 </ul>
 
@@ -40,11 +40,11 @@
 
 ### Wymagania niefunkcjonalne
 <ol>
-<li> język programowania: C# (.NET Framework),</li>
+<li> język programowania: ```C# (.NET Framework)```,</li>
 <li> środowisko programistyczne: Visual Studio 2019,</li>
 <li> system operacyjny Windows 10,</li>
-<li> język bazy danych: SQL,</li>
-<li> baza danych SQLite,</li>
+<li> język bazy danych: ```SQL```,</li>
+<li> baza danych ```SQLite```,</li>
 <li> interfejs: graficzny,</li>
 <li> serwer utrzymuje połączenie z wieloma klientami</li>
 <li> serwer po rozłączeniu z klientem jest w stanie nadal obsługiwać pozostałych klientów,</li>
@@ -53,8 +53,8 @@
 <li> klient obsługuje wyjątki,</li>
 <li> serwer zapobiega rejestracji dwóch kont o tej samej nazwie,</li>
 <li> serwer nie wymaga żadnych dodatkowych działań, prócz uruchomienia,</li>
-<li> klient korzysta z funkcji skrótu SHA256,</li>
-<li> serwer korzysta z funkcji skrótu SHA256.</li>
+<li> klient korzysta z ```funkcji skrótu SHA256```,</li>
+<li> serwer korzysta z ```funkcji skrótu SHA256```.</li>
 </ol>
 
 ### Diagram przypadków użycia
@@ -174,7 +174,7 @@
 ###Wybrane fragmenty kodu 
 <ul list-style-type: disc >
 <li>Międzywątkowa synchronizacja logera - zapis logów</li>
-```C#
+```cs
         private delegate void SafeCallDelegate(string text);
 		
 		private void cw(string mess)
@@ -206,7 +206,7 @@
 		
 ```
 <li>Dzielenie wiadomości na pakiery</li>
-```C#
+```cs
         int HowManyParts(int size)
         {
             int parts = size / bufferSize;
@@ -250,7 +250,7 @@
         }
 ```
 <li>Sprawdzenie poprawności danych - panel użytkownika</li>
-```C#
+```cs
         bool ValidUserData(string[] data)
         {
             if (data[0].Length > 0 && (!Regex.IsMatch(data[0], @"[@]") || !Regex.IsMatch(data[0], @"[.]")))
@@ -270,7 +270,7 @@
         }
 ```
 <li>Komunikacja serwer -> klienta</li>
-```C#
+```cs
  string GetLogStatus()
         {
             if (user.Status == Account.StatusCode.inv_user)
@@ -337,8 +337,7 @@
 ```
 
 <li> Sprawdzenei poprawności hasła </li>
-```C#
-
+```cs
         public static bool isValid(string password)
         {
             if (password.Length < 7)
@@ -358,7 +357,7 @@
         }
 ```
 <li> Pobranie listy plików/użytkowników </li>
-```C#
+```cs
 		public string GetListData(int id, DatabaseType type)
         {
             OpenConnection();
