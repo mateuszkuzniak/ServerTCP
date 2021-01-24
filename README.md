@@ -69,6 +69,12 @@
   <img src="/Documentation/Diagram_klas.jpg">
 </p>
 
+### Diagram klas - klient
+
+<p align="center">
+  <img src="/Documentation/Diagram_klas_klient.jpg">
+</p>
+
 ### Diagram aktywności - Wyświetlanie logów użytkonwika
 
 <p align="center">
@@ -117,6 +123,12 @@
   <img src="/Documentation/Diagram_sekwencji_logowanie_uzytkownika.jpg">
 </p>
 
+### Diagram wdrożenia
+
+<p align="center">
+  <img src="/Documentation/Diagram_wdrozenia.jpg">
+</p>
+
 ### Aplikacja - widok startowy
 
 <p align="center">
@@ -159,6 +171,252 @@
   <img src="/Documentation/app6_pwd.JPG">
 </p>
 
+###Wybrane fragmenty kodu 
+<ul list-style-type: disc >
+<li>Międzywątkowa synchronizacja logera - zapis logów</li>
+```C#
+        private delegate void SafeCallDelegate(string text);
+		
+		private void cw(string mess)
+        {
+            if (Logs.InvokeRequired)
+            {
+                var d = new SafeCallDelegate(cw);
+                Logs.Invoke(d, new object[] { mess });
+            }
+            else
+            {
+                Logs.AppendText(mess);
+                Logs.AppendText(Environment.NewLine);
+            }
+        }
+		
+		private void saveLogs(string mess, string userName = null)
+        {
+            checkDirectory(directoryLogsName);
+            var path = $"{directoryLogsPath}{((userName != null) ? $"{userName}.txt" : serverLogsFileName)}";
+            mess = $"{Date()} {mess}";
+
+            cw(mess);
+
+            checkFileExist(path, mess);
+            if (!path.Contains(serverLogsFileName))
+                checkFileExist($"{directoryLogsPath}{serverLogsFileName}", mess);
+        }
+		
+```
+<li>Dzielenie wiadomości na pakiery</li>
+```C#
+        int HowManyParts(int size)
+        {
+            int parts = size / bufferSize;
+            if (parts * bufferSize < size)
+                return parts + 1;
+            else
+                return parts;
+        }
+
+
+        List<byte[]> DivideIntoParts(string response)
+        {
+            var responseByte = ASCIIEncoding.UTF8.GetBytes(response);
+            int parts = HowManyParts(response.Length);
+            List<byte[]> newBuffer = new List<byte[]>();
+
+            byte[] tempBuffer = new byte[bufferSize];
+            int x = 0;
+            for (int i = 0; i < parts; i++)
+            {
+                tempBuffer = new byte[bufferSize];
+                for (int j = 0; j < bufferSize; j++)
+                {
+                    if (x < responseByte.Length)
+                    {
+                        tempBuffer[j] = responseByte[x];
+                        x++;
+                    }
+                    else
+                    {
+                        x = 0;
+                        break;
+                    }
+
+                }
+                newBuffer.Add(tempBuffer);
+            }
+
+            return newBuffer;
+
+        }
+```
+<li>Sprawdzenie poprawności danych - panel użytkownika</li>
+```C#
+        bool ValidUserData(string[] data)
+        {
+            if (data[0].Length > 0 && (!Regex.IsMatch(data[0], @"[@]") || !Regex.IsMatch(data[0], @"[.]")))
+                user.Status = Account.StatusCode.inv_mail;
+            else if (data[1].Length > 0 && !Regex.IsMatch(data[1], @"^[a-zA-Z]+$"))
+                user.Status = Account.StatusCode.inv_first_name;
+            else if (data[2].Length > 0 && !Regex.IsMatch(data[2], @"^[a-zA-Z]+(\-[a-zA-Z]+)?$"))
+                user.Status = Account.StatusCode.inv_second_name;
+            else if (data[3].Length > 0 && (!Regex.IsMatch(data[3], @"^[0-9]+$") || data[3].Length < 9 || data[3].Length > 9))
+                user.Status = Account.StatusCode.inv_phone_number;
+            else
+            {
+                user.Status = Account.StatusCode.user_valid_data;
+                return true;
+            }
+            return false;
+        }
+```
+<li>Komunikacja serwer -> klienta</li>
+```C#
+ string GetLogStatus()
+        {
+            if (user.Status == Account.StatusCode.inv_user)
+                return ServerMessage.invUser;
+            else if (user.Status == Account.StatusCode.user_is_logged)
+                return ServerMessage.currentlyLogged;
+            else if (user.Status == Account.StatusCode.must_be_logged)
+                return ServerMessage.mustBelogged;
+            else if (user.Status == Account.StatusCode.inv_pass)
+                return ServerMessage.invPwd;
+            else if (user.Status == Account.StatusCode.logged)
+                return ServerMessage.logged;
+            else if (user.Status == Account.StatusCode.already_logged)
+                return ServerMessage.alreadyLogged;
+            else if (user.Status == Account.StatusCode.user_exists)
+                return ServerMessage.userExists;
+            else if (user.Status == Account.StatusCode.user_does_not_exist)
+                return ServerMessage.userDoesNotExists;
+            else if (user.Status == Account.StatusCode.successful_registration)
+                return ServerMessage.regOk;
+            else if (user.Status == Account.StatusCode.change_pwd)
+                return ServerMessage.changePwd;
+            else if (user.Status == Account.StatusCode.change_pwd_error)
+                return ServerMessage.changePwdError;
+            else if (user.Status == Account.StatusCode.get_all_user_data)
+                return UsersDatabase.GetListData((int)user.Id, DatabaseAbstract.DatabaseType.User);
+            else if (user.Status == Account.StatusCode.inv_mail)
+                return ServerMessage.invMail;
+            else if (user.Status == Account.StatusCode.inv_first_name)
+                return ServerMessage.invFirstName;
+            else if (user.Status == Account.StatusCode.inv_second_name)
+                return ServerMessage.invSecondName;
+            else if (user.Status == Account.StatusCode.inv_phone_number)
+                return ServerMessage.invPhoneNumber;
+            else if (user.Status == Account.StatusCode.user_valid_data)
+                return ServerMessage.userValidData;
+            else if (user.Status == Account.StatusCode.user_inv_data)
+                return ServerMessage.userInvData;
+            return ServerMessage.unk;
+        }
+
+        string GetFileStatus()
+        {
+            if (user.FileStatus == Account.FileCode.file_added)
+                return ServerMessage.fileAdd;
+            else if (user.FileStatus == Account.FileCode.file_exists)
+                return ServerMessage.fileExists;
+            else if (user.FileStatus == Account.FileCode.must_be_logged)
+                return ServerMessage.mustBelogged;
+            else if (user.FileStatus == Account.FileCode.inv_file_name)
+                return ServerMessage.invFileName;
+            else if (user.FileStatus == Account.FileCode.get_all)
+                return FileDatabase.GetListData((int)user.Id, DatabaseAbstract.DatabaseType.File);
+            else if (user.FileStatus == Account.FileCode.file_deleted)
+                return ServerMessage.fileDeleted;
+            else if (user.FileStatus == Account.FileCode.file_deleted_error)
+                return ServerMessage.fileDeletedError;
+            else if (user.FileStatus == Account.FileCode.file_update)
+                return ServerMessage.fileUpdate;
+            else if (user.FileStatus == Account.FileCode.get_logs)
+                return getLogs(user.Login);
+            return ServerMessage.unk;
+
+```
+
+<li> Sprawdzenei poprawności hasła </li>
+```C#
+
+        public static bool isValid(string password)
+        {
+            if (password.Length < 7)
+                return false;
+            if (!password.Any(char.IsUpper))
+                return false;
+            if (!password.Any(char.IsLower))
+                return false;
+            if (!password.Any(char.IsDigit))
+                return false;
+            if (!(password.IndexOfAny(new char[] { '*', '&', '#', '!', '@', '%' }) != -1))
+                return false;
+            if (password.Any(char.IsWhiteSpace))
+                return false;
+            
+            return true;
+        }
+```
+<li> Pobranie listy plików/użytkowników </li>
+```C#
+		public string GetListData(int id, DatabaseType type)
+        {
+            OpenConnection();
+            string tableName;
+            string data = "";
+
+            if (type == DatabaseType.File)
+                tableName = _tableFiles;
+            else
+                tableName = _tableUsers;
+
+
+            if (checkForTableExist(tableName))
+            {
+                lock (keyLock)
+                {
+                    if (type == DatabaseType.File)
+                        _command.CommandText = $"SELECT * FROM {tableName} WHERE userId = '{id}'";
+                    else
+                        _command.CommandText = $"SELECT * FROM {tableName} WHERE id = '{id}'";
+
+                    SQLiteDataReader reader = _command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        if(type==DatabaseType.File)
+                        {
+                            data += reader.GetString(2);
+                            data = AddSeparator(data, ";");
+                        }
+                        if(type == DatabaseType.User)
+                        {
+                            if (!reader.IsDBNull(4))
+                                data += reader.GetString(4);
+                            data = AddSeparator(data, ";");
+                            if (!reader.IsDBNull(5))
+                                data += reader.GetString(5);
+                            data = AddSeparator(data, ";");
+                            if (!reader.IsDBNull(6))
+                                data += reader.GetString(6);
+                            data = AddSeparator(data, ";");
+                            if (!reader.IsDBNull(7))
+                                data += reader.GetInt32(7).ToString();
+                            data = AddSeparator(data, ";");
+
+                        }
+                    }
+
+                    reader.Close();
+                }
+            }
+
+            if (data.Length > 0)
+                return data;
+            else
+                return DbMessage.invFileListERROR;
+        }
+```
 ## Zespół
 - Poduct Owner: Jordan Kondracki
 - Scrum Team:
