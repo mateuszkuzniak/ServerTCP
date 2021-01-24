@@ -47,6 +47,7 @@ namespace TCP_Client
 
                 if (receivedMsg.Equals("LOGGED"))
                 {
+                    f.Text = acc.Login;
                     openCloudScreen(f);
                 }
             }

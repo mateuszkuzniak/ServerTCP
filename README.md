@@ -63,7 +63,7 @@
   <img src="/Documentation/Diagram_przypadkow_uzycia.jpg">
 </p>
 
-### Diagram klas
+### Diagram klas - serwer
 
 <p align="center">
   <img src="/Documentation/Diagram_klas.jpg">
@@ -115,6 +115,48 @@
 
 <p align="center">
   <img src="/Documentation/Diagram_sekwencji_logowanie_uzytkownika.jpg">
+</p>
+
+### Aplikacja - widok startowy
+
+<p align="center">
+  <img src="/Documentation/app1.jpg">
+</p>
+
+### Aplikacja - logowanie
+
+<p align="center">
+  <img src="/Documentation/app2.jpg">
+</p>
+
+### Aplikacja - panel główny użytkownika
+
+<p align="center">
+  <img src="/Documentation/app3.jpg">
+</p>
+
+### Aplikacja - logi
+
+<p align="center">
+  <img src="/Documentation/app4.jpg">
+</p>
+
+### Aplikacja - panel użytkownika
+
+<p align="center">
+  <img src="/Documentation/app5_user.jpg">
+</p>
+
+### Aplikacja - usuwanie pliku
+
+<p align="center">
+  <img src="/Documentation/app6_delete.jpg">
+</p>
+
+### Aplikacja - zmiana hasła
+
+<p align="center">
+  <img src="/Documentation/app6_pwd.jpg">
 </p>
 
 ## Zespół
