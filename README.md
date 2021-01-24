@@ -3,16 +3,16 @@
 
 ### Wprowadzenie - opis systemu
 
- <p align="justify">Aplikacja serwera `asynchronicznego TCP` z zaimplementowanym wzorcem TAP umożliwiająca logowanie użytkownika do systemu oraz założenie konta.  Użytkownik za pomocą klienta łączy się z serwerem przy użyciu podanego adresu IPv4 oraz portu. Następnie klient loguje się na serwerze za pomocą loginu i hasła. Po zalogowaniu klient ma dostęp do podstawowej wersji chmury – obsługa plików txt (możliwość dodawania, edycja, usuwania oraz przeglądania danych). Aplikacja kliencka dodatkowo została wyposażona w obsługę profilu użytkownika oraz podgląd historii działań (obie te rzeczy przechowywane są po stronie serwera). Prosta, intuicyjna aplikacja, umożliwiająca dalszy rozwój projektu. Serwer został wyposażony w bazę danych (SQLite), dzięki czemu po wyłączeniu serwera pozostają dane zarejestrowanych użytkowników oraz ich plików. Obie aplikacje zostały wyposażone w interfejs graficzny ułatwiający pracę </p>
+ <p align="justify">Aplikacja serwera asynchronicznego TCP z zaimplementowanym wzorcem TAP umożliwiająca logowanie użytkownika do systemu oraz założenie konta.  Użytkownik za pomocą klienta łączy się z serwerem przy użyciu podanego adresu IPv4 oraz portu. Następnie klient loguje się na serwerze za pomocą loginu i hasła. Po zalogowaniu klient ma dostęp do podstawowej wersji chmury – obsługa plików txt (możliwość dodawania, edycja, usuwania oraz przeglądania danych). Aplikacja kliencka dodatkowo została wyposażona w obsługę profilu użytkownika oraz podgląd historii działań (obie te rzeczy przechowywane są po stronie serwera). Prosta, intuicyjna aplikacja, umożliwiająca dalszy rozwój projektu. Serwer został wyposażony w bazę danych (SQLite), dzięki czemu po wyłączeniu serwera pozostają dane zarejestrowanych użytkowników oraz ich plików. Obie aplikacje zostały wyposażone w interfejs graficzny ułatwiający pracę </p>
 
 ### Słownik
 <ul list-style-type: disc >
-<li> `IPv4` (adres IP) – adres wykorzystywany do komunikacji (format xxx.xxx.xxx.xxx -> np. 168.154.202.2),</li>
+<li> IPv4 (adres IP) – adres wykorzystywany do komunikacji (format xxx.xxx.xxx.xxx -> np. 168.154.202.2),</li>
 <li> port  - jeden z parametrów gniazda, który umożliwia nawiązanie połączenia,</li>
 <li> asynchroniczność – sposób przesyłania danych pozwalający na nieregularne wysyłanie danych. Pozwala obsługiwać więcej niż 1 klienta na raz,</li>
-<li> `TCP` – niezawodny protokół komunikacyjny stosowany do przesyłania danych między procesami uruchomionymi na różnych maszynach,</li>
+<li> TCP – niezawodny protokół komunikacyjny stosowany do przesyłania danych między procesami uruchomionymi na różnych maszynach,</li>
 <li> baza danych – zbiór danych zapisanych zgodnie z określonymi regułami,</li>
-<li> `SQLite` – system zarządzania bazą danych, obsługujący język SQL, </li>
+<li> SQLite – system zarządzania bazą danych, obsługujący język SQL, </li>
 <li> logi – historia aktywności.</li>
 </ul>
 
@@ -40,11 +40,11 @@
 
 ### Wymagania niefunkcjonalne
 <ol>
-<li> język programowania: `C# (.NET Framework)`,</li>
+<li> język programowania: C# (.NET Framework) ,</li>
 <li> środowisko programistyczne: Visual Studio 2019,</li>
 <li> system operacyjny Windows 10,</li>
-<li> język bazy danych: `SQL`,</li>
-<li> baza danych `SQLite`,</li>
+<li> język bazy danych: SQL,</li>
+<li> baza danych SQLite,</li>
 <li> interfejs: graficzny,</li>
 <li> serwer utrzymuje połączenie z wieloma klientami</li>
 <li> serwer po rozłączeniu z klientem jest w stanie nadal obsługiwać pozostałych klientów,</li>
@@ -53,8 +53,8 @@
 <li> klient obsługuje wyjątki,</li>
 <li> serwer zapobiega rejestracji dwóch kont o tej samej nazwie,</li>
 <li> serwer nie wymaga żadnych dodatkowych działań, prócz uruchomienia,</li>
-<li> klient korzysta z `funkcji skrótu SHA256`,</li>
-<li> serwer korzysta z `funkcji skrótu SHA256`.</li>
+<li> klient korzysta z funkcji skrótu SHA256,</li>
+<li> serwer korzysta z funkcji skrótu SHA256.</li>
 </ol>
 
 ### Diagram przypadków użycia
