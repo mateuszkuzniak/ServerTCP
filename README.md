@@ -63,13 +63,7 @@
   <img src="/Documentation/Diagram_przypadkow_uzycia.jpg">
 </p>
 
-### Diagram klas - serwer
-
-<p align="center">
-  <img src="/Documentation/Diagram_klas.jpg">
-</p>
-
-### Diagram klas - klient
+### Diagram klas
 
 <p align="center">
   <img src="/Documentation/Diagram_klas_klient.jpg">
