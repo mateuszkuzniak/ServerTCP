@@ -24,7 +24,7 @@ namespace DatabaseLibrary
             OpenConnection();
             string nameToLower = fileName.ToLower();
 
-            lock (keyLock)
+            lock (_command)
             {
                 _command.CommandText = $"SELECT id FROM {_tableFiles} WHERE fileName = '{nameToLower}' AND userId = {userId}";
                 if (_command.ExecuteScalar() != null)
@@ -42,7 +42,7 @@ namespace DatabaseLibrary
             {
                 try
                 {
-                    lock (keyLock)
+                    lock (_command)
                     {
                         _command.CommandText = $"INSERT INTO {_tableFiles} (userId, fileName, textFile)" +
                                              $"VALUES('{id}','{nameToLower}','{text}')";
@@ -73,7 +73,7 @@ namespace DatabaseLibrary
             {
                 try
                 {
-                    lock (keyLock)
+                    lock (_command)
                     {
                         _command.CommandText = $"DELETE FROM {_tableFiles} WHERE userId = '{id}' AND fileName = '{fileName}'";
                         _command.ExecuteNonQuery();
@@ -95,7 +95,7 @@ namespace DatabaseLibrary
             {
                 try
                 {
-                    lock (keyLock)
+                    lock (_command)
                     {
                         _command.CommandText = $"UPDATE {_tableFiles} SET textFile = '{newText}' WHERE userId = '{id}' AND fileName = '{fileName}'";
                         _command.ExecuteNonQuery();
@@ -118,7 +118,7 @@ namespace DatabaseLibrary
 
             if (checkForTableExist(_tableFiles))
             {
-                lock (keyLock)
+                lock (_command)
                 {
                     _command.CommandText = $"SELECT * FROM {_tableFiles} WHERE userId = '{id}' AND fileName ='{fileName}'";
                     SQLiteDataReader reader = _command.ExecuteReader();
