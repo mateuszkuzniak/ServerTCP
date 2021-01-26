@@ -202,7 +202,7 @@
 		
 ```
 
-<li>Dzielenie wiadomości na pakiery</li>
+<li>Dzielenie wiadomości na pakiety</li>
 
 ```csharp
         int HowManyParts(int size)
