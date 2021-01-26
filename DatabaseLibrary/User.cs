@@ -200,7 +200,7 @@ namespace DatabaseLibrary
                 _command.CommandText = $"UPDATE {_tableUsers} SET {((!StringIsNull(data[0])) ? "email = '" + data[0] + $"'{CheckNull(data, 0)}" : "")}" +
                     $"{ ((!StringIsNull(data[1])) ? " firstName = '" + data[1] + $"'{CheckNull(data, 1)}" : "")}" +
                     $"{ ((!StringIsNull(data[2])) ? " secondName = '" + data[2] + $"'{CheckNull(data, 2)}" : "")}" +
-                    $"{ ((!StringIsNull(data[3])) ? " phone = '" + int.Parse(data[3]) + "'" : "")}";
+                    $"{ ((!StringIsNull(data[3])) ? " phone = '" + int.Parse(data[3]) + "'" : "")}  WHERE id={id}";
 
                 if (!DataIsNull(data))
                     _command.ExecuteScalar();
